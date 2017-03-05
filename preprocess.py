@@ -28,14 +28,15 @@ class PreProcess:
 
         print('# Whole Data Set', x.shape)
         print()
-        y = np.asarray([l.split('\\C')[0] for l in lines])
+        y = [l.split('\\C')[0] for l in lines]
         # classes
         classes = sorted(list(set(y)))
+        y = np.asarray([classes.index(item) for item in y])
         print('Labels', classes)
         print()
-        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
-        print('# Training Data', x_train.shape)
-        print('# Testing Data', x_test.shape)
+        x_train, x_test, y_train, y_test = self.train_test_split(x, y)
+        print('# Training Data', x_train.shape, y_train.shape)
+        print('# Testing Data', x_test.shape, y_test.shape)
         return x_train, x_test, y_train, y_test, len(classes)
 
     def sentence_to_ascii_list(self, s):
