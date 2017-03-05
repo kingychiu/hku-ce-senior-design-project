@@ -22,7 +22,10 @@ class PreProcess:
         print('## First sentence in ascii codes')
         print(sentences_in_ascii[0])
         print()
+
+        sentences_in_ascii = self.fixing_dimension(sentences_in_ascii)
         x = np.asarray(sentences_in_ascii)
+
         print('# Whole Data Set', x.shape)
         print()
         y = np.asarray([l.split('\\C')[0] for l in lines])
@@ -42,3 +45,17 @@ class PreProcess:
         # shuffle
         x, y = shuffle(x, y, random_state=0)
         return train_test_split(x, y, test_size=0.3, random_state=42)
+
+    def fixing_dimension(self, data):
+        avg_len = 0
+        for d in data:
+            avg_len += len(d)
+        avg_len //= len(data)
+        for i in range(0, len(data)):
+            if len(data[i]) >= avg_len:
+                data[i] = data[i][:avg_len]
+            else:
+                diff = avg_len - len(data[i])
+                data[i] += (diff * [0])
+        print('Fixing all sentences to ', avg_len, ' char')
+        return data
