@@ -1,5 +1,10 @@
+"""
+06-03-2017, Anthony Chiu
+This CNN run very slow on local machine. This file is used for ensure the model is correct only.
+The actual training will be done on SPARK.
+"""
+
 # keras
-from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
@@ -24,7 +29,8 @@ print('# Testing Data', x_test.shape, y_test.shape)
 # model config
 pool_size = (1, 2)
 model = Sequential()
-# CNN
+
+# Convolution Layer(s)
 model.add(Convolution2D(32, 3, 1,
                         border_mode="same",
                         # (channel, row, col)
@@ -36,7 +42,7 @@ print(model.output_shape)
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
 
-# FC
+# Fully Connected Layer
 model.add(Flatten())
 print(model.output_shape)
 
