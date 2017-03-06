@@ -39,19 +39,19 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution2D(4, 10, 1,
+model.add(Convolution2D(4, 3, 1,
                         border_mode="same",
                         # (channel, row, col)
                         input_shape=(1, dimension, 1)))
 model.add(Activation('relu'))
-model.add(Convolution2D(4, 10, 1, border_mode='same'))
+model.add(Convolution2D(4, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
 
-model.add(Convolution2D(8, 5, 1, border_mode="same"))
+model.add(Convolution2D(8, 3, 1, border_mode="same"))
 model.add(Activation('relu'))
-model.add(Convolution2D(8, 5, 1, border_mode='same'))
+model.add(Convolution2D(8, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
@@ -86,7 +86,7 @@ num_epoch_in_one_step = 10
 batch_size = 100
 # Accuracy records
 stat_lines = ['Epoch | Train Acc. | Test Acc.']
-for i in range(0, 100):
+for i in range(0, 200):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
     spark_model = SparkModel(sc, model, num_workers=7)
