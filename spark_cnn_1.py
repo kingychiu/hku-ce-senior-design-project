@@ -95,6 +95,7 @@ for i in range(0, 100):
     print('#############################')
     stat_lines.append(str((i + 1) * 10) + ': ' + str(score1[1]) + ', ' + str(score2[1]))
     FileIO.write_lines_to_file('./cnn_1.log', stat_lines)
-    model.save('./models/cnn_1_' + str((i + 1) * 10) + 'ep.h5')
+    if i % 10 == 0 and i != 0:
+        model.save('./models/cnn_1_' + str((i + 1) * 10) + 'ep.h5')
 sc.stop()
 ## END OF SPARK ##
