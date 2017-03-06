@@ -78,6 +78,7 @@ conf = SparkConf().setAppName('CNN_1') \
     .set('spark.eventLog.enabled', True) \
     .set('spark.akka.frameSize', 500)
 sc = SparkContext(conf=conf)
+sc.setLogLevel("ERROR")
 # Build RDD from numpy features and labels
 rdd = to_simple_rdd(sc, x_train, y_train)
 # Epoch Before Check Point
@@ -85,7 +86,7 @@ num_epoch_in_one_step = 5
 batch_size = 100
 # Accuracy records
 stat_lines = ['Epoch | Train Acc. | Test Acc.']
-for i in range(0, 100):
+for i in range(0, 20):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
     spark_model = SparkModel(sc, model, num_workers=7)
@@ -98,7 +99,7 @@ for i in range(0, 100):
     print('Train accuracy:', score1[1])
     print('Test accuracy:', score2[1])
     print('#############################')
-    stat_lines.append(str(i * 10) + ': ' + str(score1[1]) + ', ' + str(score2[1]))
+    stat_lines.append(str((i + 1) * 10) + ': ' + str(score1[1]) + ', ' + str(score2[1]))
     FileIO.write_lines_to_file('./cnn_1.log', stat_lines)
 sc.stop()
 ## END OF SPARK ##
