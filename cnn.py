@@ -31,14 +31,35 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution2D(32, 3, 1,
+model.add(Convolution2D(8, 3, 1,
                         border_mode="same",
                         # (channel, row, col)
                         input_shape=(1, dimension, 1)))
 model.add(Activation('relu'))
+model.add(Convolution2D(8, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=pool_size))
+
+model.add(Convolution2D(16, 3, 1, border_mode="same"))
+model.add(Activation('relu'))
+model.add(Convolution2D(16, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=pool_size))
+
+model.add(Convolution2D(32, 3, 1, border_mode="same"))
+model.add(Activation('relu'))
 model.add(Convolution2D(32, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
-print(model.output_shape)
+model.add(Convolution2D(32, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=pool_size))
+
+model.add(Convolution2D(64, 3, 1, border_mode="same"))
+model.add(Activation('relu'))
+model.add(Convolution2D(64, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(Convolution2D(64, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
 
@@ -56,12 +77,11 @@ model.compile(loss='categorical_crossentropy',
               optimizer='adadelta',
               metrics=['accuracy'])
 
-model.fit(x_train, y_train, batch_size=128, nb_epoch=1,
-          verbose=1, validation_data=(x_test, y_test))
-
-score = model.evaluate(x_train, y_train, verbose=0)
-print('Train accuracy:', score[1])
-
-score = model.evaluate(x_test, y_test, verbose=0)
-print('Test accuracy:', score[1])
-
+# model.fit(x_train, y_train, batch_size=128, nb_epoch=1,
+#           verbose=1, validation_data=(x_test, y_test))
+#
+# score = model.evaluate(x_train, y_train, verbose=0)
+# print('Train accuracy:', score[1])
+#
+# score = model.evaluate(x_test, y_test, verbose=0)
+# print('Test accuracy:', score[1])

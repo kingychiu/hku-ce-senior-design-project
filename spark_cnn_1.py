@@ -38,17 +38,38 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution2D(32, 3, 1,
+model.add(Convolution2D(8, 3, 1,
                         border_mode="same",
                         # (channel, row, col)
                         input_shape=(1, dimension, 1)))
 model.add(Activation('relu'))
+model.add(Convolution2D(8, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=pool_size))
+
+model.add(Convolution2D(16, 3, 1, border_mode="same"))
+model.add(Activation('relu'))
+model.add(Convolution2D(16, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=pool_size))
+
+model.add(Convolution2D(32, 3, 1, border_mode="same"))
+model.add(Activation('relu'))
 model.add(Convolution2D(32, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
-print(model.output_shape)
+model.add(Convolution2D(32, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
-print(model.output_shape)
 
+model.add(Convolution2D(64, 3, 1, border_mode="same"))
+model.add(Activation('relu'))
+model.add(Convolution2D(64, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(Convolution2D(64, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=pool_size))
+
+print(model.output_shape)
 # Fully Connected Layer
 model.add(Flatten())
 print(model.output_shape)
@@ -86,8 +107,9 @@ for i in range(0, 10):
     spark_model.train(rdd, nb_epoch=num_epoch_in_one_step, batch_size=batch_size, verbose=2,
                       validation_split=0.1)
     score1 = model.evaluate(x_train, y_train, verbose=0)
-    print('Train accuracy:', score1[1])
     score2 = model.evaluate(x_test, y_test, verbose=0)
+    print('Finished epochs', i * num_epoch_in_one_step)
+    print('Train accuracy:', score1[1])
     print('Test accuracy:', score2[1])
     stats.append((i * 10, score1[1], score2[1]))
 sc.stop()
