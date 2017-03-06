@@ -82,11 +82,11 @@ sc.setLogLevel("ERROR")
 # Build RDD from numpy features and labels
 rdd = to_simple_rdd(sc, x_train, y_train)
 # Epoch Before Check Point
-num_epoch_in_one_step = 5
+num_epoch_in_one_step = 10
 batch_size = 100
 # Accuracy records
 stat_lines = ['Epoch | Train Acc. | Test Acc.']
-for i in range(0, 20):
+for i in range(0, 10):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
     spark_model = SparkModel(sc, model, num_workers=7)
