@@ -85,7 +85,7 @@ num_epoch_in_one_step = 5
 batch_size = 100
 # Accuracy records
 stat_lines = ['Epoch | Train Acc. | Test Acc.']
-for i in range(0, 10):
+for i in range(0, 100):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
     spark_model = SparkModel(sc, model, num_workers=7)
