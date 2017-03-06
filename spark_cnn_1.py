@@ -17,6 +17,7 @@ from keras.optimizers import SGD
 
 # classes
 from preprocess import PreProcess
+from file_io import FileIO
 
 ## MODEL ##
 
@@ -99,7 +100,7 @@ rdd = to_simple_rdd(sc, x_train, y_train)
 num_epoch_in_one_step = 5
 batch_size = 100
 # Accuracy records
-stats = []
+stat_lines = ['Epoch | Train Acc. | Test Acc.']
 for i in range(0, 10):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
@@ -113,10 +114,8 @@ for i in range(0, 10):
     print('Train accuracy:', score1[1])
     print('Test accuracy:', score2[1])
     print('#############################')
-    stats.append((i * 10, score1[1], score2[1]))
+    stat_lines.append(str(i * 10) + ': ' + str(score1[1]) + ', ' + str(score2[1]))
+    FileIO.write_lines_to_file('cnn_1.log', stat_lines)
 sc.stop()
-
-for stat in stats:
-    print(stat[0], stat[1], stat[2])
 
 ## END OF SPARK ##

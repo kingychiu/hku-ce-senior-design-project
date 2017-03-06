@@ -1,4 +1,3 @@
-
 class FileIO:
     @staticmethod
     def read_first_lines(num, file_path):
@@ -20,3 +19,8 @@ class FileIO:
             lines = f.readlines()
             f.close()
             return lines
+
+    @staticmethod
+    def write_lines_to_file(file_path, lines):
+        with open(file_path, 'w', encoding='utf8') as f:
+            f.write('\n'.join(lines))
