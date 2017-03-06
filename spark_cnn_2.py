@@ -48,6 +48,14 @@ model.add(Convolution2D(4, 10, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
+
+model.add(Convolution2D(8, 5, 1, border_mode="same"))
+model.add(Activation('relu'))
+model.add(Convolution2D(8, 5, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=pool_size))
+print(model.output_shape)
+
 # Fully Connected Layer
 model.add(Flatten())
 print(model.output_shape)
@@ -66,12 +74,11 @@ model.compile(loss='categorical_crossentropy',
 
 ## SPARK ##
 # Create Spark context
-conf = SparkConf().setAppName('CNN_1') \
+conf = SparkConf().setAppName('CNN_2') \
     .setMaster('spark://cep16001s1:7077') \
     .set('spark.eventLog.enabled', True) \
     .set('spark.akka.frameSize', 500)
 sc = SparkContext(conf=conf)
-sc.setLogLevel("ERROR")
 # Build RDD from numpy features and labels
 rdd = to_simple_rdd(sc, x_train, y_train)
 # Epoch Before Check Point
@@ -93,8 +100,8 @@ for i in range(0, 100):
     print('Test accuracy:', score2[1])
     print('#############################')
     stat_lines.append(str((i + 1) * 10) + ': ' + str(score1[1]) + ', ' + str(score2[1]))
-    FileIO.write_lines_to_file('./cnn_1.log', stat_lines)
+    FileIO.write_lines_to_file('./cnn_2.log', stat_lines)
     if i % 10 == 0 and i != 0:
-        model.save('./models/cnn_1_' + str((i + 1) * 10) + 'ep.h5')
+        model.save('./models/cnn_2_' + str((i + 1) * 10) + 'ep.h5')
 sc.stop()
 ## END OF SPARK ##
