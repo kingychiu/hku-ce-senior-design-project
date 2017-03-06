@@ -100,7 +100,7 @@ num_epoch_in_one_step = 5
 batch_size = 100
 # Accuracy records
 stats = []
-for i in range(0, 2):
+for i in range(0, 10):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
     spark_model = SparkModel(sc, model, num_workers=7)
@@ -109,7 +109,7 @@ for i in range(0, 2):
     score1 = model.evaluate(x_train, y_train, verbose=0)
     score2 = model.evaluate(x_test, y_test, verbose=0)
     print('#############################')
-    print('Finished epochs', i * num_epoch_in_one_step)
+    print('Finished epochs', (i + 1) * num_epoch_in_one_step)
     print('Train accuracy:', score1[1])
     print('Test accuracy:', score2[1])
     print('#############################')
