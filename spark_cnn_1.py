@@ -54,22 +54,6 @@ model.add(Convolution2D(16, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 
-model.add(Convolution2D(32, 3, 1, border_mode="same"))
-model.add(Activation('relu'))
-model.add(Convolution2D(32, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(Convolution2D(32, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
-
-model.add(Convolution2D(64, 3, 1, border_mode="same"))
-model.add(Activation('relu'))
-model.add(Convolution2D(64, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(Convolution2D(64, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
-
 print(model.output_shape)
 # Fully Connected Layer
 model.add(Flatten())
@@ -115,7 +99,6 @@ for i in range(0, 10):
     print('Test accuracy:', score2[1])
     print('#############################')
     stat_lines.append(str(i * 10) + ': ' + str(score1[1]) + ', ' + str(score2[1]))
-    FileIO.write_lines_to_file('cnn_1.log', stat_lines)
+    FileIO.write_lines_to_file('./cnn_1.log', stat_lines)
 sc.stop()
-
 ## END OF SPARK ##
