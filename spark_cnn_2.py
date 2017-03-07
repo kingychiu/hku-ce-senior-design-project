@@ -85,7 +85,7 @@ rdd = to_simple_rdd(sc, x_train, y_train)
 num_epoch_in_one_step = 10
 batch_size = 100
 # Accuracy records
-stat_lines = ['Epoch | Train Acc. | Test Acc.']
+stat_lines = ['']
 for i in range(0, 200):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
@@ -99,7 +99,7 @@ for i in range(0, 200):
     print('Train accuracy:', score1[1])
     print('Test accuracy:', score2[1])
     print('#############################')
-    stat_lines.append(str((i + 1) * 10) + ': ' + str(score1[1]) + ', ' + str(score2[1]))
+    stat_lines.append(str((i + 1) * 10) + ', ' + str(score1[1]) + ', ' + str(score2[1]))
     FileIO.write_lines_to_file('./cnn_2.log', stat_lines)
     if (i + 1) % 10 == 0 and i != 0:
         model.save('./models/cnn_2_' + str((i + 1) * 10) + 'ep.h5')
