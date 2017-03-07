@@ -31,17 +31,10 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution2D(8, 3, 1,
+model.add(Convolution2D(16, 3, 1,
                         border_mode="same",
                         # (channel, row, col)
                         input_shape=(1, dimension, 1)))
-model.add(Activation('relu'))
-model.add(Convolution2D(8, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
-print(model.output_shape)
-
-model.add(Convolution2D(16, 3, 1, border_mode="same"))
 model.add(Activation('relu'))
 model.add(Convolution2D(16, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
@@ -51,6 +44,13 @@ print(model.output_shape)
 model.add(Convolution2D(32, 3, 1, border_mode="same"))
 model.add(Activation('relu'))
 model.add(Convolution2D(32, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=pool_size))
+print(model.output_shape)
+
+model.add(Convolution2D(64, 3, 1, border_mode="same"))
+model.add(Activation('relu'))
+model.add(Convolution2D(64, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)

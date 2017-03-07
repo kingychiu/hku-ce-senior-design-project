@@ -39,17 +39,10 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution2D(8, 3, 1,
+model.add(Convolution2D(16, 3, 1,
                         border_mode="same",
                         # (channel, row, col)
                         input_shape=(1, dimension, 1)))
-model.add(Activation('relu'))
-model.add(Convolution2D(8, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
-print(model.output_shape)
-
-model.add(Convolution2D(16, 3, 1, border_mode="same"))
 model.add(Activation('relu'))
 model.add(Convolution2D(16, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
@@ -59,6 +52,13 @@ print(model.output_shape)
 model.add(Convolution2D(32, 3, 1, border_mode="same"))
 model.add(Activation('relu'))
 model.add(Convolution2D(32, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=pool_size))
+print(model.output_shape)
+
+model.add(Convolution2D(64, 3, 1, border_mode="same"))
+model.add(Activation('relu'))
+model.add(Convolution2D(64, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
@@ -107,8 +107,8 @@ for i in range(0, 200):
     print('Test accuracy:', score2[1])
     print('#############################')
     stat_lines.append(str((i + 1) * 10) + ', ' + str(score1[1]) + ', ' + str(score2[1]))
-    FileIO.write_lines_to_file('./cnn_4.log', stat_lines)
+    FileIO.write_lines_to_file('./cnn_5.log', stat_lines)
     if (i + 1) % 10 == 0 and i != 0:
-        model.save('./models/cnn_4_' + str((i + 1) * 10) + 'ep.h5')
+        model.save('./models/cnn_5_' + str((i + 1) * 10) + 'ep.h5')
 sc.stop()
 ## END OF SPARK ##
