@@ -81,7 +81,7 @@ model.compile(loss='categorical_crossentropy',
 
 ## SPARK ##
 # Create Spark context
-conf = SparkConf().setAppName('CNN_2') \
+conf = SparkConf().setAppName('CNN_3') \
     .setMaster('spark://cep16001s1:7077') \
     .set('spark.eventLog.enabled', True) \
     .set('spark.akka.frameSize', 500)
