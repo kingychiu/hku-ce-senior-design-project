@@ -90,7 +90,7 @@ sc = SparkContext(conf=conf)
 rdd = to_simple_rdd(sc, x_train, y_train)
 # Epoch Before Check Point
 num_epoch_in_one_step = 10
-batch_size = 100
+batch_size = 10
 # Accuracy records
 stat_lines = []
 for i in range(0, 200):
