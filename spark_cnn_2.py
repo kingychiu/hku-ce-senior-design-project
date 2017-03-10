@@ -105,5 +105,5 @@ for i in range(0, 200):
     FileIO.write_lines_to_file('./cnn_2.log', stat_lines)
     if (i + 1) % 10 == 0 and i != 0:
         model.save('./models/cnn_2_' + str((i + 1) * 10) + 'ep.h5')
-sc.stop()
+# sc.stop()
 ## END OF SPARK ##
