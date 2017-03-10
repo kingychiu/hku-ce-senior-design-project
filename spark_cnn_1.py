@@ -59,7 +59,7 @@ model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',
-              optimizer='adadelta',
+              optimizer=SGD(),
               metrics=['accuracy'])
 
 ## END OF MODEL ##
@@ -69,7 +69,7 @@ model.compile(loss='categorical_crossentropy',
 conf = SparkConf().setAppName('CNN_1') \
     .setMaster('spark://cep16001s1:7077') \
     .set('spark.eventLog.enabled', True) \
-    .set('spark.akka.frameSize', 500)
+    .set('spark.rpc.message.maxSize', 1000)
 sc = SparkContext(conf=conf)
 sc.setLogLevel("ERROR")
 # Build RDD from numpy features and labels
@@ -82,7 +82,9 @@ stat_lines = []
 for i in range(0, 1):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
-    spark_model = SparkModel(sc, model, num_workers=7)
+    adadelta = elephas_optimizers.Adadelta()
+    spark_model = SparkModel(sc, model, num_workers=7,
+                             optimizer=adadelta)
     spark_model.train(rdd, nb_epoch=num_epoch_in_one_step,
                       batch_size=batch_size,
                       verbose=2,
