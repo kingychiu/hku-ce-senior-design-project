@@ -83,7 +83,9 @@ for i in range(0, 200):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
     spark_model = SparkModel(sc, model, num_workers=7)
-    spark_model.train(rdd, nb_epoch=num_epoch_in_one_step, batch_size=batch_size, verbose=0,
+    spark_model.train(rdd, nb_epoch=num_epoch_in_one_step,
+                      batch_size=batch_size,
+                      verbose=2,
                       validation_split=0.1)
     score1 = model.evaluate(x_train, y_train, verbose=0)
     score2 = model.evaluate(x_test, y_test, verbose=0)
