@@ -82,7 +82,7 @@ model.compile(loss='categorical_crossentropy',
 ## SPARK ##
 # Create Spark context
 conf = SparkConf().setAppName('CNN_5') \
-    .setMaster('spark://cep16001s1:7077') \
+    .setMaster('local[8]') \
     .set('spark.eventLog.enabled', True) \
     .set('spark.rpc.message.maxSize', 1000)
 sc = SparkContext(conf=conf)
@@ -100,13 +100,12 @@ for i in range(0, 200):
     spark_model = SparkModel(sc, model,
                              mode='asynchronous',
                              frequency='epoch',
-                             num_workers=1,
+                             num_workers=2,
                              optimizer=adagrad)
     spark_model.train(rdd, nb_epoch=num_epoch_in_one_step,
                       batch_size=batch_size,
                       verbose=0,
-                      validation_split=0.1,
-                      num_workers=7)
+                      validation_split=0.1)
     score1 = model.evaluate(x_train, y_train, verbose=0)
     score2 = model.evaluate(x_test, y_test, verbose=0)
     print('#############################')
