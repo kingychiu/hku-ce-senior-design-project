@@ -74,7 +74,7 @@ model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',
-              optimizer='adadelta',
+              optimizer=SGD(),
               metrics=['accuracy'])
 
 ## END OF MODEL ##
