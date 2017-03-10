@@ -84,7 +84,7 @@ model.compile(loss='categorical_crossentropy',
 conf = SparkConf().setAppName('CNN_3') \
     .setMaster('spark://cep16001s1:7077') \
     .set('spark.eventLog.enabled', True) \
-    .set('spark.akka.frameSize', 500)
+    .set('spark.rpc.message.maxSize', 1000)
 sc = SparkContext(conf=conf)
 # Build RDD from numpy features and labels
 rdd = to_simple_rdd(sc, x_train, y_train)
@@ -96,7 +96,9 @@ stat_lines = []
 for i in range(0, 200):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
-    spark_model = SparkModel(sc, model, num_workers=7)
+    adadelta = elephas_optimizers.Adadelta()
+    spark_model = SparkModel(sc, model, num_workers=7,
+                             optimizer=adadelta)
     spark_model.train(rdd, nb_epoch=num_epoch_in_one_step, batch_size=batch_size, verbose=0,
                       validation_split=0.1)
     score1 = model.evaluate(x_train, y_train, verbose=0)

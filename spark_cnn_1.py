@@ -79,7 +79,7 @@ num_epoch_in_one_step = 10
 batch_size = 100
 # Accuracy records
 stat_lines = []
-for i in range(0, 1):
+for i in range(0, 2):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
     adadelta = elephas_optimizers.Adadelta()
