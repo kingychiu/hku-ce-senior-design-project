@@ -91,7 +91,7 @@ for i in range(0, 200):
     spark_model.train(rdd, nb_epoch=num_epoch_in_one_step,
                       batch_size=batch_size,
                       verbose=0,
-                      validation_split=0.1
+                      validation_split=0.1)
     score1 = model.evaluate(x_train, y_train, verbose=0)
     score2 = model.evaluate(x_test, y_test, verbose=0)
     print('#############################')
