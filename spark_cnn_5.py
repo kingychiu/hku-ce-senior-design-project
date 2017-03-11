@@ -74,7 +74,7 @@ model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',
-              optimizer=SGD(),
+              optimizer=SGD(lr=0.1, momentum=0.9, nesterov=True),
               metrics=['accuracy'])
 
 ## END OF MODEL ##
@@ -90,7 +90,7 @@ sc = SparkContext(conf=conf)
 rdd = to_simple_rdd(sc, x_train, y_train)
 # Epoch Before Check Point
 num_epoch_in_one_step = 10
-batch_size = 100
+batch_size = 1000
 # Accuracy records
 stat_lines = []
 adagrad = elephas_optimizers.Adagrad()
@@ -104,7 +104,7 @@ for i in range(0, 200):
                              optimizer=adagrad)
     spark_model.train(rdd, nb_epoch=num_epoch_in_one_step,
                       batch_size=batch_size,
-                      verbose=0,
+                      verbose=2,
                       validation_split=0.1)
     score1 = model.evaluate(x_train, y_train, verbose=0)
     score2 = model.evaluate(x_test, y_test, verbose=0)
