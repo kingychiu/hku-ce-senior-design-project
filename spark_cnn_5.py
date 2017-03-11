@@ -39,19 +39,26 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution2D(128, 3, 1,
+model.add(Convolution2D(16, 3, 1,
                         border_mode="same",
                         # (channel, row, col)
                         input_shape=(1, dimension, 1)))
 model.add(Activation('relu'))
-model.add(Convolution2D(128, 3, 1, border_mode='same'))
+model.add(Convolution2D(16, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
 
-model.add(Convolution2D(128, 3, 1, border_mode="same"))
+model.add(Convolution2D(32, 3, 1, border_mode="same"))
 model.add(Activation('relu'))
-model.add(Convolution2D(128, 3, 1, border_mode='same'))
+model.add(Convolution2D(32, 3, 1, border_mode='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=pool_size))
+print(model.output_shape)
+
+model.add(Convolution2D(64, 3, 1, border_mode="same"))
+model.add(Activation('relu'))
+model.add(Convolution2D(64, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
@@ -86,7 +93,7 @@ num_epoch_in_one_step = 10
 batch_size = 1000
 # Accuracy records
 stat_lines = []
-adagrad = elephas_optimizers.Adagrad()
+sgd = elephas_optimizers.SGD()
 for i in range(0, 200):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
@@ -94,7 +101,7 @@ for i in range(0, 200):
                              mode='asynchronous',
                              frequency='epoch',
                              num_workers=2,
-                             optimizer=adagrad)
+                             optimizer=sgd)
     spark_model.train(rdd, nb_epoch=num_epoch_in_one_step,
                       batch_size=batch_size,
                       verbose=2,
