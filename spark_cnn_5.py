@@ -39,29 +39,23 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution2D(16, 3, 1,
+model.add(Convolution2D(128, 3, 1,
                         border_mode="same",
                         # (channel, row, col)
                         input_shape=(1, dimension, 1)))
 model.add(Activation('relu'))
-model.add(Convolution2D(16, 3, 1, border_mode='same'))
+model.add(Convolution2D(128, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
 
-model.add(Convolution2D(32, 3, 1, border_mode="same"))
+model.add(Convolution2D(128, 3, 1, border_mode="same"))
 model.add(Activation('relu'))
-model.add(Convolution2D(32, 3, 1, border_mode='same'))
+model.add(Convolution2D(128, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
 
-model.add(Convolution2D(64, 3, 1, border_mode="same"))
-model.add(Activation('relu'))
-model.add(Convolution2D(64, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
-print(model.output_shape)
 
 # Fully Connected Layer
 model.add(Flatten())
@@ -90,7 +84,7 @@ sc = SparkContext(conf=conf)
 rdd = to_simple_rdd(sc, x_train, y_train)
 # Epoch Before Check Point
 num_epoch_in_one_step = 10
-batch_size = 1000
+batch_size = 100
 # Accuracy records
 stat_lines = []
 sgd = elephas_optimizers.SGD()
