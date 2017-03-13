@@ -82,7 +82,7 @@ model.add(Activation('softmax'))
 ## SPARK ##
 # Create Spark context
 conf = SparkConf().setAppName('CNN_5') \
-    .setMaster('local[8]') \
+    .setMaster('spark://cep16001s1:7077') \
     .set('spark.eventLog.enabled', True) \
     .set('spark.rpc.message.maxSize', 1000)
 sc = SparkContext(conf=conf)
@@ -94,17 +94,17 @@ batch_size = 1000
 # Accuracy records
 stat_lines = []
 adam = elephas_optimizers.Adam()
+spark_model = SparkModel(sc, model,
+                         mode='asynchronous',
+                         frequency='epoch',
+                         num_workers=7,
+                         optimizer=adam,
+                         master_optimizer=Adam(),
+                         master_loss='categorical_crossentropy',
+                         master_metrics=['accuracy'])
 for i in range(0, 200):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
-    spark_model = SparkModel(sc, model,
-                             mode='asynchronous',
-                             frequency='epoch',
-                             num_workers=4,
-                             optimizer=adam,
-                             master_optimizer=Adam(),
-                             master_loss='categorical_crossentropy',
-                             master_metrics=['accuracy'])
     spark_model.train(rdd,
                       nb_epoch=num_epoch_in_one_step,
                       batch_size=batch_size,
