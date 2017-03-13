@@ -90,7 +90,7 @@ sc = SparkContext(conf=conf)
 rdd = to_simple_rdd(sc, x_train, y_train)
 # Epoch Before Check Point
 num_epoch_in_one_step = 10
-batch_size = 100
+batch_size = 1000
 # Accuracy records
 stat_lines = []
 sgd = elephas_optimizers.SGD()
@@ -101,7 +101,7 @@ for i in range(0, 200):
     spark_model = SparkModel(sc, model,
                              mode='asynchronous',
                              frequency='epoch',
-                             num_workers=2,
+                             num_workers=1,
                              optimizer=adam)
     spark_model.train(rdd, nb_epoch=num_epoch_in_one_step,
                       batch_size=batch_size,
