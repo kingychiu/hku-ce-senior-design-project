@@ -13,7 +13,7 @@ from elephas.spark_model import SparkModel
 from elephas.utils.rdd_utils import to_simple_rdd
 from elephas import optimizers as elephas_optimizers
 from pyspark import SparkContext, SparkConf
-from keras.optimizers import SGD
+from keras.optimizers import SGD, Adam
 
 # classes
 from preprocess import PreProcess
@@ -74,7 +74,7 @@ model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',
-              optimizer=SGD(lr=0.1, momentum=0.9, nesterov=True),
+              optimizer=Adam(),
               metrics=['accuracy'])
 
 ## END OF MODEL ##
@@ -94,6 +94,7 @@ batch_size = 100
 # Accuracy records
 stat_lines = []
 sgd = elephas_optimizers.SGD()
+adam = elephas_optimizers.Adam()
 for i in range(0, 200):
     # Train Spark model
     # Initialize SparkModel from Keras model and Spark context
@@ -101,7 +102,7 @@ for i in range(0, 200):
                              mode='asynchronous',
                              frequency='epoch',
                              num_workers=2,
-                             optimizer=sgd)
+                             optimizer=adam)
     spark_model.train(rdd, nb_epoch=num_epoch_in_one_step,
                       batch_size=batch_size,
                       verbose=2,
