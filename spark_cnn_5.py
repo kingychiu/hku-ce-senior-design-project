@@ -73,9 +73,9 @@ model.add(Dropout(0.2))
 model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
-model.compile(loss='categorical_crossentropy',
-              optimizer=Adam(),
-              metrics=['accuracy'])
+# model.compile(loss='categorical_crossentropy',
+#               optimizer=Adam(),
+#               metrics=['accuracy'])
 
 ## END OF MODEL ##
 
@@ -93,7 +93,6 @@ num_epoch_in_one_step = 10
 batch_size = 1000
 # Accuracy records
 stat_lines = []
-sgd = elephas_optimizers.SGD()
 adam = elephas_optimizers.Adam()
 for i in range(0, 200):
     # Train Spark model
@@ -101,9 +100,13 @@ for i in range(0, 200):
     spark_model = SparkModel(sc, model,
                              mode='asynchronous',
                              frequency='epoch',
-                             num_workers=1,
-                             optimizer=adam)
-    spark_model.train(rdd, nb_epoch=num_epoch_in_one_step,
+                             num_workers=4,
+                             optimizer=adam,
+                             master_optimizer=Adam(),
+                             master_loss='categorical_crossentropy',
+                             master_metrics=['accuracy'])
+    spark_model.train(rdd,
+                      nb_epoch=num_epoch_in_one_step,
                       batch_size=batch_size,
                       verbose=2,
                       validation_split=0.1)
