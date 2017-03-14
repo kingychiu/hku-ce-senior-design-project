@@ -39,7 +39,7 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution1D(nb_filter=128,
+model.add(Convolution1D(nb_filter=16,
                         filter_length=3,
                         border_mode="valid",
                         activation='relu',
