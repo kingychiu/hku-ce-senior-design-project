@@ -71,6 +71,7 @@ model.compile(loss='categorical_crossentropy',
 ## END OF MODEL ##
 
 start_time = datetime.datetime.now()
+print(start_time)
 history = model.fit(x_train, y_train, 128, epoch,
                     verbose=1, validation_data=(x_test, y_test))
 end_time = datetime.datetime.now()
