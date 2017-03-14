@@ -27,6 +27,7 @@ print('# Training Data', x_train.shape, y_train.shape)
 print('# Testing Data', x_test.shape, y_test.shape)
 
 # model config
+epoch = 2
 pool_size = (1, 2)
 model = Sequential()
 
@@ -55,13 +56,18 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 ## END OF MODEL ##
 
-history = model.fit(x_train, y_train, 128, 2,
+history = model.fit(x_train, y_train, 128, epoch,
                     verbose=2, validation_data=(x_test, y_test))
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 # for history in history:
 
-# FileIO.write_lines_to_file('./gpu_cnn_1.log')
 
-print(history)
+model.save('./models/gpu_cnn_1_epoch_' + str(epoch) + 'ep.h5')
+print(history.history.acc)
+print(history.history.val_acc)
+lines = []
+lines[0] = ','.join(history.history.acc)
+lines[1] = ','.join(history.history.val_acc)
+FileIO.write_lines_to_file('./gpu_cnn_1.log')
