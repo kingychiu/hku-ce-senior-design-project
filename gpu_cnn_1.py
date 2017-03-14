@@ -64,8 +64,8 @@ print('Test accuracy:', score[1])
 # for history in history:
 
 
-print(history.history.acc)
-print(history.history.val_acc)
+print(history.history['acc'])
+print(history.history['val_acc'])
 lines = []
 lines[0] = ','.join(history.history.acc)
 lines[1] = ','.join(history.history.val_acc)
