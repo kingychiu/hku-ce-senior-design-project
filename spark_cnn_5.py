@@ -104,7 +104,7 @@ sc = SparkContext(conf=conf)
 # Build RDD from numpy features and labels
 rdd = to_simple_rdd(sc, x_train, y_train)
 # Epoch Before Check Point
-num_epoch_in_one_step = 10
+num_epoch_in_one_step = 1
 batch_size = 128
 # Accuracy records
 stat_lines = []
