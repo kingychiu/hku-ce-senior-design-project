@@ -27,7 +27,7 @@ print('# Training Data', x_train.shape, y_train.shape)
 print('# Testing Data', x_test.shape, y_test.shape)
 
 # model config
-epoch = 10
+epoch = 1000
 pool_size = (1, 2)
 num_conv_block = 4
 model = Sequential()
