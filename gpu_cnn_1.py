@@ -44,7 +44,7 @@ print(model.output_shape)
 model.add(Flatten())
 print(model.output_shape)
 
-model.add(Dense(model.output_shape[1] // 2))
+model.add(Dense(model.output_shape[1]))
 model.add(Activation('relu'))
 model.add(Dropout(0.2))
 model.add(Dense(num_classes))
@@ -55,9 +55,11 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 ## END OF MODEL ##
 
-model.fit(x_train, y_train, 128, 20,
+history = model.fit(x_train, y_train, 128, 20,
           verbose=2, validation_data=(x_test, y_test))
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
+
+print(history)
