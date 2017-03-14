@@ -3,6 +3,9 @@
 This CNN run very slow on local machine. This file is used for ensure the model is correct only.
 The actual training will be done on SPARK.
 """
+import os
+
+os.environ["THEANO_FLAGS"] = "mode=FAST_RUN,device=gpu,floatX=float32"
 # numpy
 import numpy as np
 # keras
