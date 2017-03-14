@@ -39,7 +39,7 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution1D(nb_filter=16,
+model.add(Convolution1D(nb_filter=128,
                         filter_length=3,
                         border_mode="valid",
                         activation='relu',
@@ -49,7 +49,7 @@ print(model.output_shape)
 model.add(MaxPooling1D(2))
 print(model.output_shape)
 
-model.add(Convolution1D(nb_filter=32,
+model.add(Convolution1D(nb_filter=128,
                         filter_length=3,
                         border_mode="valid",
                         activation='relu',
@@ -58,14 +58,6 @@ print(model.output_shape)
 model.add(MaxPooling1D(2))
 print(model.output_shape)
 
-model.add(Convolution1D(nb_filter=64,
-                        filter_length=3,
-                        border_mode="valid",
-                        activation='relu',
-                        subsample_length=1))
-print(model.output_shape)
-model.add(MaxPooling1D(2))
-print(model.output_shape)
 
 # Fully Connected Layer
 model.add(Flatten())
@@ -119,8 +111,8 @@ for i in range(0, 200):
     print('Test accuracy:', score2[1])
     print('#############################')
     stat_lines.append(str((i + 1) * 10) + ', ' + str(score1[1]) + ', ' + str(score2[1]))
-    FileIO.write_lines_to_file('./cnn_6.log', stat_lines)
+    FileIO.write_lines_to_file('./cnn_7.log', stat_lines)
     if (i + 1) % 10 == 0 and i != 0:
-        model.save('./models/cnn_6_' + str((i + 1) * 10) + 'ep.h5')
+        model.save('./models/cnn_7_' + str((i + 1) * 10) + 'ep.h5')
 # sc.stop()
 ## END OF SPARK ##
