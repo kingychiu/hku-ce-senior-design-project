@@ -58,10 +58,10 @@ class PreProcess:
         return one_hot_tensor
 
 
-p = PreProcess('./datasets/ag_dataset_10000_each.txt')
+p = PreProcess('./datasets/ag_dataset_50000_each.txt')
 labels, tensor = p.run()
 
-with open('./datasets/ag_dataset_10000_each_one_hot.txt', 'w', encoding='utf8') as f1:
+with open('./datasets/ag_dataset_50000_each_one_hot.txt', 'w', encoding='utf8') as f1:
     document_strs = []
     for matrix in tensor:
         char_strs = []
