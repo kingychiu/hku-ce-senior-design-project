@@ -33,10 +33,10 @@ model = Sequential()
 # Convolution Layer(s)
 model.add(Convolution2D(4, 3, 1,
                         border_mode="same",
-                        # (channel, row, col)
+                        init='glorot_normal',
                         input_shape=(1, dimension, 1)))
 model.add(Activation('relu'))
-model.add(Convolution2D(4, 3, 1, border_mode='same'))
+model.add(Convolution2D(4, 3, 1, border_mode='same', init='glorot_normal', ))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
@@ -55,11 +55,13 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 ## END OF MODEL ##
 
-history = model.fit(x_train, y_train, 128, 20,
-          verbose=2, validation_data=(x_test, y_test))
+history = model.fit(x_train, y_train, 128, 2,
+                    verbose=2, validation_data=(x_test, y_test))
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
+# for history in history:
 
+# FileIO.write_lines_to_file('./gpu_cnn_1.log')
 
 print(history)
