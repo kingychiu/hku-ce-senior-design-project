@@ -1,5 +1,3 @@
-import os
-os.environ["THEANO_FLAGS"] = "mode=FAST_RUN,device=gpu,floatX=float32"
 # keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
