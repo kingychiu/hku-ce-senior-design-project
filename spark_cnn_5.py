@@ -13,6 +13,12 @@ from keras.optimizers import SGD, Adam
 # sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
+# spark, elephas
+from elephas.spark_model import SparkModel
+from elephas.utils.rdd_utils import to_simple_rdd
+from elephas import optimizers as elephas_optimizers
+from pyspark import SparkContext, SparkConf
+from keras.optimizers import SGD, Adam
 
 
 def get_data():
