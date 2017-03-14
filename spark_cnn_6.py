@@ -61,7 +61,7 @@ model.add(Activation('softmax'))
 
 ## SPARK ##
 # Create Spark context
-conf = SparkConf().setAppName('CNN_5') \
+conf = SparkConf().setAppName('CNN_6') \
     .setMaster('spark://cep16001s1:7077') \
     .set('spark.eventLog.enabled', True) \
     .set('spark.rpc.message.maxSize', 1000)
@@ -98,8 +98,8 @@ for i in range(0, 200):
     print('Test accuracy:', score2[1])
     print('#############################')
     stat_lines.append(str((i + 1) * 10) + ', ' + str(score1[1]) + ', ' + str(score2[1]))
-    FileIO.write_lines_to_file('./cnn_5.log', stat_lines)
+    FileIO.write_lines_to_file('./cnn_6.log', stat_lines)
     if (i + 1) % 10 == 0 and i != 0:
-        model.save('./models/cnn_5_' + str((i + 1) * 10) + 'ep.h5')
+        model.save('./models/cnn_6_' + str((i + 1) * 10) + 'ep.h5')
 # sc.stop()
 ## END OF SPARK ##
