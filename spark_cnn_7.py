@@ -49,6 +49,23 @@ print(model.output_shape)
 model.add(MaxPooling1D(2))
 print(model.output_shape)
 
+model.add(Convolution1D(nb_filter=32,
+                        filter_length=3,
+                        border_mode="valid",
+                        activation='relu',
+                        subsample_length=1))
+print(model.output_shape)
+model.add(MaxPooling1D(2))
+print(model.output_shape)
+
+model.add(Convolution1D(nb_filter=64,
+                        filter_length=3,
+                        border_mode="valid",
+                        activation='relu',
+                        subsample_length=1))
+print(model.output_shape)
+model.add(MaxPooling1D(2))
+print(model.output_shape)
 
 # Fully Connected Layer
 model.add(Flatten())

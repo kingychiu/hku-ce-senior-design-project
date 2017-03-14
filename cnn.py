@@ -32,7 +32,7 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution1D(nb_filter=128,
+model.add(Convolution1D(nb_filter=16,
                         filter_length=3,
                         border_mode="valid",
                         activation='relu',
@@ -41,24 +41,36 @@ model.add(Convolution1D(nb_filter=128,
 print(model.output_shape)
 model.add(MaxPooling1D(2))
 print(model.output_shape)
+
+model.add(Convolution1D(nb_filter=32,
+                        filter_length=3,
+                        border_mode="valid",
+                        activation='relu',
+                        subsample_length=1))
+print(model.output_shape)
+model.add(MaxPooling1D(2))
+print(model.output_shape)
+
+# Fully Connected Layer
+
 model.add(Flatten())
 print(model.output_shape)
-# Fully Connected Layer
+
 model.add(Dense(model.output_shape[1]))
 model.add(Activation('relu'))
 model.add(Dropout(0.25))
 model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
-model.compile(loss='categorical_crossentropy',
-              optimizer=Adam(),
-              metrics=['accuracy'])
-
-model.fit(x_train, y_train, batch_size=128, nb_epoch=1,
-          verbose=1, validation_data=(x_test, y_test))
-
-score = model.evaluate(x_train, y_train, verbose=0)
-print('Train accuracy:', score[1])
-
-score = model.evaluate(x_test, y_test, verbose=0)
-print('Test accuracy:', score[1])
+# model.compile(loss='categorical_crossentropy',
+#               optimizer=Adam(),
+#               metrics=['accuracy'])
+#
+# model.fit(x_train, y_train, batch_size=128, nb_epoch=1,
+#           verbose=1, validation_data=(x_test, y_test))
+#
+# score = model.evaluate(x_train, y_train, verbose=0)
+# print('Train accuracy:', score[1])
+#
+# score = model.evaluate(x_test, y_test, verbose=0)
+# print('Test accuracy:', score[1])
