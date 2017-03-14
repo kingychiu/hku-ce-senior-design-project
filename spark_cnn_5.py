@@ -133,7 +133,7 @@ for i in range(0, 200):
     print('Train accuracy:', score1[1])
     print('Test accuracy:', score2[1])
     print('#############################')
-    stat_lines.append(str((i + 1) * 10) + ', ' + str(score1[1]) + ', ' + str(score2[1]))
+    stat_lines.append(str((i + 1) * 1) + ', ' + str(score1[1]) + ', ' + str(score2[1]))
     FileIO.write_lines_to_file('./cnn_5.log', stat_lines)
     if (i + 1) % 10 == 0 and i != 0:
         model.save('./models/cnn_5_' + str((i + 1) * 10) + 'ep.h5')
