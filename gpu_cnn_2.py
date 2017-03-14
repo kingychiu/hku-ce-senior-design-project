@@ -10,6 +10,7 @@ from keras.optimizers import SGD, Adam
 # classes
 from preprocess import PreProcess
 from file_io import FileIO
+import datetime
 
 ## MODEL ##
 
@@ -69,14 +70,19 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 ## END OF MODEL ##
 
+start_time = datetime.datetime.now()
 history = model.fit(x_train, y_train, 128, epoch,
                     verbose=1, validation_data=(x_test, y_test))
+end_time = datetime.datetime.now()
+print(str(end_time - start_time))
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
 ## SAVE
 lines = []
+lines.append(str(end_time - start_time))
+lines.append(','.join([str(a) for a in history.history['loss']]))
 lines.append(','.join([str(a) for a in history.history['acc']]))
 lines.append(','.join([str(a) for a in history.history['val_acc']]))
 FileIO.write_lines_to_file('./gpu_cnn.log', lines)
