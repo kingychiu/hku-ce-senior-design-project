@@ -39,12 +39,17 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution1D(nb_filter=128,
+model.add(Convolution1D(nb_filter=64,
                         filter_length=3,
                         border_mode="valid",
                         activation='relu',
                         subsample_length=1,
                         input_shape=(dimension, 1)))
+model.add(Convolution1D(nb_filter=64,
+                        filter_length=3,
+                        border_mode="valid",
+                        activation='relu',
+                        subsample_length=1))
 print(model.output_shape)
 model.add(MaxPooling1D(2))
 print(model.output_shape)
@@ -54,15 +59,36 @@ model.add(Convolution1D(nb_filter=128,
                         border_mode="valid",
                         activation='relu',
                         subsample_length=1))
+model.add(Convolution1D(nb_filter=128,
+                        filter_length=3,
+                        border_mode="valid",
+                        activation='relu',
+                        subsample_length=1))
 print(model.output_shape)
 model.add(MaxPooling1D(2))
 print(model.output_shape)
 
+model.add(Convolution1D(nb_filter=256,
+                        filter_length=3,
+                        border_mode="valid",
+                        activation='relu',
+                        subsample_length=1))
+model.add(Convolution1D(nb_filter=256,
+                        filter_length=3,
+                        border_mode="valid",
+                        activation='relu',
+                        subsample_length=1))
+print(model.output_shape)
+model.add(MaxPooling1D(2))
+print(model.output_shape)
 
 # Fully Connected Layer
 model.add(Flatten())
 print(model.output_shape)
 
+model.add(Dense(model.output_shape[1]))
+model.add(Activation('relu'))
+model.add(Dropout(0.25))
 model.add(Dense(model.output_shape[1]))
 model.add(Activation('relu'))
 model.add(Dropout(0.25))
@@ -82,7 +108,7 @@ sc = SparkContext(conf=conf)
 rdd = to_simple_rdd(sc, x_train, y_train)
 # Epoch Before Check Point
 num_epoch_in_one_step = 10
-batch_size = 1000
+batch_size = 128
 # Accuracy records
 stat_lines = []
 adam = elephas_optimizers.Adam()
