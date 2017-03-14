@@ -39,13 +39,13 @@ pool_size = (1, 2)
 model = Sequential()
 
 # Convolution Layer(s)
-model.add(Convolution1D(nb_filter=64,
+model.add(Convolution1D(nb_filter=4,
                         filter_length=3,
                         border_mode="valid",
                         activation='relu',
                         subsample_length=1,
                         input_shape=(dimension, 1)))
-model.add(Convolution1D(nb_filter=64,
+model.add(Convolution1D(nb_filter=4,
                         filter_length=3,
                         border_mode="valid",
                         activation='relu',
@@ -54,12 +54,12 @@ print(model.output_shape)
 model.add(MaxPooling1D(2))
 print(model.output_shape)
 
-model.add(Convolution1D(nb_filter=128,
+model.add(Convolution1D(nb_filter=8,
                         filter_length=3,
                         border_mode="valid",
                         activation='relu',
                         subsample_length=1))
-model.add(Convolution1D(nb_filter=128,
+model.add(Convolution1D(nb_filter=8,
                         filter_length=3,
                         border_mode="valid",
                         activation='relu',
