@@ -21,7 +21,7 @@ from file_io import FileIO
 
 ## MODEL ##
 
-p = PreProcess('./datasets/ag_dataset_10000_each.txt')
+p = PreProcess('./datasets/ag_dataset_20000_each.txt')
 x_train, x_test, y_train, y_test, num_classes = p.run()
 
 # Convert class vectors to binary class matrices
