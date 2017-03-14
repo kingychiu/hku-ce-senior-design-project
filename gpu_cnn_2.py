@@ -80,4 +80,4 @@ lines = []
 lines.append(','.join([str(a) for a in history.history['acc']]))
 lines.append(','.join([str(a) for a in history.history['val_acc']]))
 FileIO.write_lines_to_file('./gpu_cnn.log', lines)
-model.save('./models/gpu_cnn_epoch_' + str(epoch) + 'ep_'+num_conv_block+'_convB.h5')
+model.save('./models/gpu_cnn_epoch_' + str(epoch) + 'ep_' + str(num_conv_block) + '_convB.h5')
