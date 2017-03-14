@@ -67,5 +67,5 @@ print('Test accuracy:', score[1])
 lines = []
 lines.append(','.join([str(a) for a in history.history['acc']]))
 lines.append(','.join([str(a) for a in history.history['val_acc']]))
-FileIO.write_lines_to_file('./gpu_cnn_1.log')
+FileIO.write_lines_to_file('./gpu_cnn_1.log', lines)
 model.save('./models/gpu_cnn_1_epoch_' + str(epoch) + 'ep.h5')
