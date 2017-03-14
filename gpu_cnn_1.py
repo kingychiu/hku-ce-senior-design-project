@@ -32,12 +32,11 @@ model = Sequential()
 
 # Convolution Layer(s)
 model.add(Convolution2D(4, 3, 1,
-                        kernel_initializer='orthogonal',
                         border_mode="same",
                         # (channel, row, col)
                         input_shape=(1, dimension, 1)))
 model.add(Activation('relu'))
-model.add(Convolution2D(4, 3, 1, border_mode='same', kernel_initializer='orthogonal', ))
+model.add(Convolution2D(4, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
@@ -61,3 +60,4 @@ model.fit(x_train, y_train, 128, 20,
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
+
