@@ -19,7 +19,7 @@ class PreProcess:
         print(sentences[0])
         sentences = [(lambda str: re.sub("[^a-zA-Z]", " ", str))(sentence) for sentence in
                      sentences]
-        sentences_in_ascii = [self.sentence_to_ascii_list_one_hot(sentence) for sentence in
+        sentences_in_ascii = [self.sentence_to_ascii_list(sentence) for sentence in
                               sentences]
         print('## First sentence in ascii codes')
         print(sentences_in_ascii[0])
@@ -36,7 +36,8 @@ class PreProcess:
         sentences = [l.split('\\C')[1].split(',')[0] for l in lines]
         print('## First sentence')
         print(sentences[0])
-        print()
+        sentences = [(lambda str: re.sub("[^a-zA-Z]", " ", str))(sentence) for sentence in
+                     sentences]
         sentences_in_ascii = [self.sentence_to_ascii_list(sentence) for sentence in sentences]
         print('## First sentence in ascii codes')
         print(sentences_in_ascii[0])
@@ -58,11 +59,8 @@ class PreProcess:
         print('# Testing Data', x_test.shape, y_test.shape)
         return x_train, x_test, y_train, y_test, len(classes)
 
-    def sentence_to_ascii_list_one_hot(self, s):
-        return [ord(char.lower()) - ord('a') for char in list(s)]
-
     def sentence_to_ascii_list(self, s):
-        return [ord(char) for char in list(s)]
+        return [ord(char.lower()) - ord('a') for char in list(s)]
 
     def train_test_split(self, x, y):
         # shuffle
