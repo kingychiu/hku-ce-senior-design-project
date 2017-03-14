@@ -63,11 +63,9 @@ print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 # for history in history:
 
-
-print(history.history['acc'])
-print(history.history['val_acc'])
+## SAVE
 lines = []
-lines[0] = ','.join(history.history.acc)
-lines[1] = ','.join(history.history.val_acc)
+lines[0] = ','.join(history.history['acc'])
+lines[1] = ','.join(history.history['val_acc'])
 FileIO.write_lines_to_file('./gpu_cnn_1.log')
 model.save('./models/gpu_cnn_1_epoch_' + str(epoch) + 'ep.h5')
