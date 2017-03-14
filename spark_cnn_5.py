@@ -109,12 +109,13 @@ batch_size = 128
 # Accuracy records
 stat_lines = []
 adam = elephas_optimizers.Adam()
+adagrad = elephas_optimizers.Adagrad()
 spark_model = SparkModel(sc, model,
                          mode='asynchronous',
                          frequency='epoch',
                          num_workers=7,
-                         optimizer=adam,
-                         master_optimizer=Adam(),
+                         optimizer=adagrad,
+                         master_optimizer=SGD(),
                          master_loss='categorical_crossentropy',
                          master_metrics=['accuracy'])
 for i in range(0, 200):
