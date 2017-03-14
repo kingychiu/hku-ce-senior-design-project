@@ -29,7 +29,7 @@ print('# Testing Data', x_test.shape, y_test.shape)
 # model config
 epoch = 1000
 pool_size = (1, 2)
-num_conv_block = 4
+num_conv_block = 3
 model = Sequential()
 # Convolution Layer(s)
 model.add(Convolution2D(2 ** 6, 3, 1,
@@ -70,7 +70,7 @@ model.compile(loss='categorical_crossentropy',
 ## END OF MODEL ##
 
 history = model.fit(x_train, y_train, 128, epoch,
-                    verbose=2, validation_data=(x_test, y_test))
+                    verbose=1, validation_data=(x_test, y_test))
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
