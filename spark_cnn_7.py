@@ -21,7 +21,7 @@ from file_io import FileIO
 
 ## MODEL ##
 
-p = PreProcess('./datasets/ag_dataset.txt')
+p = PreProcess('./datasets/ag_dataset_20000_each.txt')
 x_train, x_test, y_train, y_test, num_classes = p.run()
 
 # Convert class vectors to binary class matrices
@@ -68,20 +68,6 @@ print(model.output_shape)
 model.add(MaxPooling1D(2))
 print(model.output_shape)
 
-model.add(Convolution1D(nb_filter=256,
-                        filter_length=3,
-                        border_mode="valid",
-                        activation='relu',
-                        subsample_length=1))
-model.add(Convolution1D(nb_filter=256,
-                        filter_length=3,
-                        border_mode="valid",
-                        activation='relu',
-                        subsample_length=1))
-print(model.output_shape)
-model.add(MaxPooling1D(2))
-print(model.output_shape)
-
 # Fully Connected Layer
 model.add(Flatten())
 print(model.output_shape)
@@ -99,7 +85,7 @@ model.add(Activation('softmax'))
 
 ## SPARK ##
 # Create Spark context
-conf = SparkConf().setAppName('CNN_6') \
+conf = SparkConf().setAppName('CNN_7') \
     .setMaster('spark://cep16001s1:7077') \
     .set('spark.eventLog.enabled', True) \
     .set('spark.rpc.message.maxSize', 1000)
