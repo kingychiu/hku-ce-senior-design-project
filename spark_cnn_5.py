@@ -26,6 +26,8 @@ def get_data():
         lines = f.readlines()
         tensor = []
         labels = []
+        print(len(lines))
+
         for line in lines:
             matrix = []
             labels.append(line.split('|l|')[0])
