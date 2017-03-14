@@ -66,7 +66,7 @@ class PreProcess:
         return train_test_split(x, y, test_size=0.3, random_state=42)
 
     def fixing_dimension(self, data):
-        fix_size = 40
+        fix_size = 100
         for i in range(0, len(data)):
             if len(data[i]) >= fix_size:
                 data[i] = data[i][:fix_size]
