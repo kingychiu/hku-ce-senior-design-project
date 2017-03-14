@@ -2,68 +2,80 @@
 07-03-2017, Anthony Chiu
 """
 
+# numpy
+import numpy as np
 # keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
-
-# spark, elephas
-from elephas.spark_model import SparkModel
-from elephas.utils.rdd_utils import to_simple_rdd
-from elephas import optimizers as elephas_optimizers
-from pyspark import SparkContext, SparkConf
 from keras.optimizers import SGD, Adam
+# sklearn
+from sklearn.model_selection import train_test_split
+from sklearn.utils import shuffle
 
-# classes
-from preprocess import PreProcess
-from file_io import FileIO
 
-## MODEL ##
+def get_data():
+    with open('./datasets/ag_dataset_10000_each_one_hot.txt', 'r', encoding='utf8') as f:
+        lines = f.readlines()
+        tensor = []
+        labels = []
+        for line in lines:
+            matrix = []
+            labels.append(line.split('|l|')[0])
+            char_strs = line.split('|l|')[1].split('|c|')
+            for char_str in char_strs:
+                vector = char_str.split(',')
+                matrix.append(vector)
+            tensor.append(matrix)
 
-p = PreProcess('./datasets/ag_dataset_20000_each.txt')
-x_train, x_test, y_train, y_test, num_classes = p.run()
+        x = np.asarray(tensor)
+        classes = sorted(list(set(labels)))
+        y = np.asarray([classes.index(item) for item in labels])
+        print('Labels', classes)
+
+        # shuffle
+        x, y = shuffle(x, y, random_state=0)
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
+        f.close()
+        return x_train, x_test, y_train, y_test, len(classes)
+
+
+x_train, x_test, y_train, y_test, num_classes = get_data()
 
 # Convert class vectors to binary class matrices
 y_train = np_utils.to_categorical(y_train, num_classes)
 y_test = np_utils.to_categorical(y_test, num_classes)
 # Reshape
-dimension = x_train.shape[1]
-x_train = x_train.reshape(x_train.shape[0], 1, dimension, 1)
-x_test = x_test.reshape(x_test.shape[0], 1, dimension, 1)
+x_train = x_train.reshape(x_train.shape[0], x_test.shape[1], x_test.shape[2], 1)
+x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
 print('# Training Data', x_train.shape, y_train.shape)
 print('# Testing Data', x_test.shape, y_test.shape)
 
 # model config
 pool_size = (1, 2)
 model = Sequential()
-
+input_shape = (x_test.shape[1], x_test.shape[2], x_test.shape[3])
 # Convolution Layer(s)
-model.add(Convolution2D(16, 3, 1,
+model.add(Convolution2D(8, 3, 3,
                         border_mode="same",
-                        # (channel, row, col)
-                        input_shape=(1, dimension, 1)))
-model.add(Activation('relu'))
-model.add(Convolution2D(16, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
+                        input_shape=input_shape))
+model.add(Convolution2D(8, 3, 3,
+                        border_mode="same"))
+print(model.output_shape)
+model.add(MaxPooling2D(pool_size=(2, 2)))
 print(model.output_shape)
 
-model.add(Convolution2D(32, 3, 1, border_mode="same"))
-model.add(Activation('relu'))
-model.add(Convolution2D(32, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
+model.add(Convolution2D(16, 3, 3,
+                        border_mode="same"))
+model.add(Convolution2D(16, 3, 3,
+                        border_mode="same"))
 print(model.output_shape)
-
-model.add(Convolution2D(64, 3, 1, border_mode="same"))
-model.add(Activation('relu'))
-model.add(Convolution2D(64, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
+model.add(MaxPooling2D(pool_size=(2, 2)))
 print(model.output_shape)
 
 # Fully Connected Layer
+
 model.add(Flatten())
 print(model.output_shape)
 
@@ -72,11 +84,6 @@ model.add(Activation('relu'))
 model.add(Dropout(0.25))
 model.add(Dense(num_classes))
 model.add(Activation('softmax'))
-
-# model.compile(loss='categorical_crossentropy',
-#               optimizer=Adam(),
-#               metrics=['accuracy'])
-
 ## END OF MODEL ##
 
 ## SPARK ##
@@ -90,7 +97,7 @@ sc = SparkContext(conf=conf)
 rdd = to_simple_rdd(sc, x_train, y_train)
 # Epoch Before Check Point
 num_epoch_in_one_step = 10
-batch_size = 1000
+batch_size = 128
 # Accuracy records
 stat_lines = []
 adam = elephas_optimizers.Adam()
