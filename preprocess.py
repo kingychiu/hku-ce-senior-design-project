@@ -1,4 +1,3 @@
-
 # sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
@@ -28,41 +27,19 @@ class PreProcess:
         sentences_in_one_hot_vector = self.generate_one_hot_vector(sentences_in_ascii)
         labels = [l.split('\\C')[0] for l in lines]
         return labels, sentences_in_one_hot_vector
-        # x = np.asarray(sentences_in_ascii)
-        #
-        # print('# Whole Data Set', x.shape)
-        # print()
-
-        # # classes
-        # classes = sorted(list(set(y)))
-        # y = np.asarray([classes.index(item) for item in y])
-        # print('Labels', classes)
-        # print()
-        # x_train, x_test, y_train, y_test = self.train_test_split(x, y)
-        # print('# Training Data', x_train.shape, y_train.shape)
-        # print('# Testing Data', x_test.shape, y_test.shape)
-        # return x_train, x_test, y_train, y_test, len(classes)
 
     def sentence_to_ascii_list(self, s):
         return [ord(char.lower()) - ord('a') for char in list(s)]
 
-    def train_test_split(self, x, y):
-        # shuffle
-        x, y = shuffle(x, y, random_state=0)
-        return train_test_split(x, y, test_size=0.3, random_state=42)
-
     def fixing_dimension(self, data):
-        avg_len = 0
-        for d in data:
-            avg_len += len(d)
-        avg_len //= len(data)
+        fix_size = 40
         for i in range(0, len(data)):
-            if len(data[i]) >= avg_len:
-                data[i] = data[i][:avg_len]
+            if len(data[i]) >= fix_size:
+                data[i] = data[i][:fix_size]
             else:
-                diff = avg_len - len(data[i])
-                data[i] += (diff * [0])
-        print('Fixing all sentences to ', avg_len, ' char')
+                diff = fix_size - len(data[i])
+                data[i] += (diff * [26])
+        print('Fixing all sentences to ', fix_size, ' char')
         return data
 
     def generate_one_hot_vector(self, data):

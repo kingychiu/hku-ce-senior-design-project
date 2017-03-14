@@ -19,7 +19,8 @@ from elephas.utils.rdd_utils import to_simple_rdd
 from elephas import optimizers as elephas_optimizers
 from pyspark import SparkContext, SparkConf
 from keras.optimizers import SGD, Adam
-
+# other
+from file_io import FileIO
 
 def get_data():
     with open('./datasets/ag_dataset_10000_each_one_hot.txt', 'r', encoding='utf8') as f:
@@ -61,7 +62,6 @@ print('# Training Data', x_train.shape, y_train.shape)
 print('# Testing Data', x_test.shape, y_test.shape)
 
 # model config
-pool_size = (1, 2)
 model = Sequential()
 input_shape = (x_test.shape[1], x_test.shape[2], x_test.shape[3])
 # Convolution Layer(s)
