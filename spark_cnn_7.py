@@ -103,8 +103,8 @@ spark_model = SparkModel(sc, model,
                          mode='asynchronous',
                          frequency='epoch',
                          num_workers=7,
-                         optimizer=adagrad,
-                         master_optimizer=SGD(),
+                         optimizer=adam,
+                         master_optimizer=Adam(),
                          master_loss='categorical_crossentropy',
                          master_metrics=['accuracy'])
 for i in range(0, 200):
