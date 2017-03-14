@@ -27,13 +27,13 @@ print('# Training Data', x_train.shape, y_train.shape)
 print('# Testing Data', x_test.shape, y_test.shape)
 
 # model config
+epoch = 10
 pool_size = (1, 2)
+num_conv_block = 3
 model = Sequential()
-
 # Convolution Layer(s)
 model.add(Convolution2D(32, 3, 1,
                         border_mode="same",
-                        # (channel, row, col)
                         input_shape=(1, dimension, 1)))
 model.add(Activation('relu'))
 model.add(Convolution2D(32, 3, 1, border_mode='same'))
@@ -41,19 +41,15 @@ model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
 
-model.add(Convolution2D(64, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(Convolution2D(64, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
-print(model.output_shape)
-
-model.add(Convolution2D(128, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(Convolution2D(128, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
-print(model.output_shape)
+for i in range(num_conv_block - 1):
+    num_filters = 64 * (i + 1)
+    print(num_filters)
+    model.add(Convolution2D(num_filters, 3, 1, border_mode='same'))
+    model.add(Activation('relu'))
+    model.add(Convolution2D(num_filters, 3, 1, border_mode='same'))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=pool_size))
+    print(model.output_shape)
 
 # Fully Connected Layer
 model.add(Flatten())
@@ -73,8 +69,15 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 ## END OF MODEL ##
 
-model.fit(x_train, y_train, 128, 20,
-          verbose=2, validation_data=(x_test, y_test))
+history = model.fit(x_train, y_train, 128, epoch,
+                    verbose=2, validation_data=(x_test, y_test))
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
+
+## SAVE
+lines = []
+lines.append(','.join([str(a) for a in history.history['acc']]))
+lines.append(','.join([str(a) for a in history.history['val_acc']]))
+FileIO.write_lines_to_file('./gpu_cnn.log', lines)
+model.save('./models/gpu_cnn_epoch_' + str(epoch) + 'ep_'+num_conv_block+'_convB.h5')
