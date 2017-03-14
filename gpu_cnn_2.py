@@ -5,7 +5,7 @@ from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
 
 # spark, elephas
-from keras.optimizers import SGD
+from keras.optimizers import SGD, Adam
 
 # classes
 from preprocess import PreProcess
@@ -65,7 +65,7 @@ model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',
-              optimizer=SGD(),
+              optimizer=Adam(),
               metrics=['accuracy'])
 ## END OF MODEL ##
 
