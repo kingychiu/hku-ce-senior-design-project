@@ -47,7 +47,6 @@ model.add(Activation('relu'))
 model.add(Convolution2D(16, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
-model.add(Dropout(0.25))
 print(model.output_shape)
 
 model.add(Convolution2D(32, 3, 1, border_mode="same"))
@@ -55,7 +54,6 @@ model.add(Activation('relu'))
 model.add(Convolution2D(32, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
-model.add(Dropout(0.25))
 print(model.output_shape)
 
 model.add(Convolution2D(64, 3, 1, border_mode="same"))
@@ -63,7 +61,6 @@ model.add(Activation('relu'))
 model.add(Convolution2D(64, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
-model.add(Dropout(0.25))
 print(model.output_shape)
 
 # Fully Connected Layer
