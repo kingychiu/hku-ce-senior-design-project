@@ -39,7 +39,7 @@ model.add(Convolution2D(2 ** 6, 3, 1,
 model.add(Activation('relu'))
 model.add(Convolution2D(2 ** 6, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
+model.add(Convolution2D(2 ** 6, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
