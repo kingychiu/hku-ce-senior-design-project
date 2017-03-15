@@ -3,7 +3,7 @@ import numpy as np
 # keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
-from keras.layers import Convolution2D, MaxPooling2D
+from keras.layers import Convolution1D, MaxPooling1D
 from keras.utils import np_utils
 from keras.optimizers import SGD, Adam
 # sklearn
@@ -50,8 +50,8 @@ x_train, x_test, y_train, y_test, num_classes = get_data()
 y_train = np_utils.to_categorical(y_train, num_classes)
 y_test = np_utils.to_categorical(y_test, num_classes)
 # Reshape
-x_train = x_train.reshape(x_train.shape[0], x_test.shape[1], x_test.shape[2], 1)
-x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
+x_train = x_train.reshape(x_train.shape[0], x_test.shape[1], x_test.shape[2])
+x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2])
 print('# Training Data', x_train.shape, y_train.shape)
 print('# Testing Data', x_test.shape, y_test.shape)
 
@@ -62,23 +62,23 @@ pool_size = (2, 2)
 num_conv_block = 3
 model = Sequential()
 # Convolution Layer(s)
-model.add(Convolution2D(2 ** 6, 3, 3,
+model.add(Convolution1D(2 ** 6, 3, 3,
                         border_mode="same",
                         input_shape=input_shape))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 6, 3, 3, border_mode='same'))
+model.add(Convolution1D(2 ** 6, 3, border_mode='same'))
 model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=pool_size))
+model.add(MaxPooling1D(pool_size=pool_size))
 print(model.output_shape)
 
 for i in range(num_conv_block - 1):
     num_filters = 2 ** (7 + i)
     print(num_filters)
-    model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
+    model.add(Convolution1D(num_filters, 3, border_mode='same'))
     model.add(Activation('relu'))
-    model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
+    model.add(Convolution1D(num_filters, 3, border_mode='same'))
     model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(MaxPooling1D(pool_size=pool_size))
     print(model.output_shape)
 
 # Fully Connected Layer
@@ -95,7 +95,7 @@ model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',
-              optimizer=Adam(),
+              optimizer=SGD(),
               metrics=['accuracy'])
 ## END OF MODEL ##
 loss = []
