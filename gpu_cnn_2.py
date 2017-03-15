@@ -28,16 +28,16 @@ print('# Training Data', x_train.shape, y_train.shape)
 print('# Testing Data', x_test.shape, y_test.shape)
 
 # model config
-epoch_step = 1
+epoch_step = 10
 pool_size = (1, 2)
-num_conv_block = 1
+num_conv_block = 3
 model = Sequential()
 # Convolution Layer(s)
-model.add(Convolution2D(2 ** 1, 3, 1,
+model.add(Convolution2D(2 ** 6, 3, 1,
                         border_mode="same",
                         input_shape=(1, dimension, 1)))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 1, 3, 1, border_mode='same'))
+model.add(Convolution2D(2 ** 6, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
@@ -74,7 +74,6 @@ acc = []
 val_acc = []
 start_time = datetime.datetime.now()
 for i in range(0, 20):
-    print(start_time)
     history = model.fit(x_train, y_train, 128, epoch_step,
                         verbose=1, validation_data=(x_test, y_test))
     end_time = datetime.datetime.now()
