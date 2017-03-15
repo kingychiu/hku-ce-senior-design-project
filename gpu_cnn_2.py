@@ -28,16 +28,16 @@ print('# Training Data', x_train.shape, y_train.shape)
 print('# Testing Data', x_test.shape, y_test.shape)
 
 # model config
-epoch_step = 10
+epoch_step = 1
 pool_size = (1, 2)
 num_conv_block = 1
 model = Sequential()
 # Convolution Layer(s)
-model.add(Convolution2D(2 ** 1, 3, 1,
+model.add(Convolution2D(2 ** 6, 3, 1,
                         border_mode="same",
                         input_shape=(1, dimension, 1)))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 1, 3, 1, border_mode='same'))
+model.add(Convolution2D(2 ** 6, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
@@ -80,7 +80,7 @@ for i in range(0, 20):
     score = model.evaluate(x_test, y_test, verbose=0)
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
-    print(history.history['loss'].length)
+    print(len(history.history['loss']))
     ## SAVE
     lines = []
     lines.append(str(end_time - start_time))
