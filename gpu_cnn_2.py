@@ -30,7 +30,7 @@ print('# Testing Data', x_test.shape, y_test.shape)
 # model config
 epoch_step = 10
 pool_size = (1, 2)
-num_conv_block = 3
+num_conv_block = 4
 model = Sequential()
 # Convolution Layer(s)
 model.add(Convolution2D(2 ** 6, 3, 1,
@@ -56,10 +56,10 @@ for i in range(num_conv_block - 1):
 model.add(Flatten())
 print(model.output_shape)
 
-model.add(Dense(model.output_shape[1]))
+model.add(Dense(model.output_shape[1] // 2))
 model.add(Activation('relu'))
 model.add(Dropout(0.25))
-model.add(Dense(model.output_shape[1]))
+model.add(Dense(model.output_shape[1] // 2))
 model.add(Activation('relu'))
 model.add(Dropout(0.25))
 model.add(Dense(num_classes))
