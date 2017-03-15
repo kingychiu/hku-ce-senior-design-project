@@ -1,9 +1,9 @@
 from preprocess import PreProcess
 
-p = PreProcess('./datasets/ag_dataset.txt')
+p = PreProcess('./datasets/ag_dataset_20000_each.txt')
 labels, tensor = p.run_one_hot()
 
-with open('./datasets/ag_dataset_one_hot.txt', 'w', encoding='utf8') as f1:
+with open('./datasets/ag_dataset_20000_each_one_hot.txt', 'w', encoding='utf8') as f1:
     document_strs = []
     for matrix in tensor:
         char_strs = []
