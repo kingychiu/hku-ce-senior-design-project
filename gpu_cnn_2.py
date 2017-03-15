@@ -33,11 +33,11 @@ pool_size = (1, 2)
 num_conv_block = 1
 model = Sequential()
 # Convolution Layer(s)
-model.add(Convolution2D(2 ** 6, 3, 1,
+model.add(Convolution2D(2 ** 1, 3, 1,
                         border_mode="same",
                         input_shape=(1, dimension, 1)))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 6, 3, 1, border_mode='same'))
+model.add(Convolution2D(2 ** 1, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
