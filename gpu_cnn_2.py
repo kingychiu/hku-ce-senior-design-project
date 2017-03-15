@@ -28,9 +28,9 @@ print('# Training Data', x_train.shape, y_train.shape)
 print('# Testing Data', x_test.shape, y_test.shape)
 
 # model config
-epoch = 1000
+epoch_step = 10
 pool_size = (1, 2)
-num_conv_block = 3
+num_conv_block = 1
 model = Sequential()
 # Convolution Layer(s)
 model.add(Convolution2D(2 ** 6, 3, 1,
@@ -71,20 +71,23 @@ model.compile(loss='categorical_crossentropy',
 ## END OF MODEL ##
 
 start_time = datetime.datetime.now()
-print(start_time)
-history = model.fit(x_train, y_train, 128, epoch,
-                    verbose=1, validation_data=(x_test, y_test))
-end_time = datetime.datetime.now()
-print(str(end_time - start_time))
-score = model.evaluate(x_test, y_test, verbose=0)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
-
-## SAVE
-lines = []
-lines.append(str(end_time - start_time))
-lines.append(','.join([str(a) for a in history.history['loss']]))
-lines.append(','.join([str(a) for a in history.history['acc']]))
-lines.append(','.join([str(a) for a in history.history['val_acc']]))
-FileIO.write_lines_to_file('./gpu_cnn.log', lines)
-model.save('./models/gpu_cnn_epoch_' + str(epoch) + 'ep_' + str(num_conv_block) + '_convB.h5')
+for i in range(0, 20):
+    print(start_time)
+    history = model.fit(x_train, y_train, 128, epoch_step,
+                        verbose=1, validation_data=(x_test, y_test))
+    end_time = datetime.datetime.now()
+    print(str(end_time - start_time))
+    score = model.evaluate(x_test, y_test, verbose=0)
+    print('Test loss:', score[0])
+    print('Test accuracy:', score[1])
+    print(history.history['loss'].length)
+    ## SAVE
+    lines = []
+    lines.append(str(end_time - start_time))
+    lines.append(','.join([str(a) for a in history.history['loss']]))
+    lines.append(','.join([str(a) for a in history.history['acc']]))
+    lines.append(','.join([str(a) for a in history.history['val_acc']]))
+    FileIO.write_lines_to_file('./gpu_cnn.log', lines)
+    model.save(
+        './models/gpu_cnn_epoch_' + str((i + 1) * epoch_step) + 'ep_' + str(
+            num_conv_block) + '_convB.h5')
