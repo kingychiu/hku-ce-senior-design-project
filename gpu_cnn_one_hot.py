@@ -66,12 +66,16 @@ model.add(Convolution1D(2 ** 6, 3,
                         border_mode="same",
                         input_shape=input_shape))
 model.add(Activation('relu'))
+model.add(Convolution1D(2 ** 6, 3, border_mode='same'))
+model.add(Activation('relu'))
 print(model.output_shape)
 model.add(MaxPooling1D(2))
 print(model.output_shape)
 for i in range(num_conv_block - 1):
     num_filters = 2 ** (7 + i)
     print(num_filters)
+    model.add(Convolution1D(num_filters, 3, border_mode='same'))
+    model.add(Activation('relu'))
     model.add(Convolution1D(num_filters, 3, border_mode='same'))
     model.add(Activation('relu'))
     model.add(MaxPooling1D(2))
