@@ -1,6 +1,6 @@
 from preprocess import PreProcess
 
-p = PreProcess('./datasets/ag_dataset_20000_each.txt')
+p = PreProcess('./datasets/ag_dataset_10000_each.txt')
 labels, tensor = p.run_one_hot()
 
 with open('./datasets/ag_dataset_10000_each_one_hot.txt', 'w', encoding='utf8') as f1:

@@ -28,7 +28,7 @@ def get_data():
             labels.append(line.split('|l|')[0])
             char_strs = line.split('|l|')[1].split('|c|')
             for char_str in char_strs:
-                vector = char_str.split(',')
+                vector = char_str.split(',')[:50]
                 matrix.append(vector)
             tensor.append(matrix)
 
