@@ -69,7 +69,9 @@ model.compile(loss='categorical_crossentropy',
               optimizer=Adam(),
               metrics=['accuracy'])
 ## END OF MODEL ##
-
+loss = []
+acc = []
+val_acc = []
 start_time = datetime.datetime.now()
 for i in range(0, 20):
     print(start_time)
@@ -80,13 +82,16 @@ for i in range(0, 20):
     score = model.evaluate(x_test, y_test, verbose=0)
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
-    print(len(history.history['loss']))
     ## SAVE
+    loss = loss + history.history['loss']
+    acc = acc + history.history['acc']
+    val_acc = val_acc + history.history['val_acc']
+    print(len(loss))
     lines = []
     lines.append(str(end_time - start_time))
-    lines.append(','.join([str(a) for a in history.history['loss']]))
-    lines.append(','.join([str(a) for a in history.history['acc']]))
-    lines.append(','.join([str(a) for a in history.history['val_acc']]))
+    lines.append(','.join([str(a) for a in loss]))
+    lines.append(','.join([str(a) for a in acc]))
+    lines.append(','.join([str(a) for a in val_acc]))
     FileIO.write_lines_to_file('./gpu_cnn_' + str(num_conv_block) + '_convB.log', lines)
     model.save(
         './models/gpu_cnn_epoch_' + str((i + 1) * epoch_step) + 'ep_' + str(
