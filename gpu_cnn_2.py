@@ -87,7 +87,7 @@ for i in range(0, 20):
     lines.append(','.join([str(a) for a in history.history['loss']]))
     lines.append(','.join([str(a) for a in history.history['acc']]))
     lines.append(','.join([str(a) for a in history.history['val_acc']]))
-    FileIO.write_lines_to_file('./gpu_cnn.log', lines)
+    FileIO.write_lines_to_file('./gpu_cnn_' + num_conv_block + '_convB.log', lines)
     model.save(
         './models/gpu_cnn_epoch_' + str((i + 1) * epoch_step) + 'ep_' + str(
             num_conv_block) + '_convB.h5')
