@@ -21,7 +21,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_20000_each_one_hot.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_10000_each_one_hot.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -63,7 +63,7 @@ print('# Testing Data', x_test.shape, y_test.shape)
 input_shape = (x_test.shape[1], x_test.shape[2], x_test.shape[3])
 epoch_step = 10
 pool_size = (2, 2)
-num_conv_block = 4
+num_conv_block = 3
 model = Sequential()
 # Convolution Layer(s)
 model.add(Convolution2D(2 ** 6, 3, 3,
@@ -124,7 +124,7 @@ for i in range(0, 20):
     lines.append(','.join([str(a) for a in loss]))
     lines.append(','.join([str(a) for a in acc]))
     lines.append(','.join([str(a) for a in val_acc]))
-    FileIO.write_lines_to_file('./gpu_cnn_' + str(num_conv_block) + '_convB.log', lines)
+    FileIO.write_lines_to_file('./gpu_one_hot_cnn_' + str(num_conv_block) + '_convB.log', lines)
     model.save(
-        './models/gpu_cnn_epoch_' + str((i + 1) * epoch_step) + 'ep_' + str(
+        './models/gpu_one_hot_cnn_epoch_' + str((i + 1) * epoch_step) + 'ep_' + str(
             num_conv_block) + '_convB.h5')
