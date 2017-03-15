@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_10000_each_one_hot.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_20000_each_one_hot.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
