@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_10000_look_up.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_look_up.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -61,8 +61,7 @@ print('# Testing Data', x_test.shape, y_test.shape)
 # model config
 input_shape = (x_test.shape[1], x_test.shape[2], x_test.shape[3])
 epoch_step = 10
-num_conv_block = 2
-model = Sequential()
+num_conv_block = 2; model = Sequential()
 # Convolution Layer(s)
 print(input_shape)
 model.add(Convolution2D(2 ** 6, 3, 3,
