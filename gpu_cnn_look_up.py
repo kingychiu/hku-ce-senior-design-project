@@ -121,8 +121,8 @@ for i in range(0, 100):
     lines.append(','.join([str(a) for a in loss]))
     lines.append(','.join([str(a) for a in acc]))
     lines.append(','.join([str(a) for a in val_acc]))
-    FileIO.write_lines_to_file('./gpu_look_up_cnn_' + str(num_conv_block) + '_convB_6_layers.log',
+    FileIO.write_lines_to_file('./gpu_look_up_cnn_' + str(num_conv_block) + '_convB_4_layers.log',
                                lines)
     model.save(
         './models/gpu_look_up_cnn_epoch_' + str((i + 1) * epoch_step) + 'ep_' + str(
-            num_conv_block) + '_convB_6_layers.h5')
+            num_conv_block) + '_convB_4_layers.h5')
