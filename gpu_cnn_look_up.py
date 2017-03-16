@@ -90,10 +90,8 @@ print(model.output_shape)
 model.add(Flatten())
 print(model.output_shape)
 
-model.add(Dense(model.output_shape[1] // 2))
-model.add(Activation('relu'))
-model.add(Dropout(0.25))
-model.add(Dense(model.output_shape[1] // 2))
+n = model.output_shape[1] // 2
+model.add(Dense(n))
 model.add(Activation('relu'))
 model.add(Dropout(0.25))
 model.add(Dense(num_classes))
