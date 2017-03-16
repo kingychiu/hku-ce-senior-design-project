@@ -65,18 +65,18 @@ num_conv_block = 4
 model = Sequential()
 # Convolution Layer(s)
 print(input_shape)
-model.add(Convolution2D(2 ** 5, 3, 3,
+model.add(Convolution2D(2 ** 6, 3, 3,
                         border_mode="same",
                         input_shape=input_shape))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 5, 3, 3, border_mode='same'))
+model.add(Convolution2D(2 ** 6, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 print(model.output_shape)
 model.add(MaxPooling2D(pool_size=(2, 1)))
 print(model.output_shape)
 
 for i in range(num_conv_block - 1):
-    num_filters = 2 ** (6 + i)
+    num_filters = 2 ** (7 + i)
     print(num_filters)
     model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
     model.add(Activation('relu'))
@@ -106,7 +106,7 @@ acc = []
 val_acc = []
 start_time = datetime.datetime.now()
 for i in range(0, 100):
-    history = model.fit(x_train, y_train, 128, epoch_step,
+    history = model.fit(x_train, y_train, 10, epoch_step,
                         verbose=1, validation_data=(x_test, y_test))
     end_time = datetime.datetime.now()
     print(str(end_time - start_time))
