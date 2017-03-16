@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_20000_look_up.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_look_up.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -107,7 +107,7 @@ acc = []
 val_acc = []
 start_time = datetime.datetime.now()
 for i in range(0, 20):
-    history = model.fit(x_train, y_train, 128, epoch_step,
+    history = model.fit(x_train, y_train, 64, epoch_step,
                         verbose=1, validation_data=(x_test, y_test))
 end_time = datetime.datetime.now()
 print(str(end_time - start_time))
