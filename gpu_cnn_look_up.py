@@ -70,6 +70,8 @@ model.add(Convolution2D(2 ** 6, 3, 3,
 model.add(Activation('relu'))
 model.add(Convolution2D(2 ** 6, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
+model.add(Convolution2D(2 ** 6, 3, 3, border_mode='same'))
+model.add(Activation('relu'))
 print(model.output_shape)
 model.add(MaxPooling2D(pool_size=(2, 2)))
 print(model.output_shape)
@@ -77,6 +79,8 @@ print(model.output_shape)
 for i in range(num_conv_block - 1):
     num_filters = 2 ** (7 + i)
     print(num_filters)
+    model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
+    model.add(Activation('relu'))
     model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
     model.add(Activation('relu'))
     model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
@@ -106,23 +110,23 @@ start_time = datetime.datetime.now()
 for i in range(0, 100):
     history = model.fit(x_train, y_train, 128, epoch_step,
                         verbose=1, validation_data=(x_test, y_test))
-end_time = datetime.datetime.now()
-print(str(end_time - start_time))
-score = model.evaluate(x_test, y_test, verbose=0)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
-## SAVE
-loss = loss + history.history['loss']
-acc = acc + history.history['acc']
-val_acc = val_acc + history.history['val_acc']
-print(len(loss))
-lines = []
-lines.append(str(end_time - start_time))
-lines.append(','.join([str(a) for a in loss]))
-lines.append(','.join([str(a) for a in acc]))
-lines.append(','.join([str(a) for a in val_acc]))
-FileIO.write_lines_to_file('./gpu_look_up_cnn_' + str(num_conv_block) + '_convB_6_layers.log',
-                           lines)
-model.save(
-    './models/gpu_look_up_cnn_epoch_' + str((i + 1) * epoch_step) + 'ep_' + str(
-        num_conv_block) + '_convB_6_layers.h5')
+    end_time = datetime.datetime.now()
+    print(str(end_time - start_time))
+    score = model.evaluate(x_test, y_test, verbose=0)
+    print('Test loss:', score[0])
+    print('Test accuracy:', score[1])
+    ## SAVE
+    loss = loss + history.history['loss']
+    acc = acc + history.history['acc']
+    val_acc = val_acc + history.history['val_acc']
+    print(len(loss))
+    lines = []
+    lines.append(str(end_time - start_time))
+    lines.append(','.join([str(a) for a in loss]))
+    lines.append(','.join([str(a) for a in acc]))
+    lines.append(','.join([str(a) for a in val_acc]))
+    FileIO.write_lines_to_file('./gpu_look_up_cnn_' + str(num_conv_block) + '_convB_6_layers.log',
+                               lines)
+    model.save(
+        './models/gpu_look_up_cnn_epoch_' + str((i + 1) * epoch_step) + 'ep_' + str(
+            num_conv_block) + '_convB_6_layers.h5')
