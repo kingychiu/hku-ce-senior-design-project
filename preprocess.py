@@ -11,7 +11,7 @@ class PreProcess:
     def __init__(self, file_path):
         self.file_path = file_path
 
-    def run_one_hot(self):
+    def run_look_up(self):
         lines = FileIO.read_file_to_lines(self.file_path)
         # spiting labels and sentences
         sentences = [l.split('\\C')[1].split(',')[0] for l in lines]
@@ -19,13 +19,14 @@ class PreProcess:
         print(sentences[0])
         sentences = [(lambda str: re.sub("[^a-zA-Z]", " ", str))(sentence) for sentence in
                      sentences]
-        sentences_in_ascii = [self.sentence_to_ascii_list_one_hot(sentence) for sentence in sentences]
+        sentences_in_ascii = [self.sentence_to_ascii_list_look_up(sentence) for sentence in
+                              sentences]
         print('## First sentence in ascii codes')
         print(sentences_in_ascii[0])
         print()
 
         sentences_in_ascii = self.fixing_dimension(sentences_in_ascii)
-        sentences_in_one_hot_vector = self.generate_one_hot_vector(sentences_in_ascii)
+        sentences_in_one_hot_vector = self.generate_look_up_vector(sentences_in_ascii)
         labels = [l.split('\\C')[0] for l in lines]
         return labels, sentences_in_one_hot_vector
 
@@ -57,10 +58,12 @@ class PreProcess:
         print('# Testing Data', x_test.shape, y_test.shape)
         return x_train, x_test, y_train, y_test, len(classes)
 
-    def sentence_to_ascii_list_one_hot(self, s):
+    def sentence_to_ascii_list_look_up(self, s):
         return [ord(char.lower()) - ord('a') for char in list(s)]
+
     def sentence_to_ascii_list(self, s):
         return [ord(char) for char in list(s)]
+
     def train_test_split(self, x, y):
         # shuffle
         x, y = shuffle(x, y, random_state=0)
@@ -77,19 +80,16 @@ class PreProcess:
         print('Fixing all sentences to ', fix_size, ' char')
         return data
 
-    def generate_one_hot_vector(self, data):
+    def generate_look_up_vector(self, data):
         # create one hot vector
-        one_hot_tensor = []
+        look_up_tensor = []
         for d in data:
-            one_hot_matrix = []
+            look_up_matrix = []
             for char in d:
-                one_hot_vector = ['0'] * 27
                 if char >= 0:
-                    one_hot_vector[char] = '1'
+                    binary_look_up = '{0:05b}'.format(char)
                 else:
-                    one_hot_vector[26] = '1'
-                one_hot_matrix.append(one_hot_vector)
-            one_hot_tensor.append(one_hot_matrix)
-        return one_hot_tensor
-
-
+                    binary_look_up = '{0:05b}'.format(27)
+                look_up_matrix.append(binary_look_up)
+            look_up_tensor.append(look_up_matrix)
+        return look_up_tensor
