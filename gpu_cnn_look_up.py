@@ -104,7 +104,7 @@ loss = []
 acc = []
 val_acc = []
 start_time = datetime.datetime.now()
-for i in range(0, 20):
+for i in range(0, 100):
     history = model.fit(x_train, y_train, 128, epoch_step,
                         verbose=1, validation_data=(x_test, y_test))
 end_time = datetime.datetime.now()
