@@ -72,7 +72,7 @@ model.add(Activation('relu'))
 model.add(Convolution2D(2 ** 6, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 print(model.output_shape)
-model.add(MaxPooling2D((2, 2)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
 print(model.output_shape)
 
 for i in range(num_conv_block - 1):
@@ -82,7 +82,7 @@ model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
-model.add(MaxPooling2D((2, 2)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
 print(model.output_shape)
 
 # Fully Connected Layer
