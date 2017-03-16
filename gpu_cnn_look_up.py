@@ -66,11 +66,10 @@ model = Sequential()
 # Convolution Layer(s)
 print(input_shape)
 model.add(Convolution2D(2 ** 6, 3, 3,
-                        init="glorot_normal",
                         border_mode="same",
                         input_shape=input_shape))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 6, 3, 3, init="glorot_normal", border_mode='same'))
+model.add(Convolution2D(2 ** 6, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 print(model.output_shape)
 model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -79,9 +78,9 @@ print(model.output_shape)
 for i in range(num_conv_block - 1):
     num_filters = 2 ** (7 + i)
 print(num_filters)
-model.add(Convolution2D(num_filters, 3, 3, init="glorot_normal", border_mode='same'))
+model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
-model.add(Convolution2D(num_filters, 3, 3, init="glorot_normal", border_mode='same'))
+model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 print(model.output_shape)
@@ -98,7 +97,7 @@ model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 model.summary()
 model.compile(loss='categorical_crossentropy',
-              optimizer=Adam(),
+              optimizer=SGD(),
               metrics=['accuracy'])
 ## END OF MODEL ##
 loss = []
