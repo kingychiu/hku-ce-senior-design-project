@@ -81,7 +81,7 @@ model.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 print(model.output_shape)
-
+model.add(Dropout(0.25))
 # Fully Connected Layer
 model.add(Flatten())
 print(model.output_shape)
@@ -89,7 +89,7 @@ print(model.output_shape)
 n = model.output_shape[1] // 2
 model.add(Dense(n))
 model.add(Activation('relu'))
-model.add(Dropout(0.25))
+model.add(Dropout(0.5))
 model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 model.summary()
