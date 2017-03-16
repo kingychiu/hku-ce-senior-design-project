@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_10000_look_up.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_look_up.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -97,7 +97,7 @@ model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 model.summary()
 model.compile(loss='categorical_crossentropy',
-              optimizer=SGD(),
+              optimizer=Adam(),
               metrics=['accuracy'])
 ## END OF MODEL ##
 loss = []
