@@ -39,16 +39,12 @@ model.add(Convolution2D(2 ** 7, 3, 1,
 model.add(Activation('relu'))
 model.add(Convolution2D(2 ** 7, 3, 1, border_mode='same'))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 7, 3, 1, border_mode='same'))
-model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=pool_size))
 print(model.output_shape)
 
 for i in range(num_conv_block - 1):
     num_filters = 2 ** (8 + i)
     print(num_filters)
-    model.add(Convolution2D(num_filters, 3, 1, border_mode='same'))
-    model.add(Activation('relu'))
     model.add(Convolution2D(num_filters, 3, 1, border_mode='same'))
     model.add(Activation('relu'))
     model.add(Convolution2D(num_filters, 3, 1, border_mode='same'))
@@ -95,7 +91,7 @@ for i in range(0, 20):
     lines.append(','.join([str(a) for a in loss]))
     lines.append(','.join([str(a) for a in acc]))
     lines.append(','.join([str(a) for a in val_acc]))
-    FileIO.write_lines_to_file('./gpu_cnn_' + str(num_conv_block) + '_convB_9_layers.log', lines)
+    FileIO.write_lines_to_file('./gpu_cnn_' + str(num_conv_block) + '_convB_6_layers.log', lines)
     model.save(
         './models/gpu_cnn_epoch_' + str((i + 1) * epoch_step) + 'ep_' + str(
-            num_conv_block) + '_convB.h5')
+            num_conv_block) + '_convB_6_layers.h5')
