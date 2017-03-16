@@ -61,7 +61,7 @@ print('# Testing Data', x_test.shape, y_test.shape)
 # model config
 input_shape = (x_test.shape[1], x_test.shape[2], x_test.shape[3])
 epoch_step = 10
-num_conv_block = 4
+num_conv_block = 3
 model = Sequential()
 # Convolution Layer(s)
 print(input_shape)
@@ -72,7 +72,7 @@ model.add(Activation('relu'))
 model.add(Convolution2D(2 ** 6, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 print(model.output_shape)
-model.add(MaxPooling2D(pool_size=(2, 1)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
 print(model.output_shape)
 
 for i in range(num_conv_block - 1):
