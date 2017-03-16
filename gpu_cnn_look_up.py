@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_look_up.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_10000_look_up.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -77,13 +77,13 @@ print(model.output_shape)
 
 for i in range(num_conv_block - 1):
     num_filters = 2 ** (7 + i)
-print(num_filters)
-model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
-model.add(Activation('relu'))
-model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-print(model.output_shape)
+    print(num_filters)
+    model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
+    model.add(Activation('relu'))
+    model.add(Convolution2D(num_filters, 3, 3, border_mode='same'))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    print(model.output_shape)
 
 # Fully Connected Layer
 model.add(Flatten())
