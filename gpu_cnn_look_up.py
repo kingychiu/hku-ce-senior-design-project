@@ -61,7 +61,7 @@ print('# Testing Data', x_test.shape, y_test.shape)
 # model config
 input_shape = (x_test.shape[1], x_test.shape[2], x_test.shape[3])
 epoch_step = 10
-num_conv_block = 5
+num_conv_block = 4
 model = Sequential()
 # Convolution Layer(s)
 print(input_shape)
