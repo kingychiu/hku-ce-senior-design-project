@@ -82,13 +82,6 @@ model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 print(model.output_shape)
 
-model.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
-model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
-model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 1)))
-print(model.output_shape)
-
 # Fully Connected Layer
 model.add(Flatten())
 print(model.output_shape)
