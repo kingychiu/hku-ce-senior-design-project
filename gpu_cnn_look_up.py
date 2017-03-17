@@ -5,7 +5,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
-from keras.optimizers import SGD, Adam
+from keras.optimizers import SGD, Adam, Adadelta
 # sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_20000_look_up.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_20000_6bit_look_up.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -76,7 +76,6 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 print(model.output_shape)
 model.add(Dropout(0.25))
 
-
 model.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 model.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
@@ -97,7 +96,7 @@ model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 model.summary()
 model.compile(loss='categorical_crossentropy',
-              optimizer=SGD(lr=0.01, momentum=0.5, decay=0.0, nesterov=True),
+              optimizer=Adam(),
               metrics=['accuracy'])
 ## END OF MODEL ##
 loss = []

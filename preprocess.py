@@ -6,6 +6,8 @@ from file_io import FileIO
 import re
 import numpy as np
 
+ascii_map = 'abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’" '
+
 
 class PreProcess:
     def __init__(self, file_path):
@@ -17,8 +19,7 @@ class PreProcess:
         sentences = [l.split('\\C')[1].split(',')[0] for l in lines]
         print('## First sentence')
         print(sentences[0])
-        sentences = [(lambda str: re.sub("[^a-zA-Z]", " ", str))(sentence) for sentence in
-                     sentences]
+
         sentences_in_ascii = [self.sentence_to_ascii_list_look_up(sentence) for sentence in
                               sentences]
         print('## First sentence in ascii codes')
@@ -59,10 +60,16 @@ class PreProcess:
         return x_train, x_test, y_train, y_test, len(classes)
 
     def sentence_to_ascii_list_look_up(self, s):
-        return [ord(char.lower()) - ord('a') for char in list(s)]
+        return [self.char2lookup(char) for char in list(s)]
 
     def sentence_to_ascii_list(self, s):
         return [ord(char) for char in list(s)]
+
+    def char2lookup(self, char):
+        if char in ascii_map:
+            return ascii_map.index(char)
+        else:
+            return len(ascii_map)
 
     def train_test_split(self, x, y):
         # shuffle
@@ -86,10 +93,7 @@ class PreProcess:
         for d in data:
             look_up_matrix = []
             for char in d:
-                if char >= 0:
-                    binary_look_up = '{0:05b}'.format(char)
-                else:
-                    binary_look_up = '{0:05b}'.format(27)
+                binary_look_up = '{0:06b}'.format(char)
                 look_up_matrix.append(binary_look_up)
             look_up_tensor.append(look_up_matrix)
         return look_up_tensor
