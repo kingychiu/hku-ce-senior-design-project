@@ -20,10 +20,10 @@ for i in range(0, len(acc)):
     if val_acc[i] > val_acc[max_acc_idx]:
         max_acc_idx = i
 
-plt.annotate(str(val_acc[min_diff_idx]), xy=(min_diff_idx, val_acc[min_diff_idx]),
-             xytext=(min_diff_idx + 2, val_acc[min_diff_idx] - 0.1),
-             arrowprops=dict(facecolor='black', shrink=0.05),
-             )
+# plt.annotate(str(val_acc[min_diff_idx]), xy=(min_diff_idx, val_acc[min_diff_idx]),
+#              xytext=(min_diff_idx + 2, val_acc[min_diff_idx] - 0.1),
+#              arrowprops=dict(facecolor='black', shrink=0.05),
+#              )
 plt.annotate(str(val_acc[max_acc_idx]), xy=(max_acc_idx, val_acc[max_acc_idx]),
              xytext=(max_acc_idx - 50, val_acc[max_acc_idx] - 0.1),
              arrowprops=dict(facecolor='black', shrink=0.05),
