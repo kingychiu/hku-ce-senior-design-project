@@ -52,6 +52,7 @@ x_train, x_test, y_train, y_test, num_classes = get_data()
 # Convert class vectors to binary class matrices
 y_train = np_utils.to_categorical(y_train, num_classes)
 y_test = np_utils.to_categorical(y_test, num_classes)
+print('# Training Data', x_train.shape, y_train.shape)
 # Reshape
 x_train = x_train.reshape(x_train.shape[0], x_test.shape[1], x_test.shape[2], 1)
 x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
