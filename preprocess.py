@@ -64,7 +64,7 @@ class PreProcess:
         return [ord(char) for char in list(s)]
 
     def char2lookup(self, char):
-        if ord(char) >= 32 or ord(char) <= 127:
+        if ord(char) >= 32 and ord(char) <= 127:
             return ord(char) - 32
         else:
             return 95
@@ -92,6 +92,8 @@ class PreProcess:
             look_up_matrix = []
             for char in d:
                 binary_look_up = '{0:07b}'.format(char)
+                if(len(binary_look_up) != 7):
+                    print(len(binary_look_up))
                 look_up_matrix.append(binary_look_up)
             look_up_tensor.append(look_up_matrix)
         return look_up_tensor

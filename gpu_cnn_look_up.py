@@ -22,7 +22,6 @@ def get_data():
         tensor = []
         labels = []
         print(len(lines))
-
         for line in lines:
             matrix = []
             labels.append(line.split('|l|')[0])
@@ -34,8 +33,10 @@ def get_data():
                         look_up_vector.append(int(digit_str))
                 matrix.append(look_up_vector)
             tensor.append(matrix)
+        print(tensor[0])
 
-        x = np.asarray(tensor)
+        x = np.array(tensor)
+        print(x.shape)
         classes = sorted(list(set(labels)))
         y = np.asarray([classes.index(item) for item in labels])
         print('Labels', classes)
