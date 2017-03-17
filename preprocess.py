@@ -6,8 +6,6 @@ from file_io import FileIO
 import re
 import numpy as np
 
-ascii_map = 'abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:’" '
-
 
 class PreProcess:
     def __init__(self, file_path):
@@ -66,10 +64,10 @@ class PreProcess:
         return [ord(char) for char in list(s)]
 
     def char2lookup(self, char):
-        if char in ascii_map:
-            return ascii_map.index(char)
+        if ord(char) >= 32 or ord(char) <= 127:
+            return ord(char) - 32
         else:
-            return len(ascii_map)
+            return 95
 
     def train_test_split(self, x, y):
         # shuffle
@@ -93,7 +91,7 @@ class PreProcess:
         for d in data:
             look_up_matrix = []
             for char in d:
-                binary_look_up = '{0:06b}'.format(char)
+                binary_look_up = '{0:07b}'.format(char)
                 look_up_matrix.append(binary_look_up)
             look_up_tensor.append(look_up_matrix)
         return look_up_tensor
