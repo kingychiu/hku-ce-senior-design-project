@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_20000_7bit_look_up.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_20000_6bit_look_up.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -54,7 +54,7 @@ y_train = np_utils.to_categorical(y_train, num_classes)
 y_test = np_utils.to_categorical(y_test, num_classes)
 print('# Training Data', x_train.shape, y_train.shape)
 # Reshape
-x_train = x_train.reshape(x_train.shape[0], x_test.shape[1], x_test.shape[2], 1)
+x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
 x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
 print('# Training Data', x_train.shape, y_train.shape)
 print('# Testing Data', x_test.shape, y_test.shape)
