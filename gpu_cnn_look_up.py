@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_look_up.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_20000_look_up.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -77,7 +77,7 @@ model.add(Activation('relu'))
 model.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 print(model.output_shape)
-model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(MaxPooling2D(pool_size=(4, 2)))
 print(model.output_shape)
 model.add(Dropout(0.25))
 
@@ -91,7 +91,7 @@ model.add(Activation('relu'))
 model.add(Convolution2D(2 ** 9, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 print(model.output_shape)
-model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(MaxPooling2D(pool_size=(4, 2)))
 print(model.output_shape)
 model.add(Dropout(0.5))
 

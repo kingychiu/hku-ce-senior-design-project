@@ -25,7 +25,7 @@ plt.annotate(str(val_acc[min_diff_idx]), xy=(min_diff_idx, val_acc[min_diff_idx]
              arrowprops=dict(facecolor='black', shrink=0.05),
              )
 plt.annotate(str(val_acc[max_acc_idx]), xy=(max_acc_idx, val_acc[max_acc_idx]),
-             xytext=(max_acc_idx - 2, val_acc[max_acc_idx] - 0.1),
+             xytext=(max_acc_idx - 50, val_acc[max_acc_idx] - 0.1),
              arrowprops=dict(facecolor='black', shrink=0.05),
              )
 
