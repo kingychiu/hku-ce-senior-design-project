@@ -88,7 +88,6 @@ model.add(Convolution2D(2 ** 9, 2, 2, border_mode='same'))
 model.add(Activation('relu'))
 model.add(Convolution2D(2 ** 9, 2, 2, border_mode='same'))
 model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(4, 1)))
 
 print(model.output_shape)
 model.add(Dropout(0.5))
