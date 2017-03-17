@@ -89,9 +89,7 @@ model.add(Activation('relu'))
 model.add(Convolution2D(2 ** 9, 2, 2, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(4, 2)))
-
-print(model.output_shape)
-model.add(Dropout(0.5))
+model.add(Dropout(0.25))
 
 # Fully Connected Layer
 model.add(Flatten())
