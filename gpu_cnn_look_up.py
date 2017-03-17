@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_7bit_look_up.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_7bit_50000_look_up.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
