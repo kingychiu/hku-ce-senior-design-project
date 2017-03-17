@@ -65,15 +65,11 @@ num_conv_block = 3
 model = Sequential()
 # Convolution Layer(s)
 print(input_shape)
-model.add(Convolution2D(2 ** 6, 2, 2,
+model.add(Convolution2D(2 ** 6, 3, 3,
                         border_mode="same",
                         input_shape=input_shape))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 6, 2, 2, border_mode='same'))
-model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 6, 2, 2, border_mode='same'))
-model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 6, 2, 2, border_mode='same'))
+model.add(Convolution2D(2 ** 6, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 print(model.output_shape)
 model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -81,13 +77,9 @@ print(model.output_shape)
 model.add(Dropout(0.25))
 
 
-model.add(Convolution2D(2 ** 7, 2, 2, border_mode='same'))
+model.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 7, 2, 2, border_mode='same'))
-model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 7, 2, 2, border_mode='same'))
-model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 7, 2, 2, border_mode='same'))
+model.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 print(model.output_shape)
@@ -105,7 +97,7 @@ model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 model.summary()
 model.compile(loss='categorical_crossentropy',
-              optimizer=Adam(),
+              optimizer=SGD(lr=0.01, momentum=0.5, decay=0.0, nesterov=True),
               metrics=['accuracy'])
 ## END OF MODEL ##
 loss = []
