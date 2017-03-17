@@ -34,8 +34,8 @@ def get_data():
                 matrix.append(look_up_vector)
             tensor.append(matrix)
         print(tensor[0])
-
         x = np.array(tensor)
+        del tensor
         print(x.shape)
         classes = sorted(list(set(labels)))
         y = np.asarray([classes.index(item) for item in labels])
