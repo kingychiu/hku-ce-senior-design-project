@@ -82,6 +82,7 @@ model.add(Convolution2D(2 ** 8, 2, 2, border_mode='same'))
 model.add(Activation('relu'))
 model.add(Convolution2D(2 ** 8, 2, 2, border_mode='same'))
 model.add(Activation('relu'))
+model.add(Dropout(0.25))
 
 model.add(Convolution2D(2 ** 9, 2, 2, border_mode='same'))
 model.add(Activation('relu'))
