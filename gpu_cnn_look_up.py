@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_7bit_20000_look_up.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_7bit_look_up.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -87,10 +87,10 @@ model.add(Dropout(0.25))
 model.add(Flatten())
 print(model.output_shape)
 
-n = model.output_shape[1] // 2
+n = model.output_shape[1]
 model.add(Dense(n))
 model.add(Activation('relu'))
-model.add(Dropout(0.5))
+model.add(Dropout(0.25))
 model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 model.summary()
