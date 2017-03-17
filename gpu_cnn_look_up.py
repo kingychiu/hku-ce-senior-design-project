@@ -67,26 +67,26 @@ num_conv_block = 3
 model = Sequential()
 # Convolution Layer(s)
 print(input_shape)
-model.add(Convolution2D(2 ** 7, 2, 2,
+model.add(Convolution2D(2 ** 7, 3, 3,
                         border_mode="same",
                         input_shape=input_shape))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 7, 2, 2, border_mode='same'))
+model.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 print(model.output_shape)
 model.add(MaxPooling2D(pool_size=(4, 2)))
 print(model.output_shape)
 model.add(Dropout(0.25))
 
-model.add(Convolution2D(2 ** 8, 2, 2, border_mode='same'))
+model.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 8, 2, 2, border_mode='same'))
+model.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 model.add(Dropout(0.25))
 
-model.add(Convolution2D(2 ** 9, 2, 2, border_mode='same'))
+model.add(Convolution2D(2 ** 9, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
-model.add(Convolution2D(2 ** 9, 2, 2, border_mode='same'))
+model.add(Convolution2D(2 ** 9, 3, 3, border_mode='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(4, 2)))
 model.add(Dropout(0.25))
