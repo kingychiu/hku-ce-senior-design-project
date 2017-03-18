@@ -14,12 +14,15 @@ class PreProcess:
     def run_look_up(self):
         lines = FileIO.read_file_to_lines(self.file_path)
         # spiting labels and sentences
-        sentences = [l.split('\\C')[1].split(',')[0] for l in lines]
-        min_char = len(sentences[0])
-        for s in sentences:
-            if len(s) < min_char:
-                print(len(s))
+        sentences = [l.split('|sep|')[1] for l in lines]
+        print('## First sentence')
+        print(sentences[0])
+        print('# char', len(sentences[0]))
 
+        avg_char = 0
+        for s in sentences:
+            avg_char += len(s)
+        print('avg char:', avg_char / len(sentences))
         sentences_in_ascii = [self.sentence_to_ascii_list_look_up(sentence) for sentence in
                               sentences]
         print('## First sentence in ascii codes')
