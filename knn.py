@@ -32,4 +32,4 @@ print(predictions[:10])
 
 for i in range(len(predictions)):
     p = predictions[i][0]
-    print(p == labels[i])
+    print(p == y_test[i])
