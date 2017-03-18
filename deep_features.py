@@ -14,7 +14,7 @@ from file_io import FileIO
 
 def get_data():
     with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
-        lines = f.readlines()
+        lines = f.readlines()[:1000]
         tensor = []
         labels = []
         print(len(lines))
@@ -34,10 +34,12 @@ def get_data():
         del tensor
         print(x.shape)
         classes = sorted(list(set(labels)))
-        y = np.asarray([classes.index(item) for item in labels])
+        y = np.asarray(labels)
         print('Labels', classes)
+        # shuffle
+        x, y = shuffle(x, y, random_state=0)
         f.close()
-        return x, labels, len(classes)
+        return x, y, len(classes)
 
 
 x, y, num_classes = get_data()
@@ -56,7 +58,6 @@ while len(x) != 0:
     x = x[128:]
     y = y[128:]
     print(x.shape)
-    print(len(y))
     intermediate_output = intermediate_layer_model.predict(batch_x)
     for i in range(len(intermediate_output)):
         output = [str(item) for item in intermediate_output[i].tolist()]
