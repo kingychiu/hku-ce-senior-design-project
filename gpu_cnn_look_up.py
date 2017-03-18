@@ -62,7 +62,7 @@ print('# Testing Data', x_test.shape, y_test.shape)
 
 # model config
 input_shape = (x_test.shape[1], x_test.shape[2], x_test.shape[3])
-epoch_step = 10
+epoch_step = 1
 num_conv_block = 3
 model = Sequential()
 # Convolution Layer(s)
@@ -103,21 +103,20 @@ acc = []
 val_acc = []
 start_time = datetime.datetime.now()
 for i in range(0, 100):
-    history = model.fit(x_train, y_train, 128, epoch_step,
+    model.fit(x_train, y_train, 128, epoch_step,
                         verbose=1, validation_data=(x_test, y_test))
     end_time = datetime.datetime.now()
     print(str(end_time - start_time))
-    score = model.evaluate(x_test, y_test, verbose=0)
-    print('Test loss:', score[0])
-    print('Test accuracy:', score[1])
+    score1 = model.evaluate(x_train, y_train, verbose=0)
+    score2 = model.evaluate(x_test, y_test, verbose=0)
+    print('Train accuracy:', score1[1])
+    print('Test accuracy:', score2[1])
     ## SAVE
-    loss = loss + history.history['loss']
-    acc = acc + history.history['acc']
-    val_acc = val_acc + history.history['val_acc']
+    acc = acc + score1[1]
+    val_acc = val_acc + score2[1]
     print(len(loss))
     lines = []
     lines.append(str(end_time - start_time))
-    lines.append(','.join([str(a) for a in loss]))
     lines.append(','.join([str(a) for a in acc]))
     lines.append(','.join([str(a) for a in val_acc]))
     FileIO.write_lines_to_file('./7blkup_4classes.log', lines)

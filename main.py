@@ -3,7 +3,7 @@ from preprocess import PreProcess
 p = PreProcess('./datasets/ag_dataset_gt_50.txt')
 labels, tensor = p.run_look_up()
 print(tensor[0])
-with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'w', encoding='utf8') as f1:
+with open('./datasets/ag_7blkup_5_cl_gt_50.txt', 'w', encoding='utf8') as f1:
     document_strs = []
     for matrix in tensor:
         char_strs = []

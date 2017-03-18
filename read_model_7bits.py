@@ -46,7 +46,7 @@ print('Read Data Done')
 y = np_utils.to_categorical(y, num_classes)
 
 
-model_path = './models/7blkup_5classes.h5'
+model_path = './models/7blkup_4classes.h5'
 model = load_model(model_path)
 print('Read Model Done')
 model.summary()
