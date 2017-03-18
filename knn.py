@@ -12,7 +12,7 @@ with open('./datasets/7blkup_4classes_dfeatures.txt', 'r', encoding='utf8') as f
         features.append(line.split('|sep|')[1].split(','))
     print(labels[:10])
     print(len(features[0]))
-x_train, x_test, y_train, y_test = train_test_split(features[:50000], labels[:50000], test_size=0.3,
+x_train, x_test, y_train, y_test = train_test_split(features[:20000], labels[:20000], test_size=0.3,
                                                     random_state=42)
 print(len(x_train))
 print(len(x_train[0]))
@@ -48,6 +48,6 @@ for i in range(len(predictions)):
             t_by_class[p] = 1
 
 print(t / len(predictions))
-
+print(total_by_class)
 for k in list(t_by_class.keys()):
     print(k, t_by_class[k] / total_by_class[k])
