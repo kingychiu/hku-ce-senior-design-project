@@ -38,6 +38,7 @@ def get_data():
 
 
 x, y, num_classes = get_data()
+print('Read Data Done')
 # Convert class vectors to binary class matrices
 y = np_utils.to_categorical(y, num_classes)
 
@@ -45,5 +46,6 @@ from keras.models import load_model
 
 model_path = './models/gpu_look_up_cnn_epoch_60ep_3_convB_4_layers.h5'
 model = load_model(model_path)
+print('Read Model Done')
 score, acc = model.evaluate(x, y, verbose=0)
 print('Whole accuracy:', acc)
