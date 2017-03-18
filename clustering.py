@@ -8,7 +8,7 @@ from keras import backend as K
 # sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
-
+from sklearn.cluster import KMeans
 
 def get_data():
     with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
@@ -51,3 +51,6 @@ intermediate_layer_model = Model(input=model.input,
 
 intermediate_output = intermediate_layer_model.predict(x)
 print(intermediate_output.shape)
+
+kmeans = KMeans(n_clusters=5, random_state=0).fit(intermediate_output)
+print(kmeans.labels_[:10])
