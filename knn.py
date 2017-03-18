@@ -36,6 +36,8 @@ for i in range(0, 95000):
             t_by_class[p] = 1
     count = count - 1
     print(count)
+    del p
+    del sample
 
 print(t / len(y_test))
 print()
