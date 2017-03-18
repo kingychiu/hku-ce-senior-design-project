@@ -46,10 +46,6 @@ model_path = './models/7blkup_4classes.h5'
 model = load_model(model_path)
 model.summary()
 print('num of layers', len(model.layers))
-
-# with a Sequential model
-get_3rd_layer_output = K.function([model.layers[0].input], K.learning_phase(),
-                                  [model.layers[13].output])
-
-layer_output = get_3rd_layer_output([x, 0])[0]
-print(layer_output.shape)
+intermediate_layer_model = Model(inputs=model.input,
+                                 outputs=model.layers[13].output)
+intermediate_output = intermediate_layer_model.predict(x)
