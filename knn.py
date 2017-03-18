@@ -13,6 +13,7 @@ with open('./datasets/7blkup_4classes_dfeatures.txt', 'r', encoding='utf8') as f
 x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.5,
                                                     random_state=42)
 print(len(x_train))
+print(len(x_train[0]))
 print(len(x_test))
 del labels
 del features
