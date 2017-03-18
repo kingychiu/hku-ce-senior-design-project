@@ -14,7 +14,7 @@ from file_io import FileIO
 
 def get_data():
     with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
-        lines = f.readlines()[:1000]
+        lines = f.readlines()
         tensor = []
         labels = []
         print(len(lines))
@@ -52,7 +52,7 @@ print('num of layers', len(model.layers))
 intermediate_layer_model = Model(input=model.input,
                                  output=model.layers[13].output)
 lines = []
-while len(x) != 0:
+while len(x) != 0 and len(lines) < 200000:
     batch_x = x[:128]
     batch_y = y[:128]
     x = x[128:]
