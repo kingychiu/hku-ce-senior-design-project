@@ -9,6 +9,7 @@ from keras import backend as K
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 
+
 def get_data():
     with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()[:1000]
@@ -37,6 +38,7 @@ def get_data():
         f.close()
         return x, y, len(classes)
 
+
 x, y, num_classes = get_data()
 x = x.reshape(x.shape[0], x.shape[1], x.shape[2], 1)
 
@@ -46,8 +48,8 @@ model.summary()
 print('num of layers', len(model.layers))
 
 # with a Sequential model
-get_3rd_layer_output = K.function([model.layers[0].input],
-                                  [model.layers[13].output])
+get_3rd_layer_output = K.function([model.layers[0].input], K.learning_phase()
+[model.layers[13].output])
 
-layer_output = get_3rd_layer_output([x])[0]
+layer_output = get_3rd_layer_output([x, 0])[0]
 print(layer_output.shape)
