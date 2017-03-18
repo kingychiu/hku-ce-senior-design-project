@@ -19,7 +19,7 @@ print(len(x_test))
 del labels
 del features
 
-neigh = KNeighborsClassifier(n_neighbors=3, algorithm='brute')
+neigh = KNeighborsClassifier(n_neighbors=3)
 neigh.fit(x_train, y_train)
 
 predictions = []
