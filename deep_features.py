@@ -61,6 +61,8 @@ while len(x) != 0:
     for i in range(len(intermediate_output)):
         output = intermediate_output[i]
         f = ','.join(str(output.tolist()))
+        print(batch_y[i])
+        print(type(batch_y[i]))
         lines.append(batch_y[i] + '|sep|' + f)
         print(lines)
     break
