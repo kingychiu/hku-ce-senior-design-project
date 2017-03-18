@@ -14,7 +14,7 @@ from file_io import FileIO
 
 def get_data():
     with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
-        lines = f.readlines()[:1000]
+        lines = f.readlines()
         tensor = []
         labels = []
         print(len(lines))
