@@ -13,7 +13,7 @@ with open('./datasets/ag_7blkup_5_cl_gt_50.txt', 'w', encoding='utf8') as f1:
         document_strs.append(document_str)
     lines = []
     for i in range(len(document_strs)):
-        if labels[i] != 'Entertainment':
-            lines.append(labels[i] + '|l|' + document_strs[i])
+        # if labels[i] != 'Entertainment':
+        lines.append(labels[i] + '|l|' + document_strs[i])
 
     f1.write('\n'.join(lines))
