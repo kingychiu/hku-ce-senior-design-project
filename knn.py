@@ -23,10 +23,10 @@ neigh = KNeighborsClassifier(n_neighbors=3)
 neigh.fit(x_train, y_train)
 
 predictions = []
-count = 0
+count = len(x_test)
 for sample in x_test:
     predictions.append(neigh.predict(sample))
-    count = count + 1
+    count = count - 1
     print(count)
 print(predictions[:10])
 # for i in range(len(predictions)):
