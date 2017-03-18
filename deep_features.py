@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 from sklearn.cluster import KMeans
 
+
 def get_data():
     with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()[:1000]
@@ -34,7 +35,6 @@ def get_data():
         classes = sorted(list(set(labels)))
         y = np.asarray([classes.index(item) for item in labels])
         print('Labels', classes)
-        # shuffle
         f.close()
         return x, y, len(classes)
 
@@ -49,8 +49,12 @@ print('num of layers', len(model.layers))
 intermediate_layer_model = Model(input=model.input,
                                  output=model.layers[13].output)
 
-intermediate_output = intermediate_layer_model.predict(x)
-print(intermediate_output.shape)
+batch_x = x[0:128]
+print(batch_x.shape)
 
-kmeans = KMeans(n_clusters=5, random_state=0).fit(intermediate_output)
-print(kmeans.labels_[:10])
+
+# intermediate_output = intermediate_layer_model.predict(x)
+# print(intermediate_output.shape)
+#
+# kmeans = KMeans(n_clusters=10, random_state=0).fit(intermediate_output)
+# print(kmeans.labels_[:10])
