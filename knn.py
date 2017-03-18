@@ -33,22 +33,21 @@ print(predictions[:10])
 
 t = 0
 t_by_class = {}
-f_by_class = {}
+total_by_class = {}
 for i in range(len(predictions)):
     p = predictions[i][0]
+    if p in total_by_class.keys():
+        total_by_class[p] += 1
+    else:
+        total_by_class[p] = 1
     if p == y_test[i]:
         t += 1
         if p in t_by_class.keys():
             t_by_class[p] += 1
         else:
             t_by_class[p] = 1
-    else:
-        if p in f_by_class.keys():
-            f_by_class[p] += 1
-        else:
-            f_by_class[p] = 1
 
 print(t / len(predictions))
 
 for k in list(t_by_class.keys()):
-    print(k, t_by_class[k] / t_by_class[k] + f_by_class[k])
+    print(k, t_by_class[k] / total_by_class[k])
