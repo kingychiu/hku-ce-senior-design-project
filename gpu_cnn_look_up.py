@@ -114,7 +114,6 @@ for i in range(0, 100):
     ## SAVE
     acc.append(score1[1])
     val_acc.append(score2[1])
-    print(len(loss))
     lines = []
     lines.append(str(end_time - start_time))
     lines.append(','.join([str(a) for a in acc]))
