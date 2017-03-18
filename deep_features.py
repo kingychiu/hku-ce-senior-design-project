@@ -49,8 +49,9 @@ print('num of layers', len(model.layers))
 intermediate_layer_model = Model(input=model.input,
                                  output=model.layers[13].output)
 
-
+print(x.shape)
 batch_x = np.delete(x, 128, 0)
+print(batch_x.shape)
 print(batch_x.shape)
 
 
