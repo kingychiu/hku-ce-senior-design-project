@@ -59,7 +59,7 @@ while len(x) != 0:
     print(len(y))
     intermediate_output = intermediate_layer_model.predict(batch_x)
     for i in range(len(intermediate_output)):
-        output = intermediate_output[i].tolist()
+        output = [str(item) for item in intermediate_output[i].tolist()]
         print(len(output))
         print(output)
         # f = ','.join(str(output))
