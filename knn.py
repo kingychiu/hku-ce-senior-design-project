@@ -12,18 +12,32 @@ with open('./datasets/7blkup_4classes_dfeatures.txt', 'r', encoding='utf8') as f
         features.append(line.split('|sep|')[1].split(','))
     print(labels[:10])
     print(len(features[0]))
+x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.05,
+                                                    random_state=42)
+x_test = x_test[45000:100000]
+y_test = y_test[45000:100000]
+print(len(x_train))
+print(len(x_train[0]))
+print(len(x_test))
+del labels
+del features
 
 neigh = KNeighborsClassifier(n_neighbors=3)
-neigh.fit(features[:5000], labels[:5000])
-y_test = labels[5000:]
+neigh.fit(x_train, y_train)
+
 predictions = []
-count = len(y_test)
+count = len(x_test)
+for sample in x_test:
+    predictions.append(neigh.predict(sample))
+    count = count - 1
+    print(count)
+print(predictions[:10])
+
 t = 0
 t_by_class = {}
 total_by_class = {}
-for i in range(0, 95000):
-    sample = features[5000 + i]
-    p = neigh.predict(sample)[0]
+for i in range(len(predictions)):
+    p = predictions[i][0]
     if p in total_by_class.keys():
         total_by_class[p] += 1
     else:
@@ -34,14 +48,10 @@ for i in range(0, 95000):
             t_by_class[p] += 1
         else:
             t_by_class[p] = 1
-    count = count - 1
-    print(count)
-    del p
-    del sample
 
-print(t / len(y_test))
+print(t / len(predictions))
 print()
-print('knn train data,', len(features[:5000]))
-print('testing data', len(features[5000:]))
+print('knn train data,', len(x_train))
+print('testing data', len(x_test))
 for k in list(t_by_class.keys()):
     print(k, t_by_class[k] / total_by_class[k])
