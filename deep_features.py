@@ -52,12 +52,16 @@ intermediate_layer_model = Model(input=model.input,
 lines = []
 while len(x) != 0:
     batch_x = x[:128]
+    batch_y = y[:128]
     x = x[128:]
+    y = y[128:]
     print(x.shape)
+    print(y.shape)
     intermediate_output = intermediate_layer_model.predict(batch_x)
     for output in intermediate_output:
-        print(output.shape)
-        print(','.join(output.tolist()))
+        f = ','.join(str(output.tolist()))
+        lines.append(y + '|sep|' + f)
+        print(lines)
     break
 FileIO.write_lines_to_file('./datasets/7blkup_4classes_dfeatures.txt', lines)
 
