@@ -30,9 +30,9 @@ class PreProcess:
         print()
 
         sentences_in_ascii = self.fixing_dimension(sentences_in_ascii)
-        sentences_in_one_hot_vector = self.generate_look_up_vector(sentences_in_ascii)
-        labels = [l.split('\\C')[0] for l in lines]
-        return labels, sentences_in_one_hot_vector
+        sentences_in_vector = self.generate_look_up_vector(sentences_in_ascii)
+        labels = [l.split('|sep|')[0] for l in lines]
+        return labels, sentences_in_vector
 
     def sentence_to_ascii_list_look_up(self, s):
         return [self.char2lookup(char) for char in list(s)]
