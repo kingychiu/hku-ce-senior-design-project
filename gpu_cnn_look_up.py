@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_dataset_7bit_20000_look_up_4_classes.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_dataset_7bit_look_up_4_classes.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -120,8 +120,5 @@ for i in range(0, 100):
     lines.append(','.join([str(a) for a in loss]))
     lines.append(','.join([str(a) for a in acc]))
     lines.append(','.join([str(a) for a in val_acc]))
-    # FileIO.write_lines_to_file('./gpu_look_up_cnn_' + str(num_conv_block) + '_convB_4_layers.log',
-    #                            lines)
-    # model.save(
-    #     './models/gpu_look_up_cnn_epoch_' + str((i + 1) * epoch_step) + 'ep_' + str(
-    #         num_conv_block) + '_convB_4_layers.h5')
+    FileIO.write_lines_to_file('./7blkup_4classes.log')
+    model.save('./models/7blkup_4classes.h5')
