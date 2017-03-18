@@ -1,5 +1,6 @@
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.cluster import KMeans
 
 with open('./datasets/7blkup_4classes_dfeatures.txt', 'r', encoding='utf8') as f:
     lines = f.readlines()
@@ -17,12 +18,13 @@ print(len(x_train[0]))
 print(len(x_test))
 del labels
 del features
-neigh = KNeighborsClassifier(n_neighbors=3, algorithm='brute')
-neigh.fit(x_train, y_train)
-
-predictions = []
-for x in x_test:
-    predictions.append(neigh.predict(x))
-print(predictions[:10])
+kmeans = KMeans(n_clusters=5, random_state=0).fit(x_train)
+# neigh = KNeighborsClassifier(n_neighbors=3, algorithm='brute')
+# neigh.fit(x_train, y_train)
+#
+# predictions = []
+# for x in x_test:
+#     predictions.append(neigh.predict(x))
+# print(predictions[:10])
 # for i in range(len(predictions)):
 #
