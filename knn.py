@@ -12,10 +12,10 @@ with open('./datasets/7blkup_5classes_dfeatures.txt', 'r', encoding='utf8') as f
         features.append(line.split('|sep|')[1].split(','))
     print(labels[:10])
     print(len(features[0]))
-x_train = features[:5000]
-x_test = features[50000:100000]
-y_train = labels[:5000]
-y_test = labels[50000:100000]
+x_train = features[:35000]
+x_test = features[35000:50000]
+y_train = labels[:35000]
+y_test = labels[35000:50000]
 print('train', len(x_train))
 print('test', len(x_test))
 del labels
