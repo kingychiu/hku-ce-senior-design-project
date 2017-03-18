@@ -48,6 +48,8 @@ for i in range(len(predictions)):
             t_by_class[p] = 1
 
 print(t / len(predictions))
-print(total_by_class)
+print()
+print('knn train data,', len(x_train))
+print('testing data', len(x_test))
 for k in list(t_by_class.keys()):
     print(k, t_by_class[k] / total_by_class[k])
