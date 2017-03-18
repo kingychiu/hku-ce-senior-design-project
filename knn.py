@@ -13,9 +13,9 @@ with open('./datasets/7blkup_5classes_dfeatures.txt', 'r', encoding='utf8') as f
     print(labels[:10])
     print(len(features[0]))
 x_train = features[:5000]
-x_test = features[5000:10000]
+x_test = features[50000:100000]
 y_train = labels[:5000]
-y_test = labels[5000:10000]
+y_test = labels[50000:100000]
 print('train', len(x_train))
 print('test', len(x_test))
 del labels
