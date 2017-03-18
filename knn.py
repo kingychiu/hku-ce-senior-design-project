@@ -12,7 +12,7 @@ with open('./datasets/7blkup_4classes_dfeatures.txt', 'r', encoding='utf8') as f
         features.append(line.split('|sep|')[1].split(','))
     print(labels[:10])
     print(len(features[0]))
-x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.05,
+x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.95,
                                                     random_state=42)
 # x_test = x_test[50000:95000]
 # y_test = y_test[50000:95000]
