@@ -15,20 +15,15 @@ with open('./datasets/7blkup_4classes_dfeatures.txt', 'r', encoding='utf8') as f
 
 neigh = KNeighborsClassifier(n_neighbors=3)
 neigh.fit(features[:5000], labels[:5000])
-y_test = labels[5000:]
+y_test = labels[5000:10000]
 predictions = []
-count = len(features[5000:])
-for sample in features[5000:]:
-    predictions.append(neigh.predict(sample))
-    count = count - 1
-    print(count)
-print(predictions[:10])
-
+count = 5000
 t = 0
 t_by_class = {}
 total_by_class = {}
-for i in range(len(predictions)):
-    p = predictions[i][0]
+for i in range(5000, 10000):
+    sample = features[i]
+    p = neigh.predict(sample)
     if p in total_by_class.keys():
         total_by_class[p] += 1
     else:
@@ -39,8 +34,10 @@ for i in range(len(predictions)):
             t_by_class[p] += 1
         else:
             t_by_class[p] = 1
+    count = count - 1
+    print(count)
 
-print(t / len(predictions))
+print(t / len(y_test))
 print()
 print('knn train data,', len(features[:5000]))
 print('testing data', len(features[5000:]))
