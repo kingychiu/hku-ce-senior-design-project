@@ -30,6 +30,10 @@ for sample in x_test:
     print(count)
 print(predictions[:10])
 
+t = 0
 for i in range(len(predictions)):
     p = predictions[i][0]
-    print(p == y_test[i])
+    if p == y_test[i]:
+        t = t + 1
+
+print(t / len(predictions))
