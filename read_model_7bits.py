@@ -38,6 +38,8 @@ def get_data():
 
 
 x, y, num_classes = get_data()
+x = x.reshape(x.shape[0], x.shape[1], x.shape[2], 1)
+
 print('Read Data Done')
 # Convert class vectors to binary class matrices
 y = np_utils.to_categorical(y, num_classes)
