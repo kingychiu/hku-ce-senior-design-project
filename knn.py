@@ -29,6 +29,7 @@ for sample in x_test:
     count = count - 1
     print(count)
 print(predictions[:10])
-for p in predictions:
-    print(p[0])
-# for i in range(len(predictions)):
+
+for i in range(len(predictions)):
+    p = predictions[i][0]
+    print(p == labels[i])
