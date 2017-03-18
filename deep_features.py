@@ -56,7 +56,7 @@ while len(x) != 0:
     x = x[128:]
     y = y[128:]
     print(x.shape)
-    print(y.shape)
+    print(len(y))
     intermediate_output = intermediate_layer_model.predict(batch_x)
     for i in range(len(intermediate_output)):
         output = intermediate_output[i]
