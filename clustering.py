@@ -11,7 +11,7 @@ from sklearn.utils import shuffle
 
 def get_data():
     with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
-        lines = f.readlines()
+        lines = f.readlines()[:1000]
         tensor = []
         labels = []
         print(len(lines))
@@ -33,7 +33,6 @@ def get_data():
         classes = sorted(list(set(labels)))
         y = np.asarray([classes.index(item) for item in labels])
         print('Labels', classes)
-
         # shuffle
         f.close()
         return x, y, len(classes)
@@ -50,5 +49,5 @@ print('num of layers', len(model.layers))
 get_3rd_layer_output = K.function([model.layers[0].input],
                                   [model.layers[13].output])
 
-layer_output = get_3rd_layer_output([x])[0]
+layer_output = get_3rd_layer_output([x[0]])[0]
 print(layer_output.shape)
