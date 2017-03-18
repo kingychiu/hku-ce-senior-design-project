@@ -62,12 +62,10 @@ while len(x) != 0:
         output = [str(item) for item in intermediate_output[i].tolist()]
         print(len(output))
         print(output)
-        # f = ','.join(str(output))
-        # print(batch_y[i])
-        # print(type(batch_y[i]))
-        # lines.append(batch_y[i] + '|sep|' + f)
-        break
-    break
+        f = ','.join(output)
+        print(batch_y[i])
+        print(type(batch_y[i]))
+        lines.append(batch_y[i] + '|sep|' + f)
 FileIO.write_lines_to_file('./datasets/7blkup_4classes_dfeatures.txt', lines)
 
 
