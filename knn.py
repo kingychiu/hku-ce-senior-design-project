@@ -23,7 +23,7 @@ t_by_class = {}
 total_by_class = {}
 for i in range(5000, 10000):
     sample = features[i]
-    p = neigh.predict(sample)
+    p = neigh.predict(sample)[0]
     if p in total_by_class.keys():
         total_by_class[p] += 1
     else:
