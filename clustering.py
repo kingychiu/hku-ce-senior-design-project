@@ -46,8 +46,8 @@ model_path = './models/7blkup_4classes.h5'
 model = load_model(model_path)
 model.summary()
 print('num of layers', len(model.layers))
-intermediate_layer_model = Model(inputs=model.input,
-                                 outputs=model.layers[13].output)
+intermediate_layer_model = Model(input=model.input,
+                                 output=model.layers[13].output)
 
 intermediate_output = intermediate_layer_model.predict(x)
 print(intermediate_output.shape)
