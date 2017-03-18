@@ -23,7 +23,7 @@ neigh = KNeighborsClassifier(n_neighbors=3, algorithm='brute')
 neigh.fit(x_train, y_train)
 
 predictions = []
-for x in x_test:
-    predictions.append(neigh.predict(x))
+for sample in x_test:
+    predictions.append(neigh.predict(sample))
 print(predictions[:10])
 # for i in range(len(predictions)):
