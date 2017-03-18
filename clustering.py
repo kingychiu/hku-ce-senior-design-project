@@ -49,5 +49,5 @@ print('num of layers', len(model.layers))
 get_3rd_layer_output = K.function([model.layers[0].input],
                                   [model.layers[13].output])
 
-layer_output = get_3rd_layer_output([x[0]])[0]
+layer_output = get_3rd_layer_output([x])[0]
 print(layer_output.shape)
