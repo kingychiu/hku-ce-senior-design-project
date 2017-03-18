@@ -50,8 +50,9 @@ intermediate_layer_model = Model(input=model.input,
                                  output=model.layers[13].output)
 
 print(x.shape)
-batch_x = np.delete(x, 128, 0)
-print(batch_x.shape)
+batch_x = x[:128]
+x = x[128:]
+print(x.shape)
 print(batch_x.shape)
 
 
