@@ -48,4 +48,6 @@ model.summary()
 print('num of layers', len(model.layers))
 intermediate_layer_model = Model(inputs=model.input,
                                  outputs=model.layers[13].output)
+
 intermediate_output = intermediate_layer_model.predict(x)
+print(intermediate_output.shape)
