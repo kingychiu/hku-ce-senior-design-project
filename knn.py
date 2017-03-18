@@ -11,7 +11,7 @@ with open('./datasets/7blkup_4classes_dfeatures.txt', 'r', encoding='utf8') as f
         features.append(line.split('|sep|')[1].split(','))
     print(labels[:10])
     print(len(features[0]))
-x_train, x_test, y_train, y_test = train_test_split(features[:20000], labels[:20000], test_size=0.3,
+x_train, x_test, y_train, y_test = train_test_split(features[:2000], labels[:2000], test_size=0.3,
                                                     random_state=42)
 print(len(x_train))
 print(len(x_train[0]))
@@ -29,4 +29,6 @@ for sample in x_test:
     count = count - 1
     print(count)
 print(predictions[:10])
+for p in predictions:
+    print(p[0])
 # for i in range(len(predictions)):
