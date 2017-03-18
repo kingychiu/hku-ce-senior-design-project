@@ -15,8 +15,10 @@ class PreProcess:
         lines = FileIO.read_file_to_lines(self.file_path)
         # spiting labels and sentences
         sentences = [l.split('\\C')[1].split(',')[0] for l in lines]
-        print('## First sentence')
-        print(sentences[0])
+        min_char = len(sentences[0])
+        for s in sentences:
+            if len(s) < min_char:
+                print(len(s))
 
         sentences_in_ascii = [self.sentence_to_ascii_list_look_up(sentence) for sentence in
                               sentences]
@@ -28,34 +30,6 @@ class PreProcess:
         sentences_in_one_hot_vector = self.generate_look_up_vector(sentences_in_ascii)
         labels = [l.split('\\C')[0] for l in lines]
         return labels, sentences_in_one_hot_vector
-
-    def run(self):
-        lines = FileIO.read_file_to_lines(self.file_path)
-        # spiting labels and sentences
-        sentences = [l.split('\\C')[1].split(',')[0] for l in lines]
-        print('## First sentence')
-        print(sentences[0])
-        print()
-        sentences_in_ascii = [self.sentence_to_ascii_list(sentence) for sentence in sentences]
-        print('## First sentence in ascii codes')
-        print(sentences_in_ascii[0])
-        print()
-
-        sentences_in_ascii = self.fixing_dimension(sentences_in_ascii)
-        x = np.asarray(sentences_in_ascii)
-
-        print('# Whole Data Set', x.shape)
-        print()
-        y = [l.split('\\C')[0] for l in lines]
-        # classes
-        classes = sorted(list(set(y)))
-        y = np.asarray([classes.index(item) for item in y])
-        print('Labels', classes)
-        print()
-        x_train, x_test, y_train, y_test = self.train_test_split(x, y)
-        print('# Training Data', x_train.shape, y_train.shape)
-        print('# Testing Data', x_test.shape, y_test.shape)
-        return x_train, x_test, y_train, y_test, len(classes)
 
     def sentence_to_ascii_list_look_up(self, s):
         return [self.char2lookup(char) for char in list(s)]
@@ -76,6 +50,19 @@ class PreProcess:
 
     def fixing_dimension(self, data):
         fix_size = 100
+        avg = 0
+        max_char = len(data[0])
+        min_char = len(data[0])
+        for i in range(0, len(data)):
+            if len(data[i]) > max_char:
+                max_char = len(data[i])
+            if len(data[i]) < min_char:
+                min_char = len(data[i])
+            avg += len(data[i])
+        avg /= len(data)
+        print('avg char', avg)
+        print('max char', max_char)
+        print('min char', min_char)
         for i in range(0, len(data)):
             if len(data[i]) >= fix_size:
                 data[i] = data[i][:fix_size]
@@ -92,7 +79,7 @@ class PreProcess:
             look_up_matrix = []
             for char in d:
                 binary_look_up = '{0:07b}'.format(char)
-                if(len(binary_look_up) != 7):
+                if (len(binary_look_up) != 7):
                     print(len(binary_look_up))
                 look_up_matrix.append(binary_look_up)
             look_up_tensor.append(look_up_matrix)

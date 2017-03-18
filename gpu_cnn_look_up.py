@@ -120,5 +120,5 @@ for i in range(0, 100):
     lines.append(','.join([str(a) for a in loss]))
     lines.append(','.join([str(a) for a in acc]))
     lines.append(','.join([str(a) for a in val_acc]))
-    FileIO.write_lines_to_file('./7blkup_4classes.log')
+    FileIO.write_lines_to_file('./7blkup_4classes.log', lines)
     model.save('./models/7blkup_4classes.h5')
