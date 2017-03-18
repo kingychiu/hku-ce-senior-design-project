@@ -15,13 +15,13 @@ with open('./datasets/7blkup_4classes_dfeatures.txt', 'r', encoding='utf8') as f
 
 neigh = KNeighborsClassifier(n_neighbors=3)
 neigh.fit(features[:5000], labels[:5000])
-y_test = labels[5000:10000]
+y_test = labels[5000:]
 predictions = []
-count = 5000
+count = len(y_test)
 t = 0
 t_by_class = {}
 total_by_class = {}
-for i in range(0, 5000):
+for i in range(0, 95000):
     sample = features[5000 + i]
     p = neigh.predict(sample)[0]
     if p in total_by_class.keys():
