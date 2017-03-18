@@ -10,7 +10,7 @@ from sklearn.utils import shuffle
 
 model_path = './models/7blkup_4classes.h5'
 model = load_model(model_path)
-model.sumary()
+model.summary()
 # layer_name = 'my_layer'
 # intermediate_layer_model = Model(inputs=model.input,
 #                                  outputs=model.get_layer(layer_name).output)
