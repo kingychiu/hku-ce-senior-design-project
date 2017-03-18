@@ -48,8 +48,8 @@ model.summary()
 print('num of layers', len(model.layers))
 
 # with a Sequential model
-get_3rd_layer_output = K.function([model.layers[0].input], K.learning_phase()
-[model.layers[13].output])
+get_3rd_layer_output = K.function([model.layers[0].input], K.learning_phase(),
+                                  [model.layers[13].output])
 
 layer_output = get_3rd_layer_output([x, 0])[0]
 print(layer_output.shape)
