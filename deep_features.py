@@ -9,6 +9,7 @@ from keras import backend as K
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 from sklearn.cluster import KMeans
+from file_io import FileIO
 
 
 def get_data():
@@ -48,16 +49,17 @@ model.summary()
 print('num of layers', len(model.layers))
 intermediate_layer_model = Model(input=model.input,
                                  output=model.layers[13].output)
+lines = []
+while len(x) != 0:
+    batch_x = x[:128]
+    x = x[128:]
+    print(x.shape)
+    intermediate_output = intermediate_layer_model.predict(batch_x)
+    print(batch_x.shape)
+    break
+FileIO.write_lines_to_file('./dataset/7blkup_4classes_dfeatures.txt', lines)
 
-print(x.shape)
-batch_x = x[:128]
-x = x[128:]
-print(x.shape)
-print(batch_x.shape)
 
-
-# intermediate_output = intermediate_layer_model.predict(x)
-# print(intermediate_output.shape)
 #
 # kmeans = KMeans(n_clusters=10, random_state=0).fit(intermediate_output)
 # print(kmeans.labels_[:10])
