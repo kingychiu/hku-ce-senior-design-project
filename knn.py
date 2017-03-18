@@ -49,5 +49,6 @@ for i in range(len(predictions)):
             f_by_class[p] = 1
 
 print(t / len(predictions))
-print(t_by_class)
-print(f_by_class)
+
+for k in list(t_by_class.keys()):
+    print(k, t_by_class[k] / t_by_class[k] + f_by_class[k])
