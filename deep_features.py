@@ -37,7 +37,7 @@ def get_data():
         y = np.asarray([classes.index(item) for item in labels])
         print('Labels', classes)
         f.close()
-        return x, y, len(classes)
+        return x, labels, len(classes)
 
 
 x, y, num_classes = get_data()
