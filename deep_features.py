@@ -57,7 +57,7 @@ while len(x) != 0:
     intermediate_output = intermediate_layer_model.predict(batch_x)
     print(batch_x.shape)
     break
-FileIO.write_lines_to_file('./dataset/7blkup_4classes_dfeatures.txt', lines)
+FileIO.write_lines_to_file('./datasets/7blkup_4classes_dfeatures.txt', lines)
 
 
 #
