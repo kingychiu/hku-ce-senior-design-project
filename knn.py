@@ -14,6 +14,8 @@ x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=
                                                     random_state=42)
 print(len(x_train))
 print(len(x_test))
+del labels
+del features
 neigh = KNeighborsClassifier(n_neighbors=3)
 neigh.fit(x_train, y_train)
 
