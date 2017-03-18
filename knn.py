@@ -33,14 +33,15 @@ print(predictions[:10])
 
 t = 0
 t_by_class = {}
-for c in classes:
-    t_by_class[c] = 0
 
 for i in range(len(predictions)):
     p = predictions[i][0]
     if p == y_test[i]:
         t += 1
-        t_by_class[p] += 1
+        if p in t_by_class.keys():
+            t_by_class[p] += 1
+        else:
+            t_by_class[p] = 1
 
 print(t / len(predictions))
 print(t_by_class)
