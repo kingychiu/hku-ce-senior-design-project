@@ -112,8 +112,8 @@ for i in range(0, 100):
     print('Train accuracy:', score1[1])
     print('Test accuracy:', score2[1])
     ## SAVE
-    acc = acc + score1[1]
-    val_acc = val_acc + score2[1]
+    acc.append(score1[1])
+    val_acc.append(score2[1])
     print(len(loss))
     lines = []
     lines.append(str(end_time - start_time))
