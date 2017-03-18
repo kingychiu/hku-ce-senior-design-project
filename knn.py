@@ -20,7 +20,7 @@ del labels
 del features
 import sys
 
-sys.getsizeof(x_train)
+print(sys.getsizeof(x_train))
 # kmeans = KMeans(n_clusters=5, random_state=0).fit(x_train)
 # neigh = KNeighborsClassifier(n_neighbors=3, algorithm='brute')
 # neigh.fit(x_train, y_train)
