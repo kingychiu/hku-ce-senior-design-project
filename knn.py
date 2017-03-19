@@ -14,9 +14,9 @@ with open('./datasets/7blkup_5classes_dfeatures.txt', 'r', encoding='utf8') as f
     f.close()
 
 x_train = features[:35000]
-x_test = features[35000:35050]
+x_test = features[35000:36000]
 y_train = labels[:35000]
-y_test = labels[35000:35050]
+y_test = labels[35000:36000]
 classes = sorted(list(set(y_train)))
 print(classes)
 print('train', len(x_train))
@@ -34,9 +34,6 @@ for sample in x_test:
     num_labels_each_data = 2
     max_i = 0
     p = [classes[max_i]] * num_labels_each_data
-
-    print(len(proba))
-    print(len(classes))
     for i in range(len(proba)):
         if proba[i] > proba[max_i]:
             p[1] = classes[max_i]
