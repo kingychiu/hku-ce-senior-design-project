@@ -30,7 +30,7 @@ neigh.fit(x_train, y_train)
 predictions = []
 count = len(x_test)
 for sample in x_test:
-    distances, neighbors = neigh.kneighbors(sample)
+    distances, neighbors = neigh.kneighbors(sample, n_jobs=-1)
     neighbors = neighbors[0]
     proba = len(classes) * [0]
     for n in neighbors:
