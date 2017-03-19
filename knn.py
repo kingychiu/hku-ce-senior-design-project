@@ -13,10 +13,10 @@ with open('./datasets/7blkup_5classes_dfeatures.txt', 'r', encoding='utf8') as f
     print(len(features[0]))
     f.close()
 
-x_train = features[:5000]
-x_test = features[35000:35050]
-y_train = labels[:5000]
-y_test = labels[35000:35050]
+x_train = features[:35000]
+x_test = features[35000:50000]
+y_train = labels[:35000]
+y_test = labels[35000:50000]
 classes = sorted(list(set(y_train)))
 print(classes)
 print('train', len(x_train))
