@@ -32,7 +32,7 @@ count = len(x_test)
 for sample in x_test:
     distances, neighbors = neigh.kneighbors(sample)
     neighbors = neighbors[0]
-    proba = classes * [0]
+    proba = len(classes) * [0]
     for n in neighbors:
         proba[classes.index(y_train[n])] += 1
     num_labels_each_data = 2
