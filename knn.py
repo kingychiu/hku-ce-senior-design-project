@@ -15,9 +15,9 @@ with open('./datasets/7blkup_5classes_dfeatures.txt', 'r', encoding='utf8') as f
     f.close()
 
 x_train = features[:35000]
-x_test = features[35000:35010]
+x_test = features[35000:35050]
 y_train = labels[:35000]
-y_test = labels[35000:35010]
+y_test = labels[35000:35050]
 print('train', len(x_train))
 print('test', len(x_test))
 del labels
@@ -29,7 +29,7 @@ neigh.fit(x_train, y_train)
 predictions = []
 count = len(x_test)
 for sample in x_test:
-    proba = neigh.predict_proba(sample)
+    proba = neigh.predict_proba(sample)[0]
     num_labels_each_data = 2
     p = [''] * num_labels_each_data
     max_p = proba[0]
