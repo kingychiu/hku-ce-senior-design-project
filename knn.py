@@ -5,11 +5,11 @@ from sklearn.cluster import KMeans
 with open('./datasets/7blkup_5classes_dfeatures.txt', 'r', encoding='utf8') as f:
     lines = f.readlines()
     labels = []
-    classes = sorted(list(set(labels)))
     features = []
     for line in lines:
         labels.append(line.split('|sep|')[0])
         features.append(line.split('|sep|')[1].split(','))
+    classes = sorted(list(set(labels)))
     print(labels[:10])
     print(len(features[0]))
     f.close()
