@@ -32,12 +32,10 @@ for sample in x_test:
     proba = neigh.predict_proba(sample)[0]
     num_labels_each_data = 2
     p = [''] * num_labels_each_data
-    max_p = proba[0]
     max_i = 0
     for i in range(len(proba)):
-        if proba[i] > max_p:
+        if proba[i] > proba[max_i]:
             p[1] = classes[max_i]
-            max_p = proba[i]
             max_i = i
             p[0] = classes[max_i]
     predictions.append(p)
