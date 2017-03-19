@@ -17,7 +17,8 @@ x_train = features[:35000]
 x_test = features[35000:35050]
 y_train = labels[:35000]
 y_test = labels[35000:35050]
-classes = sorted(list(set(y_test)))
+classes = sorted(list(set(y_train)))
+print(classes)
 print('train', len(x_train))
 print('test', len(x_test))
 del labels
