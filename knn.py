@@ -33,6 +33,8 @@ for sample in x_test:
     num_labels_each_data = 2
     p = [''] * num_labels_each_data
     max_i = 0
+    print(len(proba))
+    print(len(classes))
     for i in range(len(proba)):
         if proba[i] > proba[max_i]:
             p[1] = classes[max_i]
