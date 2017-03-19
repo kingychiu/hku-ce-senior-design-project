@@ -32,8 +32,9 @@ count = len(x_test)
 for sample in x_test:
     proba = neigh.predict_proba(sample)[0]
     num_labels_each_data = 2
-    p = [''] * num_labels_each_data
     max_i = 0
+    p = [classes[max_i]] * num_labels_each_data
+
     print(len(proba))
     print(len(classes))
     for i in range(len(proba)):
