@@ -24,13 +24,13 @@ print('test', len(x_test))
 del labels
 del features
 
-neigh = KNeighborsClassifier(n_neighbors=50)
+neigh = KNeighborsClassifier(n_neighbors=50, n_jobs=-1)
 neigh.fit(x_train, y_train)
 
 predictions = []
 count = len(x_test)
 for sample in x_test:
-    distances, neighbors = neigh.kneighbors(sample, n_jobs=-1)
+    distances, neighbors = neigh.kneighbors(sample)
     neighbors = neighbors[0]
     proba = len(classes) * [0]
     for n in neighbors:
