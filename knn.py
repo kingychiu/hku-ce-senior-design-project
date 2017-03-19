@@ -33,11 +33,13 @@ for sample in x_test:
     num_labels_each_data = 2
     p = [''] * num_labels_each_data
     max_p = proba[0]
+    max_i = 0
     for i in range(len(proba)):
         if proba[i] > max_p:
-            p[1] = classes[max_p]
+            p[1] = classes[max_i]
             max_p = proba[i]
-            p[0] = classes[max_p]
+            max_i = i
+            p[0] = classes[max_i]
     predictions.append(p)
     count = count - 1
     print(count)
