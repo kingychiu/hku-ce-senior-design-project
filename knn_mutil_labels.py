@@ -14,9 +14,9 @@ with open('./datasets/7blkup_5classes_dfeatures.txt', 'r', encoding='utf8') as f
     f.close()
 
 x_train = features[:35000]
-x_test = features[35000:35050]
+x_test = features[35000:50000]
 y_train = labels[:35000]
-y_test = labels[35000:35050]
+y_test = labels[35000:50000]
 classes = sorted(list(set(y_train)))
 print(classes)
 print('train', len(x_train))
@@ -24,13 +24,26 @@ print('test', len(x_test))
 del labels
 del features
 
-neigh = KNeighborsClassifier(n_neighbors=10)
+neigh = KNeighborsClassifier(n_neighbors=50)
 neigh.fit(x_train, y_train)
 
 predictions = []
 count = len(x_test)
 for sample in x_test:
-    predictions.append(neigh.predict(sample))
+    distances, neighbors = neigh.kneighbors(sample)
+    neighbors = neighbors[0]
+    proba = len(classes) * [0]
+    for n in neighbors:
+        proba[classes.index(y_train[n])] += 1
+    num_labels_each_data = 2
+    max_i = 0
+    p = [classes[max_i]] * num_labels_each_data
+    for i in range(len(proba)):
+        if proba[i] > proba[max_i]:
+            p[1] = classes[max_i]
+            max_i = i
+            p[0] = classes[max_i]
+    predictions.append(p)
     count = count - 1
     print(count)
 print(predictions[:10])
@@ -44,7 +57,7 @@ for i in range(len(predictions)):
         total_by_class[p] += 1
     else:
         total_by_class[p] = 1
-    if p == y_test[i]:
+    if y_test[i] in p:
         t += 1
         if p in t_by_class.keys():
             t_by_class[p] += 1
