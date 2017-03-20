@@ -18,6 +18,7 @@ print(len(model.layers))
 # remove and add the new classifier
 model = Model(input=model.input,
                   output=model.layers[13].output)
+model = Sequential(model.layers)
 n = model.output_shape[1]
 model.add(Dense(n))
 model.add(Activation('relu'))
