@@ -18,7 +18,7 @@ print(len(model.layers))
 
 # remove and add the new classifier
 model = Model(input=model.input,
-                  output=model.layers[13].output)
+                  output=model.layers[14].output)
 model.summary()
 
 model = Sequential(model.layers)
