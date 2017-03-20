@@ -12,4 +12,4 @@ model = load_model(model_path)
 print('Read Model Done')
 print(len(model.layers))
 # reset the classification layers
-model.layers[14].reset()
+model.layers[14].build()
