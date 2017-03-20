@@ -13,7 +13,7 @@ from file_io import FileIO
 
 
 def get_data():
-    with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_7blkup_2.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -45,7 +45,7 @@ def get_data():
 x, y, num_classes = get_data()
 x = x.reshape(x.shape[0], x.shape[1], x.shape[2], 1)
 
-model_path = './models/7blkup_4classes.h5'
+model_path = './models/ag_7blkup_2.h5'
 model = load_model(model_path)
 model.summary()
 print('num of layers', len(model.layers))
