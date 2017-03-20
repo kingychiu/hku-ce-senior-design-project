@@ -13,7 +13,7 @@ from file_io import FileIO
 
 
 def get_data():
-    with open('./datasets/ag_7blkup_2.txt', 'r', encoding='utf8') as f:
+    with open('./datasets_gt_50.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -63,6 +63,6 @@ while len(x) != 0 and len(lines) < 100000:
         output = ["%.4f" % item for item in intermediate_output[i].tolist()]
         f = ','.join(output)
         lines.append(batch_y[i] + '|sep|' + f)
-FileIO.write_lines_to_file('./datasets/7blkup_2_dfeatures.txt', lines)
+FileIO.write_lines_to_file('./datasets/7blkup_dfeatures.txt', lines)
 
 
