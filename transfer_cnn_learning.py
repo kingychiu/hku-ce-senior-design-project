@@ -14,7 +14,9 @@ from sklearn.utils import shuffle
 model_path = './models/7blkup_4classes.h5'
 model = load_model(model_path)
 print('Read Model Done')
+model.summary()
 print(len(model.layers))
+
 # remove and add the new classifier
 model = Model(input=model.input,
                   output=model.layers[13].output)
