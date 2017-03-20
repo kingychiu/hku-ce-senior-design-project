@@ -13,7 +13,7 @@ from file_io import FileIO
 
 
 def get_data():
-    with open('./datasets_gt_50.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
