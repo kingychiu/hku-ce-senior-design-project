@@ -17,17 +17,12 @@ print('Read Model Done')
 print(len(model.layers))
 model.summary()
 
-# remove and add the new classifier
-model = Model(input=model.input,
-                  output=model.layers[12].output)
+model.layers[13] = Dense(1536)
+model.layers[14] = Activation('relu', name='cls_act1')
+model.layers[15] = Dropout(0.25)
+model.layers[16] = Dense(5)
+model.layers[17] = Activation('softmax', name='cls_act2')
 
-model = Sequential(model.layers)
-n = model.output_shape[1]
-model.add(Dense(n))
-model.add(Activation('relu', name='cls_act1'))
-model.add(Dropout(0.25))
-model.add(Dense(5))
-model.add(Activation('softmax', name='cls_act2'))
 model.summary()
 print(len(model.layers))
 model.compile(loss='categorical_crossentropy',
