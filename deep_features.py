@@ -63,6 +63,6 @@ while len(x) != 0 and len(lines) < 100000:
         output = ["%.4f" % item for item in intermediate_output[i].tolist()]
         f = ','.join(output)
         lines.append(batch_y[i] + '|sep|' + f)
-FileIO.write_lines_to_file('./datasets/7blkup_5classes_dfeatures.txt', lines)
+FileIO.write_lines_to_file('./datasets/7blkup_2_dfeatures.txt', lines)
 
 
