@@ -26,6 +26,7 @@ model.add(Dropout(0.25))
 model.add(Dense(5))
 model.add(Activation('softmax', name='cls_act2'))
 model.summary()
+print(len(model.layers))
 model.compile(loss='categorical_crossentropy',
               optimizer=Adam(),
               metrics=['accuracy'])
