@@ -13,9 +13,9 @@ with open('./datasets/7blkup_dfeatures.txt', 'r', encoding='utf8') as f:
     print(len(features[0]))
     f.close()
 
-x_train = features[:5000]
+x_train = features[:10000]
 x_test = features[50000:100000]
-y_train = labels[:5000]
+y_train = labels[:10000]
 y_test = labels[50000:100000]
 # x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.3, random_state=42)
 classes = sorted(list(set(y_train)))
