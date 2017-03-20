@@ -23,10 +23,10 @@ model.layers.pop()
 model.layers.pop()
 
 model.add(Dense(1536))
-model.add(Activation('relu'))
-model.add(Dropout(0.25))
+model.add(Activation('relu', name='a_cl_1'))
+model.add(Dropout(0.25, name='do_cl_1'))
 model.add(Dense(5))
-model.add(Activation('softmax'))
+model.add(Activation('softmax', name='a_cl_2'))
 model.summary()
 print(len(model.layers))
 model.compile(loss='categorical_crossentropy',
