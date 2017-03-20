@@ -86,7 +86,6 @@ model.add(Dropout(0.25))
 # Fully Connected Layer
 model.add(Flatten())
 print(model.output_shape)
-
 n = model.output_shape[1]
 model.add(Dense(n))
 model.add(Activation('relu'))
