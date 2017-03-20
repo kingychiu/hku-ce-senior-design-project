@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/amz_7blkup_2.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/amz_7blkup.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
