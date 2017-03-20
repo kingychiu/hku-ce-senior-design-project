@@ -13,10 +13,11 @@ with open('./datasets/7blkup_2_dfeatures.txt', 'r', encoding='utf8') as f:
     print(len(features[0]))
     f.close()
 
-x_train = features[:35000]
-x_test = features[35000:35050]
-y_train = labels[:35000]
-y_test = labels[35000:35050]
+# x_train = features[:35000]
+# x_test = features[35000:35050]
+# y_train = labels[:35000]
+# y_test = labels[35000:35050]
+x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.3, random_state=42)
 classes = sorted(list(set(y_train)))
 print(classes)
 print('train', len(x_train))
