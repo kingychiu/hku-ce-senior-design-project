@@ -51,6 +51,8 @@ model.summary()
 print('num of layers', len(model.layers))
 intermediate_layer_model = Model(input=model.input,
                                  output=model.layers[12].output)
+intermediate_layer_model.summary()
+
 lines = []
 while len(x) != 0 and len(lines) < 100000:
     batch_x = x[:128]
