@@ -21,10 +21,10 @@ model = Model(input=model.input,
 model = Sequential(model.layers)
 n = model.output_shape[1]
 model.add(Dense(n))
-model.add(Activation('relu'))
+model.add(Activation('relu', name='cls_act1'))
 model.add(Dropout(0.25))
 model.add(Dense(5))
-model.add(Activation('softmax'))
+model.add(Activation('softmax', name='cls_act2'))
 model.summary()
 model.compile(loss='categorical_crossentropy',
               optimizer=Adam(),
