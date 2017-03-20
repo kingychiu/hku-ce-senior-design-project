@@ -15,11 +15,11 @@ model_path = './models/7blkup_4classes.h5'
 model = load_model(model_path)
 print('Read Model Done')
 print(len(model.layers))
+model.summary()
 
 # remove and add the new classifier
 model = Model(input=model.input,
                   output=model.layers[12].output)
-model.summary()
 
 model = Sequential(model.layers)
 n = model.output_shape[1]
