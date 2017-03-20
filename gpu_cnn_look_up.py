@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/imdb_7blkup_2.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -104,7 +104,7 @@ val_acc = []
 start_time = datetime.datetime.now()
 for i in range(0, 100):
     model.fit(x_train, y_train, 128, epoch_step,
-                        verbose=1, validation_data=(x_test, y_test))
+              verbose=1, validation_data=(x_test, y_test))
     end_time = datetime.datetime.now()
     print(str(end_time - start_time))
     score1 = model.evaluate(x_train, y_train, verbose=0)
@@ -118,5 +118,5 @@ for i in range(0, 100):
     lines.append(str(end_time - start_time))
     lines.append(','.join([str(a) for a in acc]))
     lines.append(','.join([str(a) for a in val_acc]))
-    FileIO.write_lines_to_file('./7blkup_4classes.log', lines)
-    model.save('./models/7blkup_4classes.h5')
+    FileIO.write_lines_to_file('./imdb_7blkup.log', lines)
+    model.save('./models/imdb_7blkup.h5')
