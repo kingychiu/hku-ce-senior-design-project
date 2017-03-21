@@ -2,7 +2,7 @@
 import numpy as np
 # keras
 from keras.utils import np_utils
-from keras.models import load_model,Sequential,Model
+from keras.models import load_model, Sequential, Model
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
@@ -14,12 +14,13 @@ from sklearn.utils import shuffle
 from file_io import FileIO
 import datetime
 
-def get_data():
-    with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
+
+### DATA ###
+def get_data(path):
+    with open(path, 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
-        print(len(lines))
         for line in lines:
             matrix = []
             labels.append(line.split('|l|')[0])
@@ -38,27 +39,76 @@ def get_data():
         classes = sorted(list(set(labels)))
         y = np.asarray([classes.index(item) for item in labels])
         print('Labels', classes)
-
         # shuffle
         x, y = shuffle(x, y, random_state=0)
+        ## cut
+        x = x[:50000]
+        y = y[:50000]
+        print(len(x))
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
         f.close()
         return x_train, x_test, y_train, y_test, len(classes)
 
-x_train, x_test, y_train, y_test, num_classes = get_data()
+
+x_train = {}
+x_test = {}
+y_train = {}
+y_test = {}
+num_classes = {}
+x_train['ag1'], x_test['ag1'], y_train['ag1'], y_test['ag1'], num_classes['ag1'] = get_data(
+    './datasets/ag_7blkup_4_cl_gt_50.txt')
+x_train['ag2'], x_test['ag2'], y_train['ag2'], y_test['ag2'], num_classes['ag2'] = get_data(
+    './datasets/ag_7blkup_2.txt')
 
 # Convert class vectors to binary class matrices
-y_train = np_utils.to_categorical(y_train, num_classes)
-y_test = np_utils.to_categorical(y_test, num_classes)
-print('# Training Data', x_train.shape, y_train.shape)
+y_train['ag1'] = np_utils.to_categorical(y_train['ag1'], num_classes['ag1'])
+y_train['ag2'] = np_utils.to_categorical(y_train['ag2'], num_classes['ag2'])
+y_test['ag1'] = np_utils.to_categorical(y_test['ag1'], num_classes['ag1'])
+y_test['ag2'] = np_utils.to_categorical(y_test['ag2'], num_classes['ag2'])
 # Reshape
-x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
-x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
-print('# Training Data', x_train.shape, y_train.shape)
-print('# Testing Data', x_test.shape, y_test.shape)
-# model config
-input_shape = (x_test.shape[1], x_test.shape[2], x_test.shape[3])
+x_train['ag1'] = x_train['ag1'].reshape(x_train['ag1'].shape[0], x_train['ag1'].shape[1],
+                                        x_train['ag1'].shape[2], 1)
+x_train['ag2'] = x_train['ag2'].reshape(x_train['ag2'].shape[0], x_train['ag2'].shape[1],
+                                        x_train['ag2'].shape[2], 1)
+x_test['ag1'] = x_test['ag1'].reshape(x_test['ag1'].shape[0], x_test['ag1'].shape[1],
+                                      x_test['ag1'].shape[2], 1)
+x_test['ag2'] = x_test['ag2'].reshape(x_test['ag2'].shape[0], x_test['ag2'].shape[1],
+                                      x_test['ag2'].shape[2], 1)
+### END OF DATA ###
+
+### COMMON CNN LAYERS ###
+input_shape = (x_train['ag1'].shape[1], x_train['ag1'].shape[2], x_train['ag1'].shape[3])
 epoch_step = 1
+convLayers = Sequential()
+convLayers.add(Convolution2D(2 ** 7, 3, 3,
+                             border_mode="same",
+                             input_shape=input_shape))
+convLayers.add(Activation('relu'))
+convLayers.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
+convLayers.add(Activation('relu'))
+convLayers.add(MaxPooling2D(pool_size=(4, 2)))
+convLayers.add(Dropout(0.25))
+
+convLayers.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
+convLayers.add(Activation('relu'))
+convLayers.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
+convLayers.add(Activation('relu'))
+convLayers.add(MaxPooling2D(pool_size=(4, 2)))
+convLayers.add(Dropout(0.25))
+convLayers.add(Flatten())
+print(convLayers.output())
+### END OF COMMON CNN LAYERS ###
+
+
+
+
+
+
+
+
+
+
+
 
 model_path = './models/ag1_ag2.h5'
 model = load_model(model_path)
@@ -82,7 +132,6 @@ model.compile(loss='categorical_crossentropy',
               optimizer=Adam(),
               metrics=['accuracy'])
 
-
 loss = []
 acc = []
 val_acc = []
@@ -105,4 +154,3 @@ for i in range(0, 100):
     lines.append(','.join([str(a) for a in val_acc]))
     FileIO.write_lines_to_file('./ag1_ag2.log', lines)
     model.save('./models/ag1_ag2.h5')
-
