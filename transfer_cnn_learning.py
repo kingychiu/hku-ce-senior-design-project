@@ -138,8 +138,10 @@ for i in range(0, 10):
                       training_model.layers.pop(),
                       training_model.layers.pop(),
                       training_model.layers.pop()]
-        print(pop_layers)
+        pop_layers.reverse()
         # 2 save them into Model['ag2']
+        Models['ag2'] = pop_layers
+        #
         break
     else:
         # train on ag1
