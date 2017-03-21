@@ -96,7 +96,7 @@ convLayers.add(Activation('relu'))
 convLayers.add(MaxPooling2D(pool_size=(4, 2)))
 convLayers.add(Dropout(0.25))
 convLayers.add(Flatten())
-print(convLayers.output())
+print(convLayers.output_shape)
 ### END OF COMMON CNN LAYERS ###
 
 
