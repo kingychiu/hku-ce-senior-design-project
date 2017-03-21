@@ -15,7 +15,7 @@ from file_io import FileIO
 import datetime
 
 def get_data():
-    with open('./datasets/ag_7blkup_2.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -103,6 +103,6 @@ for i in range(0, 100):
     lines.append(str(end_time - start_time))
     lines.append(','.join([str(a) for a in acc]))
     lines.append(','.join([str(a) for a in val_acc]))
-    FileIO.write_lines_to_file('./ag_7blkup_2.log', lines)
-    model.save('./models/ag_7blkup_2.h5')
+    FileIO.write_lines_to_file('./ag1_ag2.log', lines)
+    model.save('./models/ag1_ag2.h5')
 
