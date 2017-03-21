@@ -143,6 +143,12 @@ def renew_fc_layers(model, out_dim):
 
 ### END OF HELPER FUNC ###
 ### TRAINING MODEL ###
+acc = {}
+acc['ag1'] = []
+acc['ag2'] = []
+val_acc = {}
+val_acc['ag1'] = []
+val_acc['ag2'] = []
 training_model = create_cnn_layers()
 for i in range(0, 10):
     if i % 2 == 0:
@@ -151,56 +157,30 @@ for i in range(0, 10):
         print('ag1:', training_model.output_shape)
         training_model.fit(x_train['ag1'], y_train['ag1'], 128, epoch_step,
                            verbose=1, validation_data=(x_test['ag1'], y_test['ag1']))
+        score1 = training_model.evaluate(x_train['ag1'], y_train['ag1'], verbose=0)
+        score2 = training_model.evaluate(x_test['ag1'], y_test['ag1'], verbose=0)
+        print('Train accuracy:', score1[1])
+        print('Test accuracy:', score2[1])
+        acc['ag1'].append(score1[1])
+        val_acc['ag1'].append(score2[1])
     else:
         # train on ag2
         renew_fc_layers(training_model, num_classes['ag2'])
         print('ag2:', training_model.output_shape)
         training_model.fit(x_train['ag2'], y_train['ag2'], 128, epoch_step,
                            verbose=1, validation_data=(x_test['ag2'], y_test['ag2']))
-
-
-#
-# model_path = './models/ag1_ag2.h5'
-# model = load_model(model_path)
-# print('Read Model Done')
-# print(len(model.layers))
-# model.summary()
-# model.layers.pop()
-# model.layers.pop()
-# model.layers.pop()
-# model.layers.pop()
-# model.layers.pop()
-#
-# model.add(Dense(1536, name='d_cl_1'))
-# model.add(Activation('relu', name='a_cl_1'))
-# model.add(Dropout(0.25, name='do_cl_1'))
-# model.add(Dense(num_classes, name='d_cl_2'))
-# model.add(Activation('softmax', name='a_cl_2'))
-# model.summary()
-# print(len(model.layers))
-# model.compile(loss='categorical_crossentropy',
-#               optimizer=Adam(),
-#               metrics=['accuracy'])
-#
-# loss = []
-# acc = []
-# val_acc = []
-# start_time = datetime.datetime.now()
-# for i in range(0, 100):
-#     model.fit(x_train, y_train, 128, epoch_step,
-#               verbose=1, validation_data=(x_test, y_test))
-#     end_time = datetime.datetime.now()
-#     print(str(end_time - start_time))
-#     score1 = model.evaluate(x_train, y_train, verbose=0)
-#     score2 = model.evaluate(x_test, y_test, verbose=0)
-#     print('Train accuracy:', score1[1])
-#     print('Test accuracy:', score2[1])
-#     ## SAVE
-#     acc.append(score1[1])
-#     val_acc.append(score2[1])
-#     lines = []
-#     lines.append(str(end_time - start_time))
-#     lines.append(','.join([str(a) for a in acc]))
-#     lines.append(','.join([str(a) for a in val_acc]))
-#     FileIO.write_lines_to_file('./ag1_ag2.log', lines)
-#     model.save('./models/ag1_ag2.h5')
+        score1 = training_model.evaluate(x_train['ag2'], y_train['ag2'], verbose=0)
+        score2 = training_model.evaluate(x_test['ag2'], y_test['ag2'], verbose=0)
+        print('Train accuracy:', score1[1])
+        print('Test accuracy:', score2[1])
+        acc['ag2'].append(score1[1])
+        val_acc['ag2'].append(score2[1])
+    lines = []
+    lines.append('ag1')
+    lines.append(','.join([str(a) for a in acc['ag1']]))
+    lines.append(','.join([str(a) for a in val_acc['ag1']]))
+    lines.append('ag2')
+    lines.append(','.join([str(a) for a in acc['ag2']]))
+    lines.append(','.join([str(a) for a in val_acc['ag2']]))
+    FileIO.write_lines_to_file('./switch_learning_ag12.log', lines)
+    training_model.save('./models/switch_learning_ag12.h5')
