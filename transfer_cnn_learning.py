@@ -106,17 +106,17 @@ def create_cnn_layers():
 ### CLASSIFICATION MODELS ###
 Models = {}
 Models['ag1'] = []
-Models['ag1'].append(Dense(1536, name='d_cl_1'))
-Models['ag1'].append(Activation('relu', name='a_cl_1'))
-Models['ag1'].append(Dropout(0.25, name='dr_cl_1'))
-Models['ag1'].append(Dense(num_classes['ag1'], name='d_cl_2'))
-Models['ag1'].append(Activation('softmax', name='a_cl_2'))
+Models['ag1'].append(Dense(1536, name='ag1_d_cl_1'))
+Models['ag1'].append(Activation('relu', name='ag1_a_cl_1'))
+Models['ag1'].append(Dropout(0.25, name='ag1_dr_cl_1'))
+Models['ag1'].append(Dense(num_classes['ag1'], name='ag1_d_cl_2'))
+Models['ag1'].append(Activation('softmax', name='ag1_a_cl_2'))
 Models['ag2'] = []
-Models['ag2'].append(Dense(1536, name='d_cl_1'))
-Models['ag2'].append(Activation('relu', name='a_cl_1'))
-Models['ag2'].append(Dropout(0.25, name='dr_cl_1'))
-Models['ag2'].append(Dense(num_classes['ag1'], name='d_cl_2'))
-Models['ag2'].append(Activation('softmax', name='a_cl_2'))
+Models['ag2'].append(Dense(1536, name='ag2_d_cl_1'))
+Models['ag2'].append(Activation('relu', name='ag2_a_cl_1'))
+Models['ag2'].append(Dropout(0.25, name='ag2_dr_cl_1'))
+Models['ag2'].append(Dense(num_classes['ag1'], name='ag2_d_cl_2'))
+Models['ag2'].append(Activation('softmax', name='ag2_a_cl_2'))
 ### END OF CLASSIFICATION MODELS ##
 
 ### TRAINING MODEL ###
