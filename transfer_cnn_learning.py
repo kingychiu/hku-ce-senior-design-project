@@ -154,7 +154,7 @@ for i in range(0, 10):
     else:
         # train on ag2
         renew_fc_layers(training_model, num_classes['ag2'])
-        print('ag1:', training_model.output_shape)
+        print('ag2:', training_model.output_shape)
         training_model.fit(x_train['ag2'], y_train['ag2'], 128, epoch_step,
                            verbose=1, validation_data=(x_test['ag2'], y_test['ag2']))
 
