@@ -1,22 +1,27 @@
 import matplotlib.pyplot as plt
 
-acc = [0.802417329366,0.825154222565,0.839628285518,0.849852409144,0.855087228174,0.860889270172,0.861834641806,0.868598987463,0.868641317536,0.87270218254,0.874034168834,0.878388522343,0.879189971727,0.881839834291,0.884263936474,0.882370371205]
-val_acc = [0.796402138704,0.816544630865,0.828074380391,0.835653330529,0.840591829752,0.843719545926,0.845306450343,0.849020201756,0.847913977933,0.852760291834,0.853135617775,0.854946400826,0.855374404092,0.857191771814,0.858627228914,0.857040324494]
+acc = [
+0.839587939237,0.873963968208,0.874029822668,0.898903993607,0.906326732212,0.910390893271,0.920033868013,0.928867773653,0.929253492641,0.936535114544,0.94089091679,0.946676701637,0.948370102077]
+val_acc = [
+0.833128457278,0.862015980327,0.85762577925,0.876393888835,0.880191412761,0.880827991932,0.884603564833,0.887896215636,0.887435244524,0.88932303099,0.891232768471,0.891649837552,0.890310826241]
 plt.ylabel('Acc.')
 plt.xlabel('Epochs')
 
-acc_line, = plt.plot(acc, label="Training Acc.", linewidth=2)
+acc_line, = plt.plot(acc, label="Train Acc.", linewidth=2)
 val_acc_line, = plt.plot(val_acc, label="Test Acc.", linewidth=2)
 first_legend = plt.legend(handles=[acc_line, val_acc_line], loc=4)
 
 # closest point between 2 line
 min_diff_idx = 0
 max_acc_idx = 0
+max_acc_idx2 = 0
 for i in range(0, len(acc)):
     diff = abs(acc[i] - val_acc[i])
     if abs(acc[i] - val_acc[i]) < abs(acc[min_diff_idx] - val_acc[min_diff_idx]):
         min_diff_idx = i
     if val_acc[i] > val_acc[max_acc_idx]:
+        max_acc_idx = i
+    if acc[i] > acc[max_acc_idx]:
         max_acc_idx = i
 
 # plt.annotate(str(val_acc[min_diff_idx]), xy=(min_diff_idx, val_acc[min_diff_idx]),
@@ -24,13 +29,12 @@ for i in range(0, len(acc)):
 #              arrowprops=dict(facecolor='black', shrink=0.05),
 #              )
 plt.annotate(str(val_acc[max_acc_idx]), xy=(max_acc_idx, val_acc[max_acc_idx]),
-             xytext=(max_acc_idx - 1, val_acc[max_acc_idx] - 0.01),
+             xytext=(max_acc_idx - 2, val_acc[max_acc_idx] - 0.01),
              arrowprops=dict(facecolor='black', shrink=0.05),
              )
-
-plt.annotate(str(acc[max_acc_idx]), xy=(max_acc_idx, acc[max_acc_idx]),
-             xytext=(max_acc_idx - 1, acc[max_acc_idx] - 0.01),
-             arrowprops=dict(facecolor='black', shrink=0.05),
-             )
+# plt.annotate(str(acc[max_acc_idx]), xy=(max_acc_idx, acc[max_acc_idx]),
+#              xytext=(max_acc_idx - 10, acc[max_acc_idx] - 0.1),
+#              arrowprops=dict(facecolor='black', shrink=0.05),
+#              )
 
 plt.show()

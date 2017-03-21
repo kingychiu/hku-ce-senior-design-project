@@ -111,7 +111,7 @@ def pop_layer(model):
     if not model.outputs:
         raise Exception('Sequential model cannot be popped: model is empty.')
 
-    l = model.layers.pop()
+    model.layers.pop()
     if not model.layers:
         model.outputs = []
         model.inbound_nodes = []
@@ -120,7 +120,6 @@ def pop_layer(model):
         model.layers[-1].outbound_nodes = []
         model.outputs = [model.layers[-1].output]
     model.built = False
-    return l
 
 
 def renew_fc_layers(model, out_dim):
