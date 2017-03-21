@@ -124,10 +124,6 @@ training_model = create_cnn_layers()
 for layer in Models['ag2']:
     training_model.add(layer)
 print(len(training_model.layers))
-# training_model.compile(loss='categorical_crossentropy',
-#                        optimizer=Adam(),
-#                        metrics=['accuracy'])
-
 
 for i in range(0, 10):
     if i % 2 == 0:
@@ -141,11 +137,31 @@ for i in range(0, 10):
         pop_layers.reverse()
         # 2 save them into Model['ag2']
         Models['ag2'] = pop_layers
-        #
-        break
+        # 3 connect Models['ag1'] to Conv Layers
+        for layer in Models['ag1']:
+            training_model.add(layer)
+        training_model.compile(loss='categorical_crossentropy',
+                               optimizer=Adam(),
+                               metrics=['accuracy'])
+        training_model.fit(x_train['ag1'], y_train['ag1'], 128, epoch_step,
+                           verbose=1, validation_data=(x_test['ag1'], y_test['ag1']))
     else:
         # train on ag1
-        pass
+        # 1 pop FC layer from training
+        pop_layers = [training_model.layers.pop(),
+                      training_model.layers.pop(),
+                      training_model.layers.pop(),
+                      training_model.layers.pop(),
+                      training_model.layers.pop()]
+        pop_layers.reverse()
+        # 2 save them into Model['ag1']
+        Models['ag1'] = pop_layers
+        # 3 connect Models['ag2'] to Conv Layers
+        for layer in Models['ag2']:
+            training_model.add(layer)
+        training_model.compile(loss='categorical_crossentropy',
+                               optimizer=Adam(),
+                               metrics=['accuracy'])
 
 
 #
