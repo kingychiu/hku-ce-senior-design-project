@@ -60,7 +60,7 @@ print('# Testing Data', x_test.shape, y_test.shape)
 input_shape = (x_test.shape[1], x_test.shape[2], x_test.shape[3])
 epoch_step = 1
 
-model_path = './models/7blkup_4classes.h5'
+model_path = './models/ag1_ag2.h5'
 model = load_model(model_path)
 print('Read Model Done')
 print(len(model.layers))
