@@ -81,7 +81,7 @@ input_shape = (x_train['ag1'].shape[1], x_train['ag1'].shape[2], x_train['ag1'].
 epoch_step = 1
 
 
-def create_init_model(num_classes):
+def create_cnn_layers():
     init_model = Sequential()
     init_model.add(Convolution2D(2 ** 7, 3, 3,
                                  border_mode="same",
@@ -99,40 +99,44 @@ def create_init_model(num_classes):
     init_model.add(MaxPooling2D(pool_size=(4, 2)))
     init_model.add(Dropout(0.25))
     init_model.add(Flatten())
-    init_model.add(Dense(1536, name='d_cl_1'))
-    init_model.add(Activation('relu', name='a_cl_1'))
-    init_model.add(Dropout(0.25, name='dr_cl_1'))
-    init_model.add(Dense(num_classes, name='d_cl_2'))
-    init_model.add(Activation('softmax', name='a_cl_2'))
-    init_model.compile(loss='categorical_crossentropy',
-                       optimizer=Adam(),
-                       metrics=['accuracy'])
     return init_model
-### END OF COMMON CNN LAYERS TEMPLATE ###
 
+
+### END OF COMMON CNN LAYERS TEMPLATE ###
 ### CLASSIFICATION MODELS ###
 Models = {}
-Models['ag1'] = create_init_model(num_classes['ag1'])
-Models['ag1'].summary()
-Models['ag2'] = create_init_model(num_classes['ag2'])
-Models['ag2'].summary()
+Models['ag1'] = Sequential()
+Models['ag1'].add(Dense(1536, name='d_cl_1'))
+Models['ag1'].add(Activation('relu', name='a_cl_1'))
+Models['ag1'].add(Dropout(0.25, name='dr_cl_1'))
+Models['ag1'].add(Dense(num_classes['ag1'], name='d_cl_2'))
+Models['ag1'].add(Activation('softmax', name='a_cl_2'))
+Models['ag2'] = Sequential()
+Models['ag2'].add(Dense(1536, name='d_cl_1'))
+Models['ag2'].add(Activation('relu', name='a_cl_1'))
+Models['ag2'].add(Dropout(0.25, name='dr_cl_1'))
+Models['ag2'].add(Dense(num_classes['ag1'], name='d_cl_2'))
+Models['ag2'].add(Activation('softmax', name='a_cl_2'))
 ### END OF CLASSIFICATION MODELS ##
 
-l = Models['ag2'].layers.pop()
-print(l)
-l = Models['ag2'].layers.pop()
-print(l)
-l = Models['ag2'].layers.pop()
-print(l)
-l = Models['ag2'].layers.pop()
-print(l)
-l = Models['ag2'].layers.pop()
-print(l)
+### TRAINING MODEL ###
+training_model = create_cnn_layers()
+training_model.add(Models['ag1'])
+print(len(training_model.layers))
+# training_model.compile(loss='categorical_crossentropy',
+#                        optimizer=Adam(),
+#                        metrics=['accuracy'])
+
+
 for i in range(0, 10):
     if i % 2 == 0:
         # train on ag1
         # 1 Transfer the ConvLayers from CNN['ag2']
-        pass
+        l17 = Models['ag2'].layers.pop()
+        l16 = Models['ag2'].layers.pop()
+        l15 = Models['ag2'].layers.pop()
+        l14 = Models['ag2'].layers.pop()
+        l13 = Models['ag2'].layers.pop()
     else:
         # train on ag1
         pass
