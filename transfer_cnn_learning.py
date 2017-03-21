@@ -79,40 +79,42 @@ x_test['ag2'] = x_test['ag2'].reshape(x_test['ag2'].shape[0], x_test['ag2'].shap
 ### COMMON CNN LAYERS TEMPLATE###
 input_shape = (x_train['ag1'].shape[1], x_train['ag1'].shape[2], x_train['ag1'].shape[3])
 epoch_step = 1
-def createInitModel():
-    initModel = Sequential()
-    initModel.add(Convolution2D(2 ** 7, 3, 3,
+
+
+def create_init_model(num_classes):
+    init_model = Sequential()
+    init_model.add(Convolution2D(2 ** 7, 3, 3,
                                  border_mode="same",
                                  input_shape=input_shape))
-    initModel.add(Activation('relu'))
-    initModel.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
-    initModel.add(Activation('relu'))
-    initModel.add(MaxPooling2D(pool_size=(4, 2)))
-    initModel.add(Dropout(0.25))
+    init_model.add(Activation('relu'))
+    init_model.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
+    init_model.add(Activation('relu'))
+    init_model.add(MaxPooling2D(pool_size=(4, 2)))
+    init_model.add(Dropout(0.25))
 
-    initModel.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
-    initModel.add(Activation('relu'))
-    initModel.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
-    initModel.add(Activation('relu'))
-    initModel.add(MaxPooling2D(pool_size=(4, 2)))
-    initModel.add(Dropout(0.25))
-    initModel.add(Flatten())
-    initModel.add(Dense(1536, name='d_cl_1'))
-    initModel.add(Activation('relu', name='a_cl_1'))
-    initModel.add(Dropout(0.25, name='dr_cl_1'))
-    initModel.add(Dense(num_classes, name='d_cl_2'))
-    initModel.add(Activation('softmax', name='a_cl_2'))
-    initModel.compile(loss='categorical_crossentropy',
+    init_model.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
+    init_model.add(Activation('relu'))
+    init_model.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
+    init_model.add(Activation('relu'))
+    init_model.add(MaxPooling2D(pool_size=(4, 2)))
+    init_model.add(Dropout(0.25))
+    init_model.add(Flatten())
+    init_model.add(Dense(1536, name='d_cl_1'))
+    init_model.add(Activation('relu', name='a_cl_1'))
+    init_model.add(Dropout(0.25, name='dr_cl_1'))
+    init_model.add(Dense(num_classes, name='d_cl_2'))
+    init_model.add(Activation('softmax', name='a_cl_2'))
+    init_model.compile(loss='categorical_crossentropy',
                   optimizer=Adam(),
                   metrics=['accuracy'])
-    return initModel
+    return init_model
 ### END OF COMMON CNN LAYERS TEMPLATE ###
 
 ### CLASSIFICATION MODELS ###
 Models = {}
-Models['ag1'] = createInitModel()
+Models['ag1'] = create_init_model(num_classes['ag1'])
 Models['ag1'].summery()
-Models['ag2'] = createInitModel()
+Models['ag2'] = create_init_model(num_classes['ag2'])
 Models['ag2'].summery()
 ### END OF CLASSIFICATION MODELS ##
 
