@@ -2,7 +2,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.cluster import KMeans
 
-with open('./datasets/7blkup_dfeatures.txt', 'r', encoding='utf8') as f:
+with open('./datasets/ag1_CNN_ag12_df.txt', 'r', encoding='utf8') as f:
     lines = f.readlines()
     labels = []
     features = []
