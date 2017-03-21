@@ -120,6 +120,23 @@ Models['ag2'].append(Activation('softmax', name='ag2_a_cl_2'))
 ### END OF CLASSIFICATION MODELS ##
 
 ### TRAINING MODEL ###
+
+
+def pop_layer(model):
+    if not model.outputs:
+        raise Exception('Sequential model cannot be popped: model is empty.')
+
+    l = model.layers.pop()
+    if not model.layers:
+        model.outputs = []
+        model.inbound_nodes = []
+        model.outbound_nodes = []
+    else:
+        model.layers[-1].outbound_nodes = []
+        model.outputs = [model.layers[-1].output]
+    model.built = False
+    return l
+
 training_model = create_cnn_layers()
 for layer in Models['ag2']:
     training_model.add(layer)
@@ -129,18 +146,17 @@ for i in range(0, 10):
     if i % 2 == 0:
         # train on ag1
         # 1 pop FC layer from training
-        pop_layers = [training_model.layers.pop(),
-                      training_model.layers.pop(),
-                      training_model.layers.pop(),
-                      training_model.layers.pop(),
-                      training_model.layers.pop()]
+        pop_layers = [pop_layer(training_model),
+                      pop_layer(training_model),
+                      pop_layer(training_model),
+                      pop_layer(training_model),
+                      pop_layer(training_model)]
         pop_layers.reverse()
         # 2 save them into Model['ag2']
         Models['ag2'] = pop_layers
         # 3 connect Models['ag1'] to Conv Layers
         for layer in Models['ag1']:
             training_model.add(layer)
-        training_model.summary()
         training_model.compile(loss='categorical_crossentropy',
                                optimizer=Adam(),
                                metrics=['accuracy'])
@@ -149,11 +165,11 @@ for i in range(0, 10):
     else:
         # train on ag1
         # 1 pop FC layer from training
-        pop_layers = [training_model.layers.pop(),
-                      training_model.layers.pop(),
-                      training_model.layers.pop(),
-                      training_model.layers.pop(),
-                      training_model.layers.pop()]
+        pop_layers = [pop_layer(training_model),
+                      pop_layer(training_model),
+                      pop_layer(training_model),
+                      pop_layer(training_model),
+                      pop_layer(training_model)]
         pop_layers.reverse()
         # 2 save them into Model['ag1']
         Models['ag1'] = pop_layers
