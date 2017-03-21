@@ -132,12 +132,15 @@ print(len(training_model.layers))
 for i in range(0, 10):
     if i % 2 == 0:
         # train on ag1
-        # 1 Transfer the ConvLayers from CNN['ag2']
-        l17 = Models['ag2'].layers.pop()
-        l16 = Models['ag2'].layers.pop()
-        l15 = Models['ag2'].layers.pop()
-        l14 = Models['ag2'].layers.pop()
-        l13 = Models['ag2'].layers.pop()
+        # 1 pop FC layer from training
+        pop_layers = [training_model.layers.pop(),
+                      training_model.layers.pop(),
+                      training_model.layers.pop(),
+                      training_model.layers.pop(),
+                      training_model.layers.pop()]
+        print(pop_layers)
+        # 2 save them into Model['ag2']
+        break
     else:
         # train on ag1
         pass
