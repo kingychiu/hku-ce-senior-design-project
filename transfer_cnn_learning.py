@@ -118,10 +118,20 @@ Models['ag2'] = create_init_model(num_classes['ag2'])
 Models['ag2'].summary()
 ### END OF CLASSIFICATION MODELS ##
 
-
+l = Models['ag2'].layers.pop()
+print(l)
+l = Models['ag2'].layers.pop()
+print(l)
+l = Models['ag2'].layers.pop()
+print(l)
+l = Models['ag2'].layers.pop()
+print(l)
+l = Models['ag2'].layers.pop()
+print(l)
 for i in range(0, 10):
     if i % 2 == 0:
         # train on ag1
+        # 1 Transfer the ConvLayers from CNN['ag2']
         pass
     else:
         # train on ag1
