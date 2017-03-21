@@ -41,10 +41,6 @@ def get_data():
         f.close()
         return x, y, len(classes)
 
-
-x, y, num_classes = get_data()
-x = x.reshape(x.shape[0], x.shape[1], x.shape[2], 1)
-
 model_path = './models/ag_7blkup_2.h5'
 model = load_model(model_path)
 model.summary()
@@ -52,6 +48,9 @@ print('num of layers', len(model.layers))
 intermediate_layer_model = Model(input=model.input,
                                  output=model.layers[12].output)
 intermediate_layer_model.summary()
+
+x, y, num_classes = get_data()
+x = x.reshape(x.shape[0], x.shape[1], x.shape[2], 1)
 
 lines = []
 while len(x) != 0 and len(lines) < 100000:
@@ -65,6 +64,6 @@ while len(x) != 0 and len(lines) < 100000:
         output = ["%.4f" % item for item in intermediate_output[i].tolist()]
         f = ','.join(output)
         lines.append(batch_y[i] + '|sep|' + f)
-FileIO.write_lines_to_file('./datasets/7blkup_dfeatures.txt', lines)
+FileIO.write_lines_to_file('./datasets/7blkup_2_dfeatures.txt', lines)
 
 
