@@ -150,7 +150,7 @@ val_acc = {}
 val_acc['ag1'] = []
 val_acc['ag2'] = []
 training_model = create_cnn_layers()
-for i in range(0, 10):
+for i in range(0, 100):
     if i % 2 == 0:
         # train on ag1
         renew_fc_layers(training_model, num_classes['ag1'])
