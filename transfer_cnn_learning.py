@@ -56,9 +56,9 @@ y_train = {}
 y_test = {}
 num_classes = {}
 x_train['ag1'], x_test['ag1'], y_train['ag1'], y_test['ag1'], num_classes['ag1'] = get_data(
-    './datasets/ag_7blkup_4_cl_gt_50.txt')
+    './datasets/ag_7blkup_10000each.txt')
 x_train['ag2'], x_test['ag2'], y_train['ag2'], y_test['ag2'], num_classes['ag2'] = get_data(
-    './datasets/ag_7blkup_2.txt')
+    './datasets/ag2_7blkup_10000each.txt')
 
 # Convert class vectors to binary class matrices
 y_train['ag1'] = np_utils.to_categorical(y_train['ag1'], num_classes['ag1'])
