@@ -117,12 +117,15 @@ Models['ag2'].append(Activation('relu', name='ag2_a_cl_1'))
 Models['ag2'].append(Dropout(0.25, name='ag2_dr_cl_1'))
 Models['ag2'].append(Dense(num_classes['ag1'], name='ag2_d_cl_2'))
 Models['ag2'].append(Activation('softmax', name='ag2_a_cl_2'))
+
+
 ### END OF CLASSIFICATION MODELS ##
 
 ### TRAINING MODEL ###
 
 
 def pop_layer(model):
+    ## https://github.com/fchollet/keras/issues/2640
     if not model.outputs:
         raise Exception('Sequential model cannot be popped: model is empty.')
 
@@ -136,6 +139,7 @@ def pop_layer(model):
         model.outputs = [model.layers[-1].output]
     model.built = False
     return l
+
 
 training_model = create_cnn_layers()
 for layer in Models['ag2']:
