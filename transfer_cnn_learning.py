@@ -113,7 +113,7 @@ def create_init_model(num_classes):
 ### CLASSIFICATION MODELS ###
 Models = {}
 Models['ag1'] = create_init_model(num_classes['ag1'])
-Models['ag1'].summery()
+Models['ag1'].summary()
 Models['ag2'] = create_init_model(num_classes['ag2'])
 Models['ag2'].summary()
 ### END OF CLASSIFICATION MODELS ##
