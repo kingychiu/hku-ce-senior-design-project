@@ -164,6 +164,7 @@ for i in range(0, 10):
         training_model.compile(loss='categorical_crossentropy',
                                optimizer=Adam(),
                                metrics=['accuracy'])
+        training_model.summary()
         training_model.fit(x_train['ag1'], y_train['ag1'], 128, epoch_step,
                            verbose=1, validation_data=(x_test['ag1'], y_test['ag1']))
     else:
@@ -183,6 +184,7 @@ for i in range(0, 10):
         training_model.compile(loss='categorical_crossentropy',
                                optimizer=Adam(),
                                metrics=['accuracy'])
+        training_model.summary()
 
 
 #
