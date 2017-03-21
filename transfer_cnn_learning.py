@@ -104,9 +104,9 @@ def create_init_model(num_classes):
     init_model.add(Dropout(0.25, name='dr_cl_1'))
     init_model.add(Dense(num_classes, name='d_cl_2'))
     init_model.add(Activation('softmax', name='a_cl_2'))
-    # init_model.compile(loss='categorical_crossentropy',
-    #               optimizer=Adam(),
-    #               metrics=['accuracy'])
+    init_model.compile(loss='categorical_crossentropy',
+                       optimizer=Adam(),
+                       metrics=['accuracy'])
     return init_model
 ### END OF COMMON CNN LAYERS TEMPLATE ###
 
@@ -115,7 +115,7 @@ Models = {}
 Models['ag1'] = create_init_model(num_classes['ag1'])
 Models['ag1'].summery()
 Models['ag2'] = create_init_model(num_classes['ag2'])
-Models['ag2'].summery()
+Models['ag2'].summary()
 ### END OF CLASSIFICATION MODELS ##
 
 
@@ -124,7 +124,7 @@ for i in range(0, 10):
         # train on ag1
         pass
     else:
-        # train on ag2
+        # train on ag1
         pass
 
 
