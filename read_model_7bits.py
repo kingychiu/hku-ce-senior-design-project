@@ -9,7 +9,7 @@ from sklearn.utils import shuffle
 
 
 def get_data():
-    with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/ag_7blkup_2.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -46,7 +46,7 @@ print('Read Data Done')
 y = np_utils.to_categorical(y, num_classes)
 
 
-model_path = './models/7blkup_4classes.h5'
+model_path = './models/ag_7blkup_2.h5'
 model = load_model(model_path)
 print('Read Model Done')
 model.summary()
