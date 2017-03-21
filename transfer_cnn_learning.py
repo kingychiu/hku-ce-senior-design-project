@@ -140,6 +140,7 @@ for i in range(0, 10):
         # 3 connect Models['ag1'] to Conv Layers
         for layer in Models['ag1']:
             training_model.add(layer)
+        training_model.summary()
         training_model.compile(loss='categorical_crossentropy',
                                optimizer=Adam(),
                                metrics=['accuracy'])
