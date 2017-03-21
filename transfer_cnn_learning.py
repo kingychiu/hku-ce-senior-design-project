@@ -103,23 +103,6 @@ def create_cnn_layers():
 
 
 ### END OF COMMON CNN LAYERS TEMPLATE ###
-### CLASSIFICATION MODELS ###
-Models = {}
-Models['ag1'] = []
-Models['ag1'].append(Dense(1536, name='ag1_d_cl_1'))
-Models['ag1'].append(Activation('relu', name='ag1_a_cl_1'))
-Models['ag1'].append(Dropout(0.25, name='ag1_dr_cl_1'))
-Models['ag1'].append(Dense(num_classes['ag1'], name='ag1_d_cl_2'))
-Models['ag1'].append(Activation('softmax', name='ag1_a_cl_2'))
-Models['ag2'] = []
-Models['ag2'].append(Dense(1536, name='ag2_d_cl_1'))
-Models['ag2'].append(Activation('relu', name='ag2_a_cl_1'))
-Models['ag2'].append(Dropout(0.25, name='ag2_dr_cl_1'))
-Models['ag2'].append(Dense(num_classes['ag1'], name='ag2_d_cl_2'))
-Models['ag2'].append(Activation('softmax', name='ag2_a_cl_2'))
-
-
-### END OF CLASSIFICATION MODELS ##
 
 ### TRAINING MODEL ###
 
@@ -142,49 +125,39 @@ def pop_layer(model):
 
 
 training_model = create_cnn_layers()
-for layer in Models['ag2']:
-    training_model.add(layer)
-print(len(training_model.layers))
+
+
+def renew_fc_layers(model, out_dim):
+    pop_layer(model)
+    pop_layer(model)
+    pop_layer(model)
+    pop_layer(model)
+    pop_layer(model)
+    training_model.add(Dense(1536, name='d_cl_1'))
+    training_model.add(Activation('relu', name='a_cl_1'))
+    training_model.add(Dropout(0.25, name='dr_cl_1'))
+    training_model.add(Dense(out_dim, name='d_cl_2'))
+    training_model.add(Activation('softmax', name='a_cl_2'))
+    training_model.compile(loss='categorical_crossentropy',
+                           optimizer=Adam(),
+                           metrics=['accuracy'])
+
 
 for i in range(0, 10):
     if i % 2 == 0:
         # train on ag1
-        # 1 pop FC layer from training
-        pop_layers = [pop_layer(training_model),
-                      pop_layer(training_model),
-                      pop_layer(training_model),
-                      pop_layer(training_model),
-                      pop_layer(training_model)]
-        pop_layers.reverse()
-        # 2 save them into Model['ag2']
-        Models['ag2'] = pop_layers
-        # 3 connect Models['ag1'] to Conv Layers
-        for layer in Models['ag1']:
-            training_model.add(layer)
-        training_model.compile(loss='categorical_crossentropy',
-                               optimizer=Adam(),
-                               metrics=['accuracy'])
+        print('ag1:')
+        renew_fc_layers(training_model, num_classes['ag1'])
         training_model.summary()
         training_model.fit(x_train['ag1'], y_train['ag1'], 128, epoch_step,
                            verbose=1, validation_data=(x_test['ag1'], y_test['ag1']))
     else:
-        # train on ag1
-        # 1 pop FC layer from training
-        pop_layers = [pop_layer(training_model),
-                      pop_layer(training_model),
-                      pop_layer(training_model),
-                      pop_layer(training_model),
-                      pop_layer(training_model)]
-        pop_layers.reverse()
-        # 2 save them into Model['ag1']
-        Models['ag1'] = pop_layers
-        # 3 connect Models['ag2'] to Conv Layers
-        for layer in Models['ag2']:
-            training_model.add(layer)
-        training_model.compile(loss='categorical_crossentropy',
-                               optimizer=Adam(),
-                               metrics=['accuracy'])
+        # train on ag2
+        print('ag2:')
+        renew_fc_layers(training_model, num_classes['ag2'])
         training_model.summary()
+        training_model.fit(x_train['ag2'], y_train['ag2'], 128, epoch_step,
+                           verbose=1, validation_data=(x_test['ag2'], y_test['ag2']))
 
 
 #
