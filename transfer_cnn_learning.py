@@ -104,9 +104,8 @@ def create_cnn_layers():
 
 ### END OF COMMON CNN LAYERS TEMPLATE ###
 
-### TRAINING MODEL ###
 
-
+### MODEL HELPER FUNC ###
 def pop_layer(model):
     ## https://github.com/fchollet/keras/issues/2640
     if not model.outputs:
@@ -124,25 +123,26 @@ def pop_layer(model):
     return l
 
 
-training_model = create_cnn_layers()
-
-
 def renew_fc_layers(model, out_dim):
     pop_layer(model)
     pop_layer(model)
     pop_layer(model)
     pop_layer(model)
     pop_layer(model)
-    training_model.add(Dense(1536, name='d_cl_1'))
-    training_model.add(Activation('relu', name='a_cl_1'))
-    training_model.add(Dropout(0.25, name='dr_cl_1'))
-    training_model.add(Dense(out_dim, name='d_cl_2'))
-    training_model.add(Activation('softmax', name='a_cl_2'))
-    training_model.compile(loss='categorical_crossentropy',
-                           optimizer=Adam(),
-                           metrics=['accuracy'])
+    model.add(Dense(1536, name='d_cl_1'))
+    model.add(Activation('relu', name='a_cl_1'))
+    model.add(Dropout(0.25, name='dr_cl_1'))
+    model.add(Dense(out_dim, name='d_cl_2'))
+    print(model.output_shape)
+    model.add(Activation('softmax', name='a_cl_2'))
+    model.compile(loss='categorical_crossentropy',
+                  optimizer=Adam(),
+                  metrics=['accuracy'])
 
 
+### END OF HELPER FUNC ###
+### TRAINING MODEL ###
+training_model = create_cnn_layers()
 for i in range(0, 10):
     if i % 2 == 0:
         # train on ag1
