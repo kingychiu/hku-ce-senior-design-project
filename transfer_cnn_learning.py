@@ -76,81 +76,96 @@ x_test['ag2'] = x_test['ag2'].reshape(x_test['ag2'].shape[0], x_test['ag2'].shap
                                       x_test['ag2'].shape[2], 1)
 ### END OF DATA ###
 
-### COMMON CNN LAYERS ###
+### COMMON CNN LAYERS TEMPLATE###
 input_shape = (x_train['ag1'].shape[1], x_train['ag1'].shape[2], x_train['ag1'].shape[3])
 epoch_step = 1
-convLayers = Sequential()
-convLayers.add(Convolution2D(2 ** 7, 3, 3,
-                             border_mode="same",
-                             input_shape=input_shape))
-convLayers.add(Activation('relu'))
-convLayers.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
-convLayers.add(Activation('relu'))
-convLayers.add(MaxPooling2D(pool_size=(4, 2)))
-convLayers.add(Dropout(0.25))
+def createInitModel():
+    initModel = Sequential()
+    initModel.add(Convolution2D(2 ** 7, 3, 3,
+                                 border_mode="same",
+                                 input_shape=input_shape))
+    initModel.add(Activation('relu'))
+    initModel.add(Convolution2D(2 ** 7, 3, 3, border_mode='same'))
+    initModel.add(Activation('relu'))
+    initModel.add(MaxPooling2D(pool_size=(4, 2)))
+    initModel.add(Dropout(0.25))
 
-convLayers.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
-convLayers.add(Activation('relu'))
-convLayers.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
-convLayers.add(Activation('relu'))
-convLayers.add(MaxPooling2D(pool_size=(4, 2)))
-convLayers.add(Dropout(0.25))
-convLayers.add(Flatten())
-print(convLayers.output_shape)
-### END OF COMMON CNN LAYERS ###
+    initModel.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
+    initModel.add(Activation('relu'))
+    initModel.add(Convolution2D(2 ** 8, 3, 3, border_mode='same'))
+    initModel.add(Activation('relu'))
+    initModel.add(MaxPooling2D(pool_size=(4, 2)))
+    initModel.add(Dropout(0.25))
+    initModel.add(Flatten())
+    initModel.add(Dense(1536, name='d_cl_1'))
+    initModel.add(Activation('relu', name='a_cl_1'))
+    initModel.add(Dropout(0.25, name='dr_cl_1'))
+    initModel.add(Dense(num_classes, name='d_cl_2'))
+    initModel.add(Activation('softmax', name='a_cl_2'))
+    initModel.compile(loss='categorical_crossentropy',
+                  optimizer=Adam(),
+                  metrics=['accuracy'])
+    return initModel
+### END OF COMMON CNN LAYERS TEMPLATE ###
+
+### CLASSIFICATION MODELS ###
+Models = {}
+Models['ag1'] = createInitModel()
+Models['ag1'].summery()
+Models['ag2'] = createInitModel()
+Models['ag2'].summery()
+### END OF CLASSIFICATION MODELS ##
 
 
+for i in range(0, 10):
+    if i % 2 == 0:
+        pass
+    else:
+        pass
 
 
-
-
-
-
-
-
-
-
-model_path = './models/ag1_ag2.h5'
-model = load_model(model_path)
-print('Read Model Done')
-print(len(model.layers))
-model.summary()
-model.layers.pop()
-model.layers.pop()
-model.layers.pop()
-model.layers.pop()
-model.layers.pop()
-
-model.add(Dense(1536, name='d_cl_1'))
-model.add(Activation('relu', name='a_cl_1'))
-model.add(Dropout(0.25, name='do_cl_1'))
-model.add(Dense(num_classes, name='d_cl_2'))
-model.add(Activation('softmax', name='a_cl_2'))
-model.summary()
-print(len(model.layers))
-model.compile(loss='categorical_crossentropy',
-              optimizer=Adam(),
-              metrics=['accuracy'])
-
-loss = []
-acc = []
-val_acc = []
-start_time = datetime.datetime.now()
-for i in range(0, 100):
-    model.fit(x_train, y_train, 128, epoch_step,
-              verbose=1, validation_data=(x_test, y_test))
-    end_time = datetime.datetime.now()
-    print(str(end_time - start_time))
-    score1 = model.evaluate(x_train, y_train, verbose=0)
-    score2 = model.evaluate(x_test, y_test, verbose=0)
-    print('Train accuracy:', score1[1])
-    print('Test accuracy:', score2[1])
-    ## SAVE
-    acc.append(score1[1])
-    val_acc.append(score2[1])
-    lines = []
-    lines.append(str(end_time - start_time))
-    lines.append(','.join([str(a) for a in acc]))
-    lines.append(','.join([str(a) for a in val_acc]))
-    FileIO.write_lines_to_file('./ag1_ag2.log', lines)
-    model.save('./models/ag1_ag2.h5')
+#
+# model_path = './models/ag1_ag2.h5'
+# model = load_model(model_path)
+# print('Read Model Done')
+# print(len(model.layers))
+# model.summary()
+# model.layers.pop()
+# model.layers.pop()
+# model.layers.pop()
+# model.layers.pop()
+# model.layers.pop()
+#
+# model.add(Dense(1536, name='d_cl_1'))
+# model.add(Activation('relu', name='a_cl_1'))
+# model.add(Dropout(0.25, name='do_cl_1'))
+# model.add(Dense(num_classes, name='d_cl_2'))
+# model.add(Activation('softmax', name='a_cl_2'))
+# model.summary()
+# print(len(model.layers))
+# model.compile(loss='categorical_crossentropy',
+#               optimizer=Adam(),
+#               metrics=['accuracy'])
+#
+# loss = []
+# acc = []
+# val_acc = []
+# start_time = datetime.datetime.now()
+# for i in range(0, 100):
+#     model.fit(x_train, y_train, 128, epoch_step,
+#               verbose=1, validation_data=(x_test, y_test))
+#     end_time = datetime.datetime.now()
+#     print(str(end_time - start_time))
+#     score1 = model.evaluate(x_train, y_train, verbose=0)
+#     score2 = model.evaluate(x_test, y_test, verbose=0)
+#     print('Train accuracy:', score1[1])
+#     print('Test accuracy:', score2[1])
+#     ## SAVE
+#     acc.append(score1[1])
+#     val_acc.append(score2[1])
+#     lines = []
+#     lines.append(str(end_time - start_time))
+#     lines.append(','.join([str(a) for a in acc]))
+#     lines.append(','.join([str(a) for a in val_acc]))
+#     FileIO.write_lines_to_file('./ag1_ag2.log', lines)
+#     model.save('./models/ag1_ag2.h5')
