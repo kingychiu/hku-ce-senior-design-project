@@ -147,16 +147,14 @@ training_model = create_cnn_layers()
 for i in range(0, 10):
     if i % 2 == 0:
         # train on ag1
-        print('ag1:')
         renew_fc_layers(training_model, num_classes['ag1'])
-        training_model.summary()
+        print('ag1:', training_model.output_shape)
         training_model.fit(x_train['ag1'], y_train['ag1'], 128, epoch_step,
                            verbose=1, validation_data=(x_test['ag1'], y_test['ag1']))
     else:
         # train on ag2
-        print('ag2:')
         renew_fc_layers(training_model, num_classes['ag2'])
-        training_model.summary()
+        print('ag1:', training_model.output_shape)
         training_model.fit(x_train['ag2'], y_train['ag2'], 128, epoch_step,
                            verbose=1, validation_data=(x_test['ag2'], y_test['ag2']))
 
