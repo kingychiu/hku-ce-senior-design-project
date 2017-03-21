@@ -59,21 +59,28 @@ x_train['ag1'], x_test['ag1'], y_train['ag1'], y_test['ag1'], num_classes['ag1']
     './datasets/ag_7blkup_10000each.txt')
 x_train['ag2'], x_test['ag2'], y_train['ag2'], y_test['ag2'], num_classes['ag2'] = get_data(
     './datasets/ag2_7blkup_10000each.txt')
-
+x_train['bbc'], x_test['bbc'], y_train['bbc'], y_test['bbc'], num_classes['bbc'] = get_data(
+    './datasets/bbc_7blkup.txt')
 # Convert class vectors to binary class matrices
 y_train['ag1'] = np_utils.to_categorical(y_train['ag1'], num_classes['ag1'])
 y_train['ag2'] = np_utils.to_categorical(y_train['ag2'], num_classes['ag2'])
+y_train['bbc'] = np_utils.to_categorical(y_train['bbc'], num_classes['bbc'])
 y_test['ag1'] = np_utils.to_categorical(y_test['ag1'], num_classes['ag1'])
 y_test['ag2'] = np_utils.to_categorical(y_test['ag2'], num_classes['ag2'])
+y_test['bbc'] = np_utils.to_categorical(y_test['bbc'], num_classes['bbc'])
 # Reshape
 x_train['ag1'] = x_train['ag1'].reshape(x_train['ag1'].shape[0], x_train['ag1'].shape[1],
                                         x_train['ag1'].shape[2], 1)
 x_train['ag2'] = x_train['ag2'].reshape(x_train['ag2'].shape[0], x_train['ag2'].shape[1],
                                         x_train['ag2'].shape[2], 1)
+x_train['bbc'] = x_train['bbc'].reshape(x_train['bbc'].shape[0], x_train['bbc'].shape[1],
+                                        x_train['bbc'].shape[2], 1)
 x_test['ag1'] = x_test['ag1'].reshape(x_test['ag1'].shape[0], x_test['ag1'].shape[1],
                                       x_test['ag1'].shape[2], 1)
 x_test['ag2'] = x_test['ag2'].reshape(x_test['ag2'].shape[0], x_test['ag2'].shape[1],
                                       x_test['ag2'].shape[2], 1)
+x_test['bbc'] = x_test['bbc'].reshape(x_test['bbc'].shape[0], x_test['bbc'].shape[1],
+                                      x_test['bbc'].shape[2], 1)
 ### END OF DATA ###
 
 ### COMMON CNN LAYERS TEMPLATE###
@@ -145,12 +152,14 @@ def renew_fc_layers(model, out_dim):
 acc = {}
 acc['ag1'] = []
 acc['ag2'] = []
+acc['bbc'] = []
 val_acc = {}
 val_acc['ag1'] = []
 val_acc['ag2'] = []
+val_acc['bbc'] = []
 training_model = create_cnn_layers()
 for i in range(0, 100):
-    if i % 2 == 0:
+    if i % 3 == 0:
         # train on ag1
         renew_fc_layers(training_model, num_classes['ag1'])
         print('ag1:', training_model.output_shape)
@@ -162,7 +171,7 @@ for i in range(0, 100):
         print('Test accuracy:', score2[1])
         acc['ag1'].append(score1[1])
         val_acc['ag1'].append(score2[1])
-    else:
+    elif i % 3 == 1:
         # train on ag2
         renew_fc_layers(training_model, num_classes['ag2'])
         print('ag2:', training_model.output_shape)
@@ -174,6 +183,18 @@ for i in range(0, 100):
         print('Test accuracy:', score2[1])
         acc['ag2'].append(score1[1])
         val_acc['ag2'].append(score2[1])
+    else:
+        # train on bbc
+        renew_fc_layers(training_model, num_classes['bbc'])
+        print('bbc:', training_model.output_shape)
+        training_model.fit(x_train['bbc'], y_train['bbc'], 128, epoch_step,
+                           verbose=1, validation_data=(x_test['bbc'], y_test['bbc']))
+        score1 = training_model.evaluate(x_train['bbc'], y_train['bbc'], verbose=0)
+        score2 = training_model.evaluate(x_test['bbc'], y_test['bbc'], verbose=0)
+        print('Train accuracy:', score1[1])
+        print('Test accuracy:', score2[1])
+        acc['bbc'].append(score1[1])
+        val_acc['bbc'].append(score2[1])
     lines = []
     lines.append('ag1')
     lines.append(','.join([str(a) for a in acc['ag1']]))
@@ -181,5 +202,8 @@ for i in range(0, 100):
     lines.append('ag2')
     lines.append(','.join([str(a) for a in acc['ag2']]))
     lines.append(','.join([str(a) for a in val_acc['ag2']]))
-    FileIO.write_lines_to_file('./switch_learning_ag12.log', lines)
-    training_model.save('./models/switch_learning_ag12.h5')
+    lines.append('bbc')
+    lines.append(','.join([str(a) for a in acc['bbc']]))
+    lines.append(','.join([str(a) for a in val_acc['bbc']]))
+    FileIO.write_lines_to_file('./switch_learning_ag12bbc.log', lines)
+    training_model.save('./models/switch_learning_ag12bbc.h5')
