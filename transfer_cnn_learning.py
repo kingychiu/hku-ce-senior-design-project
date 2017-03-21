@@ -105,23 +105,24 @@ def create_cnn_layers():
 ### END OF COMMON CNN LAYERS TEMPLATE ###
 ### CLASSIFICATION MODELS ###
 Models = {}
-Models['ag1'] = Sequential()
-Models['ag1'].add(Dense(1536, name='d_cl_1'))
-Models['ag1'].add(Activation('relu', name='a_cl_1'))
-Models['ag1'].add(Dropout(0.25, name='dr_cl_1'))
-Models['ag1'].add(Dense(num_classes['ag1'], name='d_cl_2'))
-Models['ag1'].add(Activation('softmax', name='a_cl_2'))
-Models['ag2'] = Sequential()
-Models['ag2'].add(Dense(1536, name='d_cl_1'))
-Models['ag2'].add(Activation('relu', name='a_cl_1'))
-Models['ag2'].add(Dropout(0.25, name='dr_cl_1'))
-Models['ag2'].add(Dense(num_classes['ag1'], name='d_cl_2'))
-Models['ag2'].add(Activation('softmax', name='a_cl_2'))
+Models['ag1'] = []
+Models['ag1'].append(Dense(1536, name='d_cl_1'))
+Models['ag1'].append(Activation('relu', name='a_cl_1'))
+Models['ag1'].append(Dropout(0.25, name='dr_cl_1'))
+Models['ag1'].append(Dense(num_classes['ag1'], name='d_cl_2'))
+Models['ag1'].append(Activation('softmax', name='a_cl_2'))
+Models['ag2'] = []
+Models['ag2'].append(Dense(1536, name='d_cl_1'))
+Models['ag2'].append(Activation('relu', name='a_cl_1'))
+Models['ag2'].append(Dropout(0.25, name='dr_cl_1'))
+Models['ag2'].append(Dense(num_classes['ag1'], name='d_cl_2'))
+Models['ag2'].append(Activation('softmax', name='a_cl_2'))
 ### END OF CLASSIFICATION MODELS ##
 
 ### TRAINING MODEL ###
 training_model = create_cnn_layers()
-training_model.add(Models['ag1'])
+for layer in Models['ag2']:
+    training_model.add(layer)
 print(len(training_model.layers))
 # training_model.compile(loss='categorical_crossentropy',
 #                        optimizer=Adam(),
