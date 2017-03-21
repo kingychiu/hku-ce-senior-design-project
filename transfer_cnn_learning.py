@@ -133,7 +133,7 @@ def renew_fc_layers(model, out_dim):
     model.add(Activation('relu', name='a_cl_1'))
     model.add(Dropout(0.25, name='dr_cl_1'))
     model.add(Dense(out_dim, name='d_cl_2'))
-    print(model.output_shape)
+    print(model.summary())
     model.add(Activation('softmax', name='a_cl_2'))
     model.compile(loss='categorical_crossentropy',
                   optimizer=Adam(),
