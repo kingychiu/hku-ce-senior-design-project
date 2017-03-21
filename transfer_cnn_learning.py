@@ -124,11 +124,12 @@ def pop_layer(model):
 
 
 def renew_fc_layers(model, out_dim):
-    pop_layer(model)
-    pop_layer(model)
-    pop_layer(model)
-    pop_layer(model)
-    pop_layer(model)
+    if len(model) == 18:
+        pop_layer(model)
+        pop_layer(model)
+        pop_layer(model)
+        pop_layer(model)
+        pop_layer(model)
     model.add(Dense(1536, name='d_cl_1'))
     model.add(Activation('relu', name='a_cl_1'))
     model.add(Dropout(0.25, name='dr_cl_1'))
