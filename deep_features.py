@@ -13,7 +13,7 @@ from file_io import FileIO
 
 
 def get_data():
-    with open('./datasets/ag_7blkup_4_cl_gt_50.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/all_7blkup.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -41,7 +41,7 @@ def get_data():
         f.close()
         return x, y, len(classes)
 
-model_path = './models/ag1_ag2.h5'
+model_path = './models/switch_learning_ag12bbc.h5'
 model = load_model(model_path)
 model.summary()
 print('num of layers', len(model.layers))
@@ -64,6 +64,6 @@ while len(x) != 0 and len(lines) < 100000:
         output = ["%.4f" % item for item in intermediate_output[i].tolist()]
         f = ','.join(output)
         lines.append(batch_y[i] + '|sep|' + f)
-FileIO.write_lines_to_file('./datasets/ag1_CNN_ag12_df.txt', lines)
+FileIO.write_lines_to_file('./datasets/switch_ag12bbc.txt', lines)
 
 
