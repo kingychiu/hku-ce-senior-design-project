@@ -57,7 +57,6 @@ for i in range(len(x_test)):
     label_of_sample = y_test[i]
     for n in neighbors:
         summary[label_of_sample][n] += 1
-    break
 
 import operator
 for c in summary.keys():
