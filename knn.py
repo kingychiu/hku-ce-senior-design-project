@@ -4,6 +4,7 @@ from sklearn.cluster import KMeans
 
 with open('./datasets/switch_ag12bbc.txt', 'r', encoding='utf8') as f:
     lines = f.readlines()
+    print(len(lines))
     labels = []
     features = []
     for line in lines:
