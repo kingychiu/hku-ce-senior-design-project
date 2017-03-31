@@ -59,8 +59,12 @@ for i in range(len(x_test)):
         summary[label_of_sample][n] += 1
     break
 
+import operator
 for c in summary.keys():
-    print(c, summary[c])
+    ss = summary[c]
+    print(c)
+    for s in sorted(ss.items(), key=operator.itemgetter(1), reversed=True):
+        print('\t',s[0], s[1])
 
 
 
