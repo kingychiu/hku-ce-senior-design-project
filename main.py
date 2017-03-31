@@ -1,9 +1,9 @@
 from preprocess import PreProcess
 
-p = PreProcess('./datasets/political-media-dataset.txt')
+p = PreProcess('./datasets/amz_review_binary.txt')
 labels, tensor = p.run_look_up()
 print(tensor[0])
-with open('./datasets/political_media_7blkup.txt', 'w', encoding='utf8') as f1:
+with open('./datasets/am_review_dataset_7blkup.txt', 'w', encoding='utf8') as f1:
     document_strs = []
     for matrix in tensor:
         char_strs = []
