@@ -15,11 +15,13 @@ with open('./datasets/switch_ag12bbc.txt', 'r', encoding='utf8') as f:
             stat[label] += 1
             labels.append(label)
             features.append(line.split('|sep|')[1].split(','))
-        else:
+        elif label not in stat.keys():
             print(label)
             stat[label] = 1
             labels.append(label)
             features.append(line.split('|sep|')[1].split(','))
+        else:
+            pass
     f.close()
 
 print(stat)
