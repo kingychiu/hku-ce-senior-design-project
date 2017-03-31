@@ -26,7 +26,7 @@ print('test', len(x_test))
 del labels
 del features
 
-neigh = KNeighborsClassifier(n_neighbors=10)
+neigh = KNeighborsClassifier(n_neighbors=100)
 neigh.fit(x_train, y_train)
 
 predictions = []
