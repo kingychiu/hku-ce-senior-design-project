@@ -43,31 +43,42 @@ neigh.fit(x_train, y_train)
 
 predictions = []
 count = len(x_test)
-for sample in x_test:
-    predictions.append(neigh.predict(sample))
-    count = count - 1
-    print(count)
-print(predictions[:10])
 
-t = 0
-t_by_class = {}
-total_by_class = {}
-for i in range(len(predictions)):
-    p = predictions[i][0]
-    if p in total_by_class.keys():
-        total_by_class[p] += 1
-    else:
-        total_by_class[p] = 1
-    if p == y_test[i]:
-        t += 1
-        if p in t_by_class.keys():
-            t_by_class[p] += 1
-        else:
-            t_by_class[p] = 1
+for i in range(len(x_test)):
+    sample = x_test[i]
+    distances, neighbors = neigh.kneighbors(sample)
+    neighbors = neighbors[0]
+    label_of_sample = y_test[i]
+    print(neighbors)
+    break
 
-print(t / len(predictions))
-print()
-print('knn train data,', len(x_train))
-print('testing data', len(x_test))
-for k in list(t_by_class.keys()):
-    print(k, t_by_class[k] / total_by_class[k])
+
+
+# for sample in x_test:
+#     predictions.append(neigh.predict(sample))
+#     count = count - 1
+#     print(count)
+# print(predictions[:10])
+#
+# t = 0
+# t_by_class = {}
+# total_by_class = {}
+# for i in range(len(predictions)):
+#     p = predictions[i][0]
+#     if p in total_by_class.keys():
+#         total_by_class[p] += 1
+#     else:
+#         total_by_class[p] = 1
+#     if p == y_test[i]:
+#         t += 1
+#         if p in t_by_class.keys():
+#             t_by_class[p] += 1
+#         else:
+#             t_by_class[p] = 1
+#
+# print(t / len(predictions))
+# print()
+# print('knn train data,', len(x_train))
+# print('testing data', len(x_test))
+# for k in list(t_by_class.keys()):
+#     print(k, t_by_class[k] / total_by_class[k])
