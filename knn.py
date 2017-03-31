@@ -47,7 +47,7 @@ count = len(x_test)
 for i in range(len(x_test)):
     sample = x_test[i]
     distances, neighbors = neigh.kneighbors(sample)
-    neighbors = neighbors[0]
+    neighbors = [y_train[n] for n in neighbors[0]]
     label_of_sample = y_test[i]
     print(neighbors)
     break
