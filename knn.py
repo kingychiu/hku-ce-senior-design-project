@@ -44,13 +44,23 @@ neigh.fit(x_train, y_train)
 predictions = []
 count = len(x_test)
 
+summary = {}
+for c in classes:
+    summary[c] = {}
+    for c1 in classes:
+        summary[c][c1] = 0
+
 for i in range(len(x_test)):
     sample = x_test[i]
     distances, neighbors = neigh.kneighbors(sample)
     neighbors = [y_train[n] for n in neighbors[0]]
     label_of_sample = y_test[i]
-    print(neighbors)
+    for n in neighbors:
+        summary[label_of_sample][n] += 1
     break
+
+for c in summary.keys():
+    print(c, summary[c])
 
 
 
