@@ -51,13 +51,14 @@ for c in classes:
         summary[c][c1] = 0
 
 for i in range(len(x_test)):
+    count = count - 1
+    print(count)
     sample = x_test[i]
     distances, neighbors = neigh.kneighbors(sample)
     neighbors = [y_train[n] for n in neighbors[0]]
     label_of_sample = y_test[i]
     for n in neighbors:
         summary[label_of_sample][n] += 1
-
 import operator
 for c in summary.keys():
     ss = summary[c]
