@@ -63,7 +63,7 @@ import operator
 for c in summary.keys():
     ss = summary[c]
     print(c)
-    for s in sorted(ss.items(), key=operator.itemgetter(1), reversed=True):
+    for s in sorted(ss.items(), key=operator.itemgetter(1), reverse=True):
         if s[1] != 0:
             print('\t', s[0], s[1])
 
