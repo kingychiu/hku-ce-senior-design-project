@@ -64,7 +64,8 @@ for c in summary.keys():
     ss = summary[c]
     print(c)
     for s in sorted(ss.items(), key=operator.itemgetter(1), reversed=True):
-        print('\t',s[0], s[1])
+        if s[1] != 0:
+            print('\t', s[0], s[1])
 
 
 
