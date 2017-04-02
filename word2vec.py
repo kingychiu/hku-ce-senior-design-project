@@ -1,8 +1,8 @@
 import gensim
-
+from gensim.models.keyedvectors import KeyedVectors
 
 # load google pretrained word2vec model
-model = gensim.models.Word2Vec.load_word2vec_format('./word2vec_model/GoogleNews-vectors-negative300.bin', binary=True)
+model =  KeyedVectors.load_word2vec_format('./word2vec_model/GoogleNews-vectors-negative300.bin', binary=True)
 
 
 # from bs4 import BeautifulSoup
