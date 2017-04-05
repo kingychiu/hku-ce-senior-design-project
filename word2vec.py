@@ -35,12 +35,12 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
         words = [w for w in words if not w in stops]
         if len(words) <= 3:
             continue
-        vectors = []
+        vectors = np.array([])
         for word in words:
             if text in word_vectors.vocab:
                 vectors.append(word_vectors[text])
 
-        print(len(vectors))
+        print(vectors.shape)
         average_vector = np.sum(vectors) / 300
         print(average_vector.shape)
         new_line = label + '|sep|' + text
