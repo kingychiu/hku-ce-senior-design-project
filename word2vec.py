@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 import re
 from nltk.corpus import stopwords
 import nltk.data
+import operator, functools
 
 sentences = []
 with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
@@ -35,15 +36,16 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
         words = [w for w in words if not w in stops]
         if len(words) <= 3:
             continue
-        vectors = np.array([])
+        vectors = []
         for word in words:
             try:
-                np.append(word_vectors[word], vectors)
+                vectors.append(word_vectors[word])
             except Exception as e:
                 print(e)
 
-        print(vectors.shape)
-        average_vector = np.sum(vectors) / 300
+        print(len(vectors))
+        average_vector = functools.reduce(np.add, vectors)
+        average_vector = average_vector / 300
         print(average_vector.shape)
         new_line = label + '|sep|' + text
         break
