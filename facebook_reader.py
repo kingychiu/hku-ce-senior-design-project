@@ -2,7 +2,7 @@ import requests
 from file_io import FileIO
 base_path = "https://graph.facebook.com"
 token = "1825924290976649|f4a421b77888587f351418a5aa84762c"
-page_ids = ['TheEconomist']
+page_ids = ['BillGates', ]
 
 for page_id in page_ids:
     texts = []
@@ -12,7 +12,9 @@ for page_id in page_ids:
         r = requests.get(url)
         json_dict = r.json()
         for data in json_dict['data']:
-            texts.append(data['message'].replace('\n', ' '))
+            data = data['message'].replace('\n', ' ')
+            if(len(data) >= 50):
+                texts.append(data)
         print(len(texts))
         if len(texts) == 1000:
             return
