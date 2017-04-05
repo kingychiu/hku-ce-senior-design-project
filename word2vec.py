@@ -39,8 +39,8 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
         for word in words:
             try:
                 np.append(word_vectors[word], vectors)
-            except:
-                pass
+            except Exception as e:
+                print(e)
 
         print(vectors.shape)
         average_vector = np.sum(vectors) / 300
