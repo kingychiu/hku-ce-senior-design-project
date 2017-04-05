@@ -2,7 +2,8 @@ import gensim
 from gensim.models.keyedvectors import KeyedVectors
 # numpy
 import numpy as np
-
+from sklearn.utils import shuffle
+from file_io import FileIO
 print('loading word2vec model...')
 # load google pretrained word2vec model
 word_vectors = KeyedVectors.load_word2vec_format(
@@ -15,7 +16,8 @@ from nltk.corpus import stopwords
 import nltk.data
 import operator, functools
 
-sentences = []
+labels = []
+doc_vectors = []
 with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
     lines = f.readlines()
     lines = [line.split('|sep|') for line in lines]
@@ -44,11 +46,21 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
                 # print(e)
                 pass
 
-        print(len(vectors))
         average_vector = functools.reduce(np.add, vectors)
         average_vector = average_vector / 300
-        print(average_vector.shape)
-        print(average_vector)
-        new_line = label + '|sep|' + text
-        break
-        sentences.append(new_line)
+        labels.append(label)
+        doc_vectors.append(average_vector)
+labels = np.array(labels)
+doc_vectors = np.array(labels)
+print(labels.shape)
+print(doc_vectors.shape)
+doc_vectors, labels = shuffle(doc_vectors, labels, random_state=0)
+
+lines = []
+for i in range(len(doc_vectors)):
+    vector = doc_vectors[i]
+    vector = ["%.4f" % item for item in vector[i].tolist()]
+    label = labels[i]
+    lines.append(label + '|sep|' + ','.join(vector))
+FileIO.write_lines_to_file('./datasets/word2vec_ag12bbc.txt', lines)
+
