@@ -38,6 +38,8 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
         vectors = np.array([])
         for word in words:
             if text in word_vectors.vocab:
+                print(word_vectors[text])
+                print(type(word_vectors[text]))
                 vectors.append(word_vectors[text])
 
         print(vectors.shape)
