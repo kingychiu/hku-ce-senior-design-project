@@ -37,7 +37,7 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
             continue
         vectors = np.array([])
         for word in words:
-            if text in word_vectors.vocab:
+            if word in word_vectors.vocab:
                 print(word_vectors[text])
                 print(type(word_vectors[text]))
                 vectors.append(word_vectors[text])
