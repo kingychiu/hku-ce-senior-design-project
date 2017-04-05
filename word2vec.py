@@ -41,12 +41,14 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
             try:
                 vectors.append(word_vectors[word])
             except Exception as e:
-                print(e)
+                # print(e)
+                pass
 
         print(len(vectors))
         average_vector = functools.reduce(np.add, vectors)
         average_vector = average_vector / 300
         print(average_vector.shape)
+        print(average_vector)
         new_line = label + '|sep|' + text
         break
         sentences.append(new_line)
