@@ -60,7 +60,7 @@ print('write output')
 lines = []
 for i in range(len(doc_vectors)):
     vector = doc_vectors[i]
-    vector = ["%.4f" % item for item in vector[i].tolist()]
+    vector = ["%.4f" % item for item in vector.tolist()]
     label = labels[i]
     lines.append(label + '|sep|' + ','.join(vector))
 FileIO.write_lines_to_file('./datasets/word2vec_ag12bbc.txt', lines)
