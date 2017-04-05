@@ -35,12 +35,17 @@ def string27Bits(string):
 
 
 
-# model_path = './models/switch_learning_ag12bbc.h5'
-# model = load_model(model_path)
-#
-# print('num of layers', len(model.layers))
-# intermediate_layer_model = Model(input=model.input,
-#                                  output=model.layers[12].output)
-# intermediate_layer_model.summary()
+
+model_path = './models/switch_learning_ag12bbc.h5'
+model = load_model(model_path)
+
+print('num of layers', len(model.layers))
+intermediate_layer_model = Model(input=model.input,
+                                 output=model.layers[12].output)
+intermediate_layer_model.summary()
 
 
+def get_deep_features(string):
+    input = string27Bits(string)
+    intermediate_output = intermediate_layer_model.predict(input)
+    return intermediate_output
