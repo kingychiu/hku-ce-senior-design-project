@@ -11,7 +11,7 @@ with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
     features = []
     for line in lines:
         label = line.split('|sep|')[0]
-        if label in stat.keys() and stat[label] < 2000:
+        if label in stat.keys() and stat[label] < 5000:
             stat[label] += 1
             labels.append(label)
             features.append(line.split('|sep|')[1].split(','))
