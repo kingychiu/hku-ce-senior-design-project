@@ -113,7 +113,7 @@ def get_labels(string, sumary):
 
 
 print('ready')
-with open('./fb_posts/Federer.txt', 'r', encoding='utf8') as fb_posts:
+with open('./fb_posts/michaelphelps.txt', 'r', encoding='utf8') as fb_posts:
     summary = {}
     for c in classes:
         summary[c] = 0
