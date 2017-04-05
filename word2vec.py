@@ -50,6 +50,9 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
         average_vector = average_vector / 300
         labels.append(label)
         doc_vectors.append(average_vector)
+        print(type(average_vector))
+        print(type(average_vector[0]))
+        break
 print('shuffle vectors')
 labels = np.array(labels)
 doc_vectors = np.array(labels)
