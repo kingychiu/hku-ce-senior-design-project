@@ -60,7 +60,7 @@ def get_deep_features(string):
     return intermediate_output
 
 
-
+print ('loading knn')
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.cluster import KMeans
@@ -100,9 +100,21 @@ del features
 neigh = KNeighborsClassifier(n_neighbors=50)
 neigh.fit(x_train, y_train)
 
+import operator
 def get_labels(string):
+    summary = {}
+    for c in classes:
+        summary[c] = {}
+        for c1 in classes:
+            summary[c][c1] = 0
     sample = get_deep_features(string)
     distances, neighbors = neigh.kneighbors(sample)
     neighbors = [y_train[n] for n in neighbors[0]]
-    return neighbors
+    for n in neighbors:
+        summary[n] += 1
+    for s in sorted(summary.items(), key=operator.itemgetter(1), reverse=True):
+        if s[1] != 0:
+            print('\t', s[0], s[1])
+
+print('ready')
 
