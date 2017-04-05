@@ -50,12 +50,13 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
         average_vector = average_vector / 300
         labels.append(label)
         doc_vectors.append(average_vector)
+print('shuffle vectors')
 labels = np.array(labels)
 doc_vectors = np.array(labels)
 print(labels.shape)
 print(doc_vectors.shape)
 doc_vectors, labels = shuffle(doc_vectors, labels, random_state=0)
-
+print('write output')
 lines = []
 for i in range(len(doc_vectors)):
     vector = doc_vectors[i]
