@@ -1,5 +1,7 @@
 import gensim
 from gensim.models.keyedvectors import KeyedVectors
+# numpy
+import numpy as np
 
 print('loading word2vec model...')
 # load google pretrained word2vec model
@@ -13,7 +15,7 @@ from nltk.corpus import stopwords
 import nltk.data
 
 sentences = []
-with open('../dataset/all_data_set.txt', 'r', encoding='utf8') as f:
+with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
     lines = f.readlines()
     lines = [line.split('|sep|') for line in lines]
     print(len(lines))
@@ -34,10 +36,14 @@ with open('../dataset/all_data_set.txt', 'r', encoding='utf8') as f:
         text = ' '.join(words)
         if len(text.split()) <= 3:
             continue
+        vectors = []
         for word in text:
             if text in word_vectors.keys():
-                print(word_vectors[text])
-                break
+                vectors.append(word_vectors[text])
+
+        print(len(vectors))
+        average_vector = np.sum(vectors)
+        print(len(average_vector))
         new_line = label + '|sep|' + text
         break
         sentences.append(new_line)
