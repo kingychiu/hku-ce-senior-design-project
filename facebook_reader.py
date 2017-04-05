@@ -18,7 +18,7 @@ for page_id in page_ids:
                 if len(data) >= 50:
                     texts.append(data)
         print(len(texts))
-        if len(texts) == 1000:
+        if len(texts) >= 1000:
             return
         if 'paging' in json_dict.keys():
             do(url)
