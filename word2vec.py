@@ -59,7 +59,7 @@ print(doc_vectors.shape)
 doc_vectors, labels = shuffle(doc_vectors, labels, random_state=0)
 print('write output')
 lines = []
-for i in range(len(doc_vectors)):
+for i in range(100000):
     vector = doc_vectors[i]
     vector = ["%.4f" % item for item in vector.tolist()]
     label = labels[i]
