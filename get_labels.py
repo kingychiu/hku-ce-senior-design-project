@@ -58,3 +58,51 @@ def get_deep_features(string):
     input = input.reshape(input.shape[0], input.shape[1], input.shape[2], 1)
     intermediate_output = intermediate_layer_model.predict(input)
     return intermediate_output
+
+
+
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.cluster import KMeans
+
+stat = {}
+
+with open('./datasets/switch_ag12bbc.txt', 'r', encoding='utf8') as f:
+    lines = f.readlines()
+    print(len(lines))
+    labels = []
+    features = []
+    for line in lines:
+        label = line.split('|sep|')[0]
+        if label in stat.keys() and stat[label] < 5000:
+            stat[label] += 1
+            labels.append(label)
+            features.append(line.split('|sep|')[1].split(','))
+        elif label not in stat.keys():
+            print(label)
+            stat[label] = 1
+            labels.append(label)
+            features.append(line.split('|sep|')[1].split(','))
+        else:
+            pass
+    f.close()
+
+print(stat)
+
+x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.3, random_state=42)
+classes = sorted(list(set(y_train)))
+print(classes)
+print('train', len(x_train))
+print('test', len(x_test))
+del labels
+del features
+
+neigh = KNeighborsClassifier(n_neighbors=50)
+neigh.fit(x_train, y_train)
+
+def get_labels(string):
+    sample = get_deep_features(string)
+    distances, neighbors = neigh.kneighbors(sample)
+    neighbors = [y_train[n] for n in neighbors[0]]
+    return neighbors
+
