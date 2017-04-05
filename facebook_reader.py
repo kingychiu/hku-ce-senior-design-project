@@ -11,8 +11,8 @@ for page_id in page_ids:
     def do(url):
         r = requests.get(url)
         json_dict = r.json()
-        print(json_dict)
         for data in json_dict['data']:
+            print(data.keys())
             data = data['message'].replace('\n', ' ')
             if len(data) >= 50:
                 texts.append(data)
