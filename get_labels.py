@@ -42,11 +42,11 @@ def string27Bits(string):
 print('loading model')
 model_path = './models/switch_learning_ag12bbc.h5'
 model = load_model(model_path)
-del model
 
-print('num of layers', len(model.layers))
+
 intermediate_layer_model = Model(input=model.input,
                                  output=model.layers[12].output)
+del model
 intermediate_layer_model.summary()
 
 
