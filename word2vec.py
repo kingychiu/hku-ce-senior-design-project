@@ -42,7 +42,7 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
                 vectors.append(word_vectors[text])
 
         print(len(vectors))
-        average_vector = np.sum(vectors)
+        average_vector = np.sum(vectors) / 300
         print(len(average_vector))
         new_line = label + '|sep|' + text
         break
