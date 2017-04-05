@@ -18,6 +18,7 @@ def char2lookup(char):
     else:
         return 95
 
+
 def string27Bits(string):
     asciis = [char2lookup(char) for char in list(string)]
     if len(asciis) >= 100:
@@ -38,11 +39,9 @@ def string27Bits(string):
     return look_up_matrix
 
 
-
 print('loading model')
 model_path = './models/switch_learning_ag12bbc.h5'
 model = load_model(model_path)
-
 
 intermediate_layer_model = Model(input=model.input,
                                  output=model.layers[12].output)
@@ -60,7 +59,7 @@ def get_deep_features(string):
     return intermediate_output
 
 
-print ('loading knn')
+print('loading knn')
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.cluster import KMeans
@@ -89,7 +88,8 @@ with open('./datasets/switch_ag12bbc.txt', 'r', encoding='utf8') as f:
 
 print(stat)
 
-x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.3, random_state=42)
+x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=0.3,
+                                                    random_state=42)
 classes = sorted(list(set(y_train)))
 print(classes)
 print('train', len(x_train))
@@ -101,27 +101,29 @@ neigh = KNeighborsClassifier(n_neighbors=50)
 neigh.fit(x_train, y_train)
 
 import operator
-def get_labels(string):
-    summary = {}
-    for c in classes:
-        summary[c] = 0
+
+
+def get_labels(string, sumary):
     sample = get_deep_features(string)
     distances, neighbors = neigh.kneighbors(sample)
     neighbors = [y_train[n] for n in neighbors[0]]
     for n in neighbors:
         summary[n] += 1
+    return summary
+
+
+print('ready')
+with open('./fb_posts/technologyreview.txt', 'r', encoding='utf8') as fb_posts:
+    summary = {}
+    for c in classes:
+        summary[c] = 0
+    lines = fb_posts.readlines()
+    count = 0
+    for line in lines:
+        summary = get_labels(line, summary)
+        count += 1
+        print(count)
+
     for s in sorted(summary.items(), key=operator.itemgetter(1), reverse=True):
         if s[1] != 0:
             print('\t', s[0], s[1])
-
-print('ready')
-
-mit_tech_reviews = [
-    '"Now we have to talk about [the Web] as a human right ... the difference in economic and social power between someone who has it and someone who doesn’t means they’re massively disadvantaged."',
-    'Tech news overload? Get the story behind the headline. Become an MIT Technology Review Insider today.',
-    'Picking different types of objects piled into a bin may sound simple, but it remains a huge challenge for robots, especially if the objects are unfamiliar.',
-    'Tim Berners Lee, inventor of the World Web has won the 50th Annual Turing Award (and also $1M from Google). This is the story of how he got there. (Partner content via OpenMind)',
-]
-
-for d in mit_tech_reviews:
-    get_labels(d)
