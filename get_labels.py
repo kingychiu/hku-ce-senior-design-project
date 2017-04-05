@@ -30,6 +30,7 @@ def string27Bits(string):
         binary_look_up = '{0:07b}'.format(char)
         if (len(binary_look_up) != 7):
             print(len(binary_look_up))
+        binary_look_up = binary_look_up.split()
         look_up_matrix.append(binary_look_up)
     return look_up_matrix
 
