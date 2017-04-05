@@ -33,17 +33,16 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
         # Convert words to lower case
         words = text.lower().split()
         words = [w for w in words if not w in stops]
-        text = ' '.join(words)
-        if len(text.split()) <= 3:
+        if len(words) <= 3:
             continue
         vectors = []
-        for word in text:
+        for word in words:
             if text in word_vectors.vocab:
                 vectors.append(word_vectors[text])
 
         print(len(vectors))
         average_vector = np.sum(vectors) / 300
-        print(len(average_vector))
+        print(average_vector.shape)
         new_line = label + '|sep|' + text
         break
         sentences.append(new_line)
