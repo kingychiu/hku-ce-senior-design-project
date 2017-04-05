@@ -13,9 +13,10 @@ for page_id in page_ids:
         json_dict = r.json()
         for data in json_dict['data']:
             print(data.keys())
-            data = data['message'].replace('\n', ' ')
-            if len(data) >= 50:
-                texts.append(data)
+            if 'message' in data.keys():
+                data = data['message'].replace('\n', ' ')
+                if len(data) >= 50:
+                    texts.append(data)
         print(len(texts))
         if len(texts) == 1000:
             return
