@@ -51,7 +51,7 @@ intermediate_layer_model.summary()
 
 x, y, num_classes = get_data()
 x = x.reshape(x.shape[0], x.shape[1], x.shape[2], 1)
-
+print(x.shape)
 lines = []
 while len(x) != 0 and len(lines) < 100000:
     batch_x = x[:128]
