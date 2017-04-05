@@ -47,5 +47,8 @@ intermediate_layer_model.summary()
 
 def get_deep_features(string):
     input = string27Bits(string)
+    input = np.array([input])
+    print(input.shape)
+    input = input.reshape(input.shape[0], input.shape[1], input.shape[2], 1)
     intermediate_output = intermediate_layer_model.predict(input)
     return intermediate_output
