@@ -38,9 +38,7 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
         vectors = np.array([])
         for word in words:
             try:
-                print(word_vectors[word])
-                print(type(word_vectors[word]))
-                vectors.append(word_vectors[word])
+                np.append(word_vectors[word], vectors)
             except:
                 pass
 
