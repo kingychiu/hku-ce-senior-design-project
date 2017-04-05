@@ -1,5 +1,5 @@
 import requests
-
+from file_io import FileIO
 base_path = "https://graph.facebook.com"
 token = "1825924290976649|f4a421b77888587f351418a5aa84762c"
 page_ids = ['technologyreview']
@@ -12,9 +12,12 @@ for page_id in page_ids:
         r = requests.get(url)
         json_dict = r.json()
         for data in json_dict['data']:
-            texts.append(data['message'])
+            texts.append(data['message'].replace('\n', ' '))
         print(len(texts))
+        if len(texts) == 1000:
+            return
         if 'paging' in json_dict.keys():
             do(url)
-
     do(feedRequestUrl)
+    # write text
+    FileIO.write_lines_to_file('./fb_posts/'+page_id+'.txt', texts)
