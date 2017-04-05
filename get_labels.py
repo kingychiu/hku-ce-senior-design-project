@@ -39,7 +39,7 @@ def string27Bits(string):
 
 
 
-
+print('loading model')
 model_path = './models/switch_learning_ag12bbc.h5'
 model = load_model(model_path)
 del model
