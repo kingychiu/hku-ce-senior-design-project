@@ -104,9 +104,7 @@ import operator
 def get_labels(string):
     summary = {}
     for c in classes:
-        summary[c] = {}
-        for c1 in classes:
-            summary[c][c1] = 0
+        summary[c] = 0
     sample = get_deep_features(string)
     distances, neighbors = neigh.kneighbors(sample)
     neighbors = [y_train[n] for n in neighbors[0]]
@@ -118,3 +116,12 @@ def get_labels(string):
 
 print('ready')
 
+mit_tech_reviews = [
+    '"Now we have to talk about [the Web] as a human right ... the difference in economic and social power between someone who has it and someone who doesn’t means they’re massively disadvantaged."',
+    'Tech news overload? Get the story behind the headline. Become an MIT Technology Review Insider today.',
+    'Picking different types of objects piled into a bin may sound simple, but it remains a huge challenge for robots, especially if the objects are unfamiliar.',
+    'Tim Berners Lee, inventor of the World Web has won the 50th Annual Turing Award (and also $1M from Google). This is the story of how he got there. (Partner content via OpenMind)',
+]
+
+for d in mit_tech_reviews:
+    get_labels(d)
