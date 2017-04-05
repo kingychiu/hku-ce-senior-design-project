@@ -4,7 +4,7 @@ from sklearn.cluster import KMeans
 
 stat = {}
 
-with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
+with open('./datasets/switch_ag12bbc.txt', 'r', encoding='utf8') as f:
     lines = f.readlines()
     print(len(lines))
     labels = []
