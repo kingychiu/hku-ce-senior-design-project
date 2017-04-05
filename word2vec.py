@@ -38,7 +38,7 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
             continue
         vectors = []
         for word in text:
-            if text in word_vectors.keys():
+            if text in word_vectors.vocab:
                 vectors.append(word_vectors[text])
 
         print(len(vectors))
