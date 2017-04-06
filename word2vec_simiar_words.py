@@ -27,10 +27,8 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
     tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
     # English stop words
     stops = set(stopwords.words("english"))
-    i = 0
+
     for line in lines:
-        i += 1
-        print(i)
         label = line[0]
         text = line[1]
         # Remove HTML
@@ -54,7 +52,9 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
                         bag_of_words[w[0]] = w[1]
             except:
                 pass
+        print(bag_of_words)
         related_words.append(sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True)[10:])
+        print(len(related_words))
         # print(text)
         # for s in sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True):
         #     if s[1] != 0:
