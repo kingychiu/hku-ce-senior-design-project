@@ -36,8 +36,8 @@ with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
             features.append(line.split('|sep|')[1].split(','))
         else:
             pass
-    print(features)
-    break
+        print(features)
+        break
     f.close()
 
 print(stat)
