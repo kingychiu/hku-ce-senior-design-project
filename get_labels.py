@@ -104,7 +104,6 @@ word_vectors = []
 with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as original_data:
     lines = original_data.readlines()
     word_vectors = [np.array(l.split('|sep|')[1].replace('\n', '').split(',')) for l in lines]
-    word_vectors = [float(v) for v in word_vectors]
 
 def get_labels(string):
     sample = get_deep_features(string)
@@ -120,6 +119,7 @@ with open('./fb_posts/Cristiano.txt', 'r', encoding='utf8') as fb_posts:
         neighbors = get_labels(line)
         for n in neighbors:
             print(n, word_vectors[n])
+            # print(word_vectors.similar_by_vector(word_vectors[n], topn = 5))
         count += 1
         print(count)
         break
