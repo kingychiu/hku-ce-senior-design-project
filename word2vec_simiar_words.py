@@ -27,7 +27,10 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
     tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
     # English stop words
     stops = set(stopwords.words("english"))
+    i = 0
     for line in lines:
+        i += 1
+        print(i)
         label = line[0]
         text = line[1]
         # Remove HTML
@@ -58,12 +61,6 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
         #         print('\t', s[0], s[1])
 
 
-
-# labels = np.array(labels)
-# doc_vectors = np.array(doc_vectors)
-# print(labels.shape)
-# print(doc_vectors.shape)
-# # doc_vectors, labels = shuffle(doc_vectors, labels, random_state=0)
 print('write output')
 lines = []
 for i in range(100000):
