@@ -36,6 +36,8 @@ def get_data():
         classes = sorted(list(set(labels)))
         y = np.asarray(labels)
         print('Labels', classes)
+        # shuffle
+        x, y = shuffle(x, y, random_state=0)
         f.close()
         return x, y, len(classes)
 
