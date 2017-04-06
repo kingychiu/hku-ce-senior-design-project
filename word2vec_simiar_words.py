@@ -39,13 +39,20 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
         words = [w for w in words if not w in stops]
         if len(words) <= 3:
             continue
-        vectors = []
+        bag_of_words = {}
         for word in words:
             # get similar word of the word
             try:
-                print(word, word_vectors.similar_by_word(word, topn=10))
+                simiar_words = word_vectors.similar_by_word(word, topn=10)
+                for w in simiar_words:
+                    if w in bag_of_words.keys():
+                        bag_of_words[w] += 1
+                    else:
+                        bag_of_words[w] = 1
             except:
                 pass
+        print(bag_of_words)
+        break
 
 
 # labels = np.array(labels)
