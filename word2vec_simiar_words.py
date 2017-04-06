@@ -31,21 +31,21 @@ with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
         # get similar word of the word
         try:
             simiar_words = word_vectors.similar_by_vector(vector, topn=10)
-            print(simiar_words)
+            # print(simiar_words)
             for w in simiar_words:
                 if w[0] in bag_of_words.keys():
                     bag_of_words[w[0]] += w[1]
                 else:
                     bag_of_words[w[0]] = w[1]
 
-            print(bag_of_words)
+            # print(bag_of_words)
             related_words.append(
                 sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True)[10:])
             labels.append(label)
             print(len(related_words))
         except Exception as e:
             print(e)
-        break
+        # break
         # print(text)
         # for s in sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True):
         #     if s[1] != 0:
