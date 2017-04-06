@@ -107,16 +107,18 @@ def get_labels(string, summary):
 
 
 # print('ready')
-with open('./fb_posts/LeBron.txt', 'r', encoding='utf8') as fb_posts:
-    summary = {}
-    for c in classes:
-        summary[c] = 0
-    lines = fb_posts.readlines()
-    count = 0
-    for line in lines:
-        summary = get_labels(line, summary)
-        count += 1
-        print(count)
-    for s in sorted(summary.items(), key=operator.itemgetter(1), reverse=True):
-        if s[1] != 0:
-            print('\t', s[0], s[1])
+arr = ['Beckham', 'Federer', 'LeBron', 'Cristiano']
+for file_name in arr:
+    with open('./fb_posts/'+arr+'.txt', 'r', encoding='utf8') as fb_posts:
+        summary = {}
+        for c in classes:
+            summary[c] = 0
+        lines = fb_posts.readlines()
+        count = 0
+        for line in lines:
+            summary = get_labels(line, summary)
+            count += 1
+            print(count)
+        for s in sorted(summary.items(), key=operator.itemgetter(1), reverse=True):
+            if s[1] != 0:
+                print('\t', s[0], s[1])
