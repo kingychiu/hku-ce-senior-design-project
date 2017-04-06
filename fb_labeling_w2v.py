@@ -38,8 +38,6 @@ with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
             features.append(v)
         else:
             pass
-        print(features)
-        break
     f.close()
 
 print(stat)
@@ -56,15 +54,43 @@ del features
 neigh = KNeighborsClassifier(n_neighbors=50)
 neigh.fit(x_train, y_train)
 
-
 print('loading model')
 # load google pretrained word2vec model
 word_vectors = KeyedVectors.load_word2vec_format(
     './word2vec_model/GoogleNews-vectors-negative300.bin', binary=True)
 
+from bs4 import BeautifulSoup
+import re
+from nltk.corpus import stopwords
+import nltk.data
+import operator, functools
 
-def get_deep_features(string):
-    pass
+# Load the punkt tokenizer
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+# English stop words
+stops = set(stopwords.words("english"))
+
+
+def get_deep_features(text):
+    # Remove HTML
+    text = BeautifulSoup(text).get_text()
+    # Remove non-letters
+    text = re.sub("[^a-zA-Z]", " ", text)
+    # Convert words to lower case
+    words = text.lower().split()
+    words = [w for w in words if not w in stops]
+    vectors = []
+    for word in words:
+        try:
+            vectors.append(word_vectors[word])
+        except Exception as e:
+            # print(e)
+            pass
+
+    average_vector = functools.reduce(np.add, vectors)
+    average_vector = average_vector / 300
+    return average_vector
+
 
 word_vectors = []
 with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as original_data:
@@ -72,23 +98,24 @@ with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as original_d
     word_vectors = [l.split('|sep|')[1].replace('\n', '').split(',') for l in lines]
     word_vectors = [map(float, v) for v in word_vectors]
 
-def get_labels(string):
+
+def get_labels(string, summary):
     sample = get_deep_features(string)
     distances, neighbors = neigh.kneighbors(sample)
-    return neighbors[0]
-
-
+    neighbors = [y_train[n] for n in neighbors[0]]
+    for n in neighbors:
+        summary[n] += 1
+    return summary
 
 
 # print('ready')
 with open('./fb_posts/Cristiano.txt', 'r', encoding='utf8') as fb_posts:
+    summary = {}
+    for c in classes:
+        summary[c] = 0
     lines = fb_posts.readlines()
     count = 0
     for line in lines:
-        neighbors = get_labels(line)
-        for n in neighbors:
-            print(n, word_vectors[n])
-            print(trained_word2vec.similar_by_vector(np.array(word_vectors[n]), topn = 5))
+        summary = get_labels(line, summary)
         count += 1
         print(count)
-        break
