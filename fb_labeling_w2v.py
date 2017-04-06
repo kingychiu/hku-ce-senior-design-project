@@ -109,7 +109,7 @@ def get_labels(string, summary):
 # print('ready')
 arr = ['Beckham', 'Federer', 'LeBron', 'Cristiano']
 for file_name in arr:
-    with open('./fb_posts/'+arr+'.txt', 'r', encoding='utf8') as fb_posts:
+    with open('./fb_posts/' + file_name + '.txt', 'r', encoding='utf8') as fb_posts:
         summary = {}
         for c in classes:
             summary[c] = 0
