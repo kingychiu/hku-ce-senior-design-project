@@ -85,20 +85,14 @@ def get_deep_features(text):
         try:
             vectors.append(w2v_model[word])
         except Exception as e:
-            print(e)
+            # print(e)
             pass
-    print(len(vectors))
+    # print(len(vectors))
 
     average_vector = functools.reduce(np.add, vectors)
     average_vector = average_vector / 300
     return average_vector
 
-
-word_vectors = []
-with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as original_data:
-    lines = original_data.readlines()
-    word_vectors = [l.split('|sep|')[1].replace('\n', '').split(',') for l in lines]
-    word_vectors = [map(float, v) for v in word_vectors]
 
 
 def get_labels(string, summary):
@@ -121,3 +115,6 @@ with open('./fb_posts/Cristiano.txt', 'r', encoding='utf8') as fb_posts:
         summary = get_labels(line, summary)
         count += 1
         print(count)
+    for s in sorted(summary.items(), key=operator.itemgetter(1), reverse=True):
+        if s[1] != 0:
+            print('\t', s[0], s[1])
