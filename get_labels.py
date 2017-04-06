@@ -10,7 +10,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 from sklearn.cluster import KMeans
 from file_io import FileIO
-
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.cluster import KMeans
+import operator
 
 def char2lookup(char):
     if ord(char) >= 32 and ord(char) <= 127:
@@ -60,9 +63,6 @@ def get_deep_features(string):
 
 
 print('loading knn')
-from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.cluster import KMeans
 
 stat = {}
 
@@ -100,30 +100,26 @@ del features
 neigh = KNeighborsClassifier(n_neighbors=50)
 neigh.fit(x_train, y_train)
 
-import operator
+original_text = []
+with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as original_data:
+    lines = original_data.readlines()
+    original_text = [l.split('|sep|')[1] for l in lines]
 
 
-def get_labels(string, sumary):
+def get_labels(string):
     sample = get_deep_features(string)
     distances, neighbors = neigh.kneighbors(sample)
-    neighbors = [y_train[n] for n in neighbors[0]]
-    for n in neighbors:
-        summary[n] += 1
-    return summary
+    return neighbors[0]
 
 
 print('ready')
 with open('./fb_posts/Cristiano.txt', 'r', encoding='utf8') as fb_posts:
-    summary = {}
-    for c in classes:
-        summary[c] = 0
     lines = fb_posts.readlines()
     count = 0
     for line in lines:
-        summary = get_labels(line, summary)
+        neighbors = get_labels(line)
+        for n in neighbors:
+            print(n, original_data[n])
         count += 1
         print(count)
-
-    for s in sorted(summary.items(), key=operator.itemgetter(1), reverse=True):
-        if s[1] != 0:
-            print('\t', s[0], s[1])
+        break
