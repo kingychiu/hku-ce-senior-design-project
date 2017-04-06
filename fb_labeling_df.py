@@ -116,10 +116,7 @@ def get_labels(string, summary):
     return summary
 
 
-print('ready')
-arr = ['Beckham', 'Federer', 'LeBron', 'Cristiano']
-for file_name in arr:
-    print(file_name)
+def result(file_name):
     with open('./fb_posts/' + file_name + '.txt', 'r', encoding='utf8') as fb_posts:
         summary = {}
         for c in classes:
@@ -129,8 +126,8 @@ for file_name in arr:
         for line in lines:
             summary = get_labels(line, summary)
             count += 1
-            # print(count)
+            print(count)
+        print(file_name)
         for s in sorted(summary.items(), key=operator.itemgetter(1), reverse=True):
             if s[1] != 0:
                 print('\t', s[0], s[1])
-        fb_posts.close()
