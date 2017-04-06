@@ -56,7 +56,7 @@ neigh.fit(x_train, y_train)
 
 print('loading model')
 # load google pretrained word2vec model
-word_vectors = KeyedVectors.load_word2vec_format(
+w2v_model = KeyedVectors.load_word2vec_format(
     './word2vec_model/GoogleNews-vectors-negative300.bin', binary=True)
 
 from bs4 import BeautifulSoup
@@ -83,7 +83,7 @@ def get_deep_features(text):
     print(words)
     for word in words:
         try:
-            vectors.append(word_vectors[word])
+            vectors.append(w2v_model[word])
         except Exception as e:
             print(e)
             pass
