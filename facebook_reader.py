@@ -4,7 +4,7 @@ from file_io import FileIO
 base_path = "https://graph.facebook.com"
 token = "1825924290976649|f4a421b77888587f351418a5aa84762c"
 # page_ids = ['healthzone.tips']
-page_ids = ['ScienceNOW', 'OpenSourceForU', 'NASA', 'technologyreview']
+page_ids = ['hillaryclinton']
 
 for page_id in page_ids:
     texts = []
