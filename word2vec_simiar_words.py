@@ -25,12 +25,13 @@ with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
 
     for line in lines:
         label = line[0]
-        vector = [i.replace('\n','') for i in line[1]]
+        vector = line[1].replace('\n', '').split(',')
         vector = [float(i) for i in vector]
         bag_of_words = {}
         # get similar word of the word
         try:
             simiar_words = word_vectors.similar_by_vector(vector, topn=10)
+            print(simiar_words)
             for w in simiar_words:
                 if w[0] in bag_of_words.keys():
                     bag_of_words[w[0]] += w[1]
@@ -49,7 +50,6 @@ with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
         # for s in sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True):
         #     if s[1] != 0:
         #         print('\t', s[0], s[1])
-
 
 print('write output')
 lines = []
