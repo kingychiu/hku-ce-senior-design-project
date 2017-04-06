@@ -46,9 +46,9 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
                 simiar_words = word_vectors.similar_by_word(word, topn=10)
                 for w in simiar_words:
                     if w[0] in bag_of_words.keys():
-                        bag_of_words[w[0]] += 1
+                        bag_of_words[w[0]] += w[1]
                     else:
-                        bag_of_words[w[0]] = 1
+                        bag_of_words[w[0]] = w[1]
             except:
                 pass
         print(words)
