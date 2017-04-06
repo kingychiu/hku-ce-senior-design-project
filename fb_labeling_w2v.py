@@ -119,6 +119,7 @@ for file_name in arr:
             summary = get_labels(line, summary)
             count += 1
             print(count)
+        print(file_name)
         for s in sorted(summary.items(), key=operator.itemgetter(1), reverse=True):
             if s[1] != 0:
                 print('\t', s[0], s[1])
