@@ -103,8 +103,8 @@ neigh.fit(x_train, y_train)
 word_vectors = []
 with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as original_data:
     lines = original_data.readlines()
-    word_vectors = [np.array(l.split('|sep|')[1].split(',')) for l in lines]
-
+    word_vectors = [np.array(l.split('|sep|')[1].replace('\n', '').split(',')) for l in lines]
+    word_vectors = [float(v) for v in word_vectors]
 
 def get_labels(string):
     sample = get_deep_features(string)
