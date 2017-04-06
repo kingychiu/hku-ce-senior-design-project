@@ -102,32 +102,31 @@ del features
 neigh = KNeighborsClassifier(n_neighbors=50)
 neigh.fit(x_train, y_train)
 
-word_vectors = []
-with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as original_data:
-    lines = original_data.readlines()
-    word_vectors = [l.split('|sep|')[1].replace('\n', '').split(',') for l in lines]
-    word_vectors = [map(float, v) for v in word_vectors]
 
-def get_labels(string):
+
+def get_labels(string, summary):
     sample = get_deep_features(string)
+    if len(sample) == 0:
+        return summary
     distances, neighbors = neigh.kneighbors(sample)
-    return neighbors[0]
+    neighbors = [y_train[n] for n in neighbors[0]]
+    for n in neighbors:
+        summary[n] += 1
+    return summary
 
 
 
-print('loading word2vec model...')
-# load google pretrained word2vec model
-trained_word2vec = KeyedVectors.load_word2vec_format(
-    './word2vec_model/GoogleNews-vectors-negative300.bin', binary=True)
 print('ready')
-with open('./fb_posts/Cristiano.txt', 'r', encoding='utf8') as fb_posts:
+with open('./fb_posts/LeBron.txt', 'r', encoding='utf8') as fb_posts:
+    summary = {}
+    for c in classes:
+        summary[c] = 0
     lines = fb_posts.readlines()
     count = 0
     for line in lines:
-        neighbors = get_labels(line)
-        for n in neighbors:
-            print(n, word_vectors[n])
-            print(trained_word2vec.similar_by_vector(np.array(word_vectors[n]), topn = 5))
+        summary = get_labels(line, summary)
         count += 1
         print(count)
-        break
+    for s in sorted(summary.items(), key=operator.itemgetter(1), reverse=True):
+        if s[1] != 0:
+            print('\t', s[0], s[1])
