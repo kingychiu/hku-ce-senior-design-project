@@ -36,6 +36,8 @@ with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
             features.append(line.split('|sep|')[1].split(','))
         else:
             pass
+    print(features)
+    break
     f.close()
 
 print(stat)
@@ -75,19 +77,16 @@ def get_labels(string):
 
 
 
-# print('loading word2vec model...')
-# # load google pretrained word2vec model
-# trained_word2vec = KeyedVectors.load_word2vec_format(
-#     './word2vec_model/GoogleNews-vectors-negative300.bin', binary=True)
+
 # print('ready')
-# with open('./fb_posts/Cristiano.txt', 'r', encoding='utf8') as fb_posts:
-#     lines = fb_posts.readlines()
-#     count = 0
-#     for line in lines:
-#         neighbors = get_labels(line)
-#         for n in neighbors:
-#             print(n, word_vectors[n])
-#             print(trained_word2vec.similar_by_vector(np.array(word_vectors[n]), topn = 5))
-#         count += 1
-#         print(count)
-#         break
+with open('./fb_posts/Cristiano.txt', 'r', encoding='utf8') as fb_posts:
+    lines = fb_posts.readlines()
+    count = 0
+    for line in lines:
+        neighbors = get_labels(line)
+        for n in neighbors:
+            print(n, word_vectors[n])
+            print(trained_word2vec.similar_by_vector(np.array(word_vectors[n]), topn = 5))
+        count += 1
+        print(count)
+        break
