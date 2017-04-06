@@ -43,8 +43,8 @@ with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
                 sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True)[10:])
             labels.append(label)
             print(len(related_words))
-        except:
-            pass
+        except Exception as e:
+            print(e)
         break
         # print(text)
         # for s in sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True):
