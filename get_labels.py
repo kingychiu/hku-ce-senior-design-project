@@ -14,6 +14,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.cluster import KMeans
 import operator
+import gensim
+from gensim.models.keyedvectors import KeyedVectors
 
 def char2lookup(char):
     if ord(char) >= 32 and ord(char) <= 127:
@@ -112,6 +114,11 @@ def get_labels(string):
     return neighbors[0]
 
 
+
+print('loading word2vec model...')
+# load google pretrained word2vec model
+trained_word2vec = KeyedVectors.load_word2vec_format(
+    './word2vec_model/GoogleNews-vectors-negative300.bin', binary=True)
 print('ready')
 with open('./fb_posts/Cristiano.txt', 'r', encoding='utf8') as fb_posts:
     lines = fb_posts.readlines()
@@ -120,7 +127,7 @@ with open('./fb_posts/Cristiano.txt', 'r', encoding='utf8') as fb_posts:
         neighbors = get_labels(line)
         for n in neighbors:
             print(n, word_vectors[n])
-            # print(word_vectors.similar_by_vector(word_vectors[n], topn = 5))
+            print(trained_word2vec.similar_by_vector(np.array(word_vectors[n]), topn = 5))
         count += 1
         print(count)
         break

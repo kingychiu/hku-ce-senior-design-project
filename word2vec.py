@@ -56,7 +56,7 @@ labels = np.array(labels)
 doc_vectors = np.array(doc_vectors)
 print(labels.shape)
 print(doc_vectors.shape)
-doc_vectors, labels = shuffle(doc_vectors, labels, random_state=0)
+# doc_vectors, labels = shuffle(doc_vectors, labels, random_state=0)
 print('write output')
 lines = []
 for i in range(100000):
