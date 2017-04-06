@@ -22,10 +22,11 @@ related_words = []
 with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
     lines = f.readlines()
     lines = [line.split('|sep|') for line in lines]
-    print(len(lines))
+
     for line in lines:
         label = line[0]
-        vector = line[1]
+        vector = [i.replace('\n','') for i in line[1]]
+        vector = [float(i) for i in vector]
         bag_of_words = {}
         # get similar word of the word
         try:
@@ -35,12 +36,14 @@ with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
                     bag_of_words[w[0]] += w[1]
                 else:
                     bag_of_words[w[0]] = w[1]
+
+            print(bag_of_words)
+            related_words.append(
+                sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True)[10:])
+            labels.append(label)
+            print(len(related_words))
         except:
             pass
-
-        print(bag_of_words)
-        related_words.append(sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True)[10:])
-        print(len(related_words))
         break
         # print(text)
         # for s in sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True):
