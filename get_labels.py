@@ -100,10 +100,10 @@ del features
 neigh = KNeighborsClassifier(n_neighbors=50)
 neigh.fit(x_train, y_train)
 
-original_text = []
-with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as original_data:
+word_vectors = []
+with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as original_data:
     lines = original_data.readlines()
-    original_text = [l.split('|sep|')[1] for l in lines]
+    word_vectors = [l.split('|sep|')[1] for l in lines]
 
 
 def get_labels(string):
