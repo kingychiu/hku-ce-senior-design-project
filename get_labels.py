@@ -119,7 +119,7 @@ with open('./fb_posts/Cristiano.txt', 'r', encoding='utf8') as fb_posts:
     for line in lines:
         neighbors = get_labels(line)
         for n in neighbors:
-            print(n, original_data[n])
+            print(n, original_text[n])
         count += 1
         print(count)
         break
