@@ -17,6 +17,7 @@ import operator
 import gensim
 from gensim.models.keyedvectors import KeyedVectors
 
+
 def char2lookup(char):
     if ord(char) >= 32 and ord(char) <= 127:
         return ord(char) - 32
@@ -105,7 +106,6 @@ neigh = KNeighborsClassifier(n_neighbors=50)
 neigh.fit(x_train, y_train)
 
 
-
 def get_labels(string, summary):
     sample = get_deep_features(string)
     if len(sample) == 0:
@@ -117,18 +117,21 @@ def get_labels(string, summary):
     return summary
 
 
-
 print('ready')
-with open('./fb_posts/Cristiano.txt', 'r', encoding='utf8') as fb_posts:
-    summary = {}
-    for c in classes:
-        summary[c] = 0
-    lines = fb_posts.readlines()
-    count = 0
-    for line in lines:
-        summary = get_labels(line, summary)
-        count += 1
-        print(count)
-    for s in sorted(summary.items(), key=operator.itemgetter(1), reverse=True):
-        if s[1] != 0:
-            print('\t', s[0], s[1])
+arr = ['Beckham', 'Federer', 'LeBron', 'Cristiano']
+for file_name in arr:
+    print(file_name)
+    with open('./fb_posts/' + file_name + '.txt', 'r', encoding='utf8') as fb_posts:
+        summary = {}
+        for c in classes:
+            summary[c] = 0
+        lines = fb_posts.readlines()
+        count = 0
+        for line in lines:
+            summary = get_labels(line, summary)
+            count += 1
+            # print(count)
+        for s in sorted(summary.items(), key=operator.itemgetter(1), reverse=True):
+            if s[1] != 0:
+                print('\t', s[0], s[1])
+        fb_posts.close()
