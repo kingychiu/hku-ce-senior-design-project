@@ -88,15 +88,17 @@ def get_deep_features(text):
             # print(e)
             pass
     # print(len(vectors))
-
+    if len(vectors) == 0:
+        return []
     average_vector = functools.reduce(np.add, vectors)
     average_vector = average_vector / 300
     return average_vector
 
 
-
 def get_labels(string, summary):
     sample = get_deep_features(string)
+    if len(sample) == 0:
+        return summary
     distances, neighbors = neigh.kneighbors(sample)
     neighbors = [y_train[n] for n in neighbors[0]]
     for n in neighbors:
