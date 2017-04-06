@@ -80,6 +80,7 @@ def get_deep_features(text):
     words = text.lower().split()
     words = [w for w in words if not w in stops]
     vectors = []
+    print(words)
     for word in words:
         try:
             vectors.append(word_vectors[word])
