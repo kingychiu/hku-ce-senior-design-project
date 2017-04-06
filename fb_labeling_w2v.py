@@ -85,8 +85,9 @@ def get_deep_features(text):
         try:
             vectors.append(word_vectors[word])
         except Exception as e:
-            # print(e)
+            print(e)
             pass
+    print(len(vectors))
 
     average_vector = functools.reduce(np.add, vectors)
     average_vector = average_vector / 300
