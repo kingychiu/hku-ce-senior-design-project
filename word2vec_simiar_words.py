@@ -18,7 +18,7 @@ import nltk.data
 import operator, functools
 
 labels = []
-doc_vectors = []
+related_words = []
 with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
     lines = f.readlines()
     lines = [line.split('|sep|') for line in lines]
@@ -51,11 +51,12 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
                         bag_of_words[w[0]] = w[1]
             except:
                 pass
-        print(words)
-        for s in sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True):
-            if s[1] != 0:
-                print('\t', s[0], s[1])
-        break
+        related_words.append(sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True)[10:])
+        # print(text)
+        # for s in sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True):
+        #     if s[1] != 0:
+        #         print('\t', s[0], s[1])
+
 
 
 # labels = np.array(labels)
@@ -63,11 +64,10 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
 # print(labels.shape)
 # print(doc_vectors.shape)
 # # doc_vectors, labels = shuffle(doc_vectors, labels, random_state=0)
-# print('write output')
-# lines = []
-# for i in range(100000):
-#     vector = doc_vectors[i]
-#     vector = ["%.4f" % item for item in vector.tolist()]
-#     label = labels[i]
-#     lines.append(label + '|sep|' + ','.join(vector))
-# FileIO.write_lines_to_file('./datasets/word2vec_ag12bbc.txt', lines)
+print('write output')
+lines = []
+for i in range(100000):
+    words = related_words[i]
+    label = labels[i]
+    lines.append(label + '|sep|' + ','.join(words))
+FileIO.write_lines_to_file('./datasets/all_related_words.txt', lines)
