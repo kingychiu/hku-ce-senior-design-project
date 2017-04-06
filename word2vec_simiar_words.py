@@ -51,7 +51,10 @@ with open('./datasets/all_data_set.txt', 'r', encoding='utf8') as f:
                         bag_of_words[w] = 1
             except:
                 pass
-        print(bag_of_words)
+        print(words)
+        for s in sorted(bag_of_words.items(), key=operator.itemgetter(1), reverse=True):
+            if s[1] != 0:
+                print('\t', s[0], s[1])
         break
 
 
