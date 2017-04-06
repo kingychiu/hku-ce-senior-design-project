@@ -26,7 +26,7 @@ with open('./datasets/word2vec_ag12bbc.txt', 'r', encoding='utf8') as f:
     for line in lines:
         label = line[0]
         vector = line[1].replace('\n', '').split(',')
-        vector = [float(i) for i in vector]
+        vector = np.array([float(i) for i in vector])
         bag_of_words = {}
         # get similar word of the word
         try:
