@@ -48,6 +48,7 @@ model = load_model(model_path)
 
 
 x = get_data()
+print(x.shape)
 x = x.reshape(x.shape[0], x.shape[1], x.shape[2], 1)
 print(x.shape)
 

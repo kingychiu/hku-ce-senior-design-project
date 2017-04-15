@@ -12,6 +12,7 @@ with open('./datasets/gistnote_highlight_7blkup.txt', 'w', encoding='utf8') as f
         document_str = ','.join(char_strs)
         document_strs.append(document_str)
     lines = []
+    print(len(lines))
     for i in range(len(document_strs)):
         # if labels[i] != 'Entertainment':
         lines.append(labels[i] + '|l|' + document_strs[i])
