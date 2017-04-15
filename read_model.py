@@ -12,7 +12,7 @@ from sklearn.cluster import KMeans
 from file_io import FileIO
 
 def get_data():
-    with open('./datasets/bbc_7blkup.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/gistnote_highlight_7blkup.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
@@ -37,31 +37,20 @@ def get_data():
         print('Labels', classes)
 
         # shuffle
-        x, y = shuffle(x, y, random_state=0)
-        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
+        # x, y = shuffle(x, y, random_state=0)
+        # x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42)
         f.close()
-        return x_train, x_test, y_train, y_test, len(classes)
+        return x
 
 
 model_path = './models/switch_learning_ag12bbc.h5'
 model = load_model(model_path)
 
 
-x_train, x_test, y_train, y_test, num_classes = get_data()
+x = get_data()
+x = x.reshape(x.shape[0], x.shape[1], x.shape[2], 1)
+print(x.shape)
 
-# Convert class vectors to binary class matrices
-y_train = np_utils.to_categorical(y_train, num_classes)
-y_test = np_utils.to_categorical(y_test, num_classes)
-print('# Training Data', x_train.shape, y_train.shape)
-# Reshape
-x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
-x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
-print('# Training Data', x_train.shape, y_train.shape)
-print('# Testing Data', x_test.shape, y_test.shape)
-
-score1 = model.evaluate(x_train, y_train, verbose=0)
-score2 = model.evaluate(x_test, y_test, verbose=0)
-print('Train accuracy:', score1[1])
-print('Test accuracy:', score2[1])
-
-labels =  ['business', 'entertainment', 'politics', 'sport', 'tech']
+p = model.predict(x)
+print(p[0:3])
+labels = ['business', 'entertainment', 'politics', 'sport', 'tech']
