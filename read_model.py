@@ -11,6 +11,7 @@ from sklearn.utils import shuffle
 from sklearn.cluster import KMeans
 from file_io import FileIO
 
+
 def get_data():
     with open('./datasets/gistnote_highlight_7blkup.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
@@ -48,7 +49,6 @@ def get_data():
 model_path = './models/switch_learning_ag12bbc.h5'
 model = load_model(model_path)
 
-
 x = get_data()
 print(x.shape)
 x = x.reshape(x.shape[0], x.shape[1], x.shape[2], 1)
@@ -57,3 +57,6 @@ print(x.shape)
 p = model.predict(x)
 print(p[0:3])
 labels = ['business', 'entertainment', 'politics', 'sport', 'tech']
+
+for i in range(len(labels)):
+    print(labels[i], len([_p for _p in p if _p == i]))
