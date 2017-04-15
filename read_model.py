@@ -25,6 +25,7 @@ def get_data():
                 for digit_str in char_look_up:
                     if digit_str == '0' or digit_str == '1':
                         look_up_vector.append(int(digit_str))
+                print(len(look_up_vector))
                 matrix.append(look_up_vector)
             tensor.append(matrix)
         print(tensor[0])
