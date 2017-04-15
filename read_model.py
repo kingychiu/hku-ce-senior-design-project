@@ -14,7 +14,7 @@ from file_io import FileIO
 
 def get_data():
     with open('./datasets/gistnote_highlight_7blkup.txt', 'r', encoding='utf8') as f:
-        lines = f.readlines()
+        lines = f.readlines()[0:10]
         tensor = []
         print(len(lines))
         for line in lines:
