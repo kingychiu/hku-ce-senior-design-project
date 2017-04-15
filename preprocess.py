@@ -14,7 +14,8 @@ class PreProcess:
     def run_look_up(self):
         lines = FileIO.read_file_to_lines(self.file_path)
         # spiting labels and sentences
-        sentences = [l.split('|sep|')[1] for l in lines]
+        sentences = [l.split('|sep|')[1]for l in lines if len(l.split('|sep|')) > 1]
+
         print('## First sentence')
         print(sentences[0])
         print('# char', len(sentences[0]))
