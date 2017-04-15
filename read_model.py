@@ -14,16 +14,12 @@ from file_io import FileIO
 
 def get_data():
     with open('./datasets/gistnote_highlight_7blkup.txt', 'r', encoding='utf8') as f:
-        lines = f.readlines()
+        lines = f.readlines()[0:10]
         tensor = []
-        labels = []
         print(len(lines))
         for line in lines:
             matrix = []
-            labels.append(line.split('|l|')[0])
-            if not len(line.split('|l|')) > 1:
-                continue
-            char_look_up_list = line.split('|l|')[1].split(',')
+            char_look_up_list = line.replace('|l|', '').split(',')
             for char_look_up in char_look_up_list:
                 look_up_vector = []
                 for digit_str in char_look_up:
@@ -35,9 +31,6 @@ def get_data():
         x = np.array(tensor)
         del tensor
         print(x.shape)
-        classes = sorted(list(set(labels)))
-        y = np.asarray([classes.index(item) for item in labels])
-        print('Labels', classes)
 
         # shuffle
         # x, y = shuffle(x, y, random_state=0)
