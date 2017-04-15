@@ -48,7 +48,7 @@ x = x.reshape(x.shape[0], x.shape[1], x.shape[2], 1)
 print(x.shape)
 
 p = model.predict(x)
-p = [i.index(max(values)) for i in p]
+p = [i.index(max(i)) for i in p]
 labels = ['business', 'entertainment', 'politics', 'sport', 'tech']
 
 for i in range(len(labels)):
