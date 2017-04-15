@@ -20,6 +20,8 @@ def get_data():
         for line in lines:
             matrix = []
             labels.append(line.split('|l|')[0])
+            if not len(line.split('|l|')) > 1:
+                continue
             char_look_up_list = line.split('|l|')[1].split(',')
             for char_look_up in char_look_up_list:
                 look_up_vector = []
