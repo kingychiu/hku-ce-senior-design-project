@@ -25,9 +25,8 @@ def get_data():
                 for digit_str in char_look_up:
                     if digit_str == '0' or digit_str == '1':
                         look_up_vector.append(int(digit_str))
-                if len(look_up_vector) != 7:
-                    continue
-                matrix.append(look_up_vector)
+                if len(look_up_vector) == 7:
+                    matrix.append(look_up_vector)
             tensor.append(matrix)
         print(tensor[0])
         x = np.array(tensor)
