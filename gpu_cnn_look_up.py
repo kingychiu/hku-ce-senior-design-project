@@ -117,4 +117,4 @@ for i in range(0, 100):
     lines.append(','.join([str(a) for a in acc]))
     lines.append(','.join([str(a) for a in val_acc]))
     FileIO.write_lines_to_file('./am_review_dataset_7blkup.log', lines)
-    model.save('./models/am_review_dataset_7blkup.h5')
+    model.save('./models/bbc_dataset_7blkup.h5')
