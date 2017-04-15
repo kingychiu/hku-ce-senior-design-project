@@ -27,7 +27,8 @@ def get_data():
                         look_up_vector.append(int(digit_str))
                 if len(look_up_vector) == 7:
                     matrix.append(look_up_vector)
-            tensor.append(matrix)
+            if len(matrix) == 100:
+                tensor.append(matrix)
         print(tensor[0])
         x = np.array(tensor)
         del tensor
