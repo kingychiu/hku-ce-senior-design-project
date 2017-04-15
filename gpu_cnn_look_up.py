@@ -17,7 +17,7 @@ import datetime
 
 
 def get_data():
-    with open('./datasets/text_emotion_7blkup.txt', 'r', encoding='utf8') as f:
+    with open('./datasets/bbc_7blkup.txt', 'r', encoding='utf8') as f:
         lines = f.readlines()
         tensor = []
         labels = []
